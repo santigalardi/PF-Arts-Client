@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useHistory } from "react-router-dom"; //Enlaces e historial de navegacion.
-import { postArts } from "../redux/actions";
+import { postArts } from "../../redux/actions";
 import { useDispatch } from "react-redux"; //Despacho acciones.
 import "./Form.css";
 
