@@ -105,7 +105,7 @@ export default function Form() {
       <Link to="/home">
         <button className="button">Home</button>
       </Link>
-      <h1>Create a new Art!</h1>
+      <h1>Create a new art!</h1>
       <div className="container">
         <form onSubmit={handleSubmit}>
           {showAlert && Object.keys(errors).length > 0 && (
