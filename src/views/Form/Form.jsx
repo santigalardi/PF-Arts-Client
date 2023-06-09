@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom"; //Enlaces e historial de navegacion.
-import { postArts } from "../redux/actions";
+import { useState } from "react";
+// import { Link, useHistory } from "react-router-dom"; //Enlaces e historial de navegacion.
+import { Link } from "react-router-dom";
+import { postArts } from "../../redux/actions";
 import { useDispatch } from "react-redux"; //Despacho acciones.
 import "./Form.css";
 
@@ -31,7 +32,7 @@ function validate(input) {
 
 export default function Form() {
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
   const [errors, setErrors] = useState({}); //almacena errores de validaciones del formu.
   const [input, setInput] = useState({
     //almacena valores.
@@ -104,7 +105,7 @@ export default function Form() {
       <Link to="/home">
         <button className="button">Home</button>
       </Link>
-      <h1>Create a new Art!</h1>
+      <h1>Create a new art!</h1>
       <div className="container">
         <form onSubmit={handleSubmit}>
           {showAlert && Object.keys(errors).length > 0 && (

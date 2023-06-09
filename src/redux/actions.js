@@ -1,8 +1,10 @@
+import axios from "axios";
+
 export function postArts(payload) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/create",
+        "http://localhost:5173/create",
         payload
       );
       dispatch({ type: "POST_ARTS_SUCCESS", payload: response.data });
