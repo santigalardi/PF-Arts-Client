@@ -51,12 +51,12 @@ export default function Form() {
   function handleChange(e) {
     setInput({
       ...input,
-      [e.target.title]: e.target.value,
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validate({
         ...input,
-        [e.target.title]: e.target.value,
+        [e.target.name]: e.target.value,
       })
     );
     setShowAlert(false); // Oculta el mensaje de error general
