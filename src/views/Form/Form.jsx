@@ -1,52 +1,48 @@
-import { useState } from "react";
-// import { Link, useHistory } from "react-router-dom"; //Enlaces e historial de navegacion.
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { postArts } from "../../redux/actions";
-import { useDispatch } from "react-redux"; //Despacho acciones.
-import "./Form.css";
-
-function validate(input) {
-  //Validaciones
-  let errors = {};
-  if (!input.title) {
-    errors.title = "Need a title";
-  }
-  if (!input.image) {
-    errors.image = "Need an image URL";
-  }
-  if (!input.artistName) {
-    errors.artistName = "Need a artist name";
-  }
-  if (!input.completitionYear) {
-    errors.completitionYear = "Need a year";
-  }
-  if (!input.width) {
-    errors.width = "Need a width";
-  }
-  if (!input.height) {
-    errors.height = "Need a height";
-  }
-
-  return errors;
-}
+import { useDispatch } from "react-redux";
+import styles from "./Form.module.css";
 
 export default function Form() {
   const dispatch = useDispatch();
-  // const history = useHistory();
-  const [errors, setErrors] = useState({}); //almacena errores de validaciones del formu.
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
-    //almacena valores.
     title: "",
     image: "",
     artistName: "",
-    completitionYear: "",
+    completionYear: "",
     width: "",
     height: "",
+    description: "",
   });
-
   const [submitted, setSubmitted] = useState(false);
-  const [showAlert, setShowAlert] = useState(false); //Alerta que no completó
-  const [showConfirmation, setShowConfirmation] = useState(false); // Alerta de confirmación
+  const [showAlert, setShowAlert] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  function validate(input) {
+    let errors = {};
+    if (!input.title) {
+      errors.title = "Need a title";
+    }
+    if (!input.image) {
+      errors.image = "Need an image URL";
+    }
+    if (!input.artistName) {
+      errors.artistName = "Need an artist name";
+    }
+    if (!input.completionYear) {
+      errors.completionYear = "Need a year";
+    }
+    if (!input.width) {
+      errors.width = "Need a width";
+    }
+    if (!input.height) {
+      errors.height = "Need a height";
+    }
+    return errors;
+  }
 
   function handleChange(e) {
     setInput({
@@ -59,7 +55,7 @@ export default function Form() {
         [e.target.name]: e.target.value,
       })
     );
-    setShowAlert(false); // Oculta el mensaje de error general
+    setShowAlert(false);
   }
 
   function handleSubmit(e) {
@@ -73,7 +69,7 @@ export default function Form() {
       input.title &&
       input.image &&
       input.artistName &&
-      input.completitionYear &&
+      input.completionYear &&
       input.width &&
       input.height
     ) {
@@ -81,18 +77,15 @@ export default function Form() {
         ...input,
       };
       dispatch(postArts(updatedInput));
-      setShowConfirmation(true); // Mostra confirmación
-      // Restablece el formulario
-
+      setShowConfirmation(true);
       setInput({
         title: "",
         image: "",
         artistName: "",
-        completitionYear: "",
+        completionYear: "",
         width: "",
         height: "",
       });
-
       setSubmitted(false);
       setErrors({});
     } else {
@@ -100,84 +93,148 @@ export default function Form() {
     }
   }
 
+  function handleScrollButton() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  useEffect(() => {
+    function handleScroll() {
+      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const bodyHeight = document.body.offsetHeight;
+      const isBottom = scrollY >= bodyHeight - windowHeight;
+
+      setShowScrollButton(isBottom);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div>
       <Link to="/home">
-        <button className="button">Home</button>
+        <button className={`${styles.button} ${styles.homeButton}`}>
+          Home
+        </button>
       </Link>
-      <h1>Create a new art!</h1>
-      <div className="container">
+      <div className={styles.container}>
+        <h1 className={styles.heading}>Create a new art!</h1>
         <form onSubmit={handleSubmit}>
           {showAlert && Object.keys(errors).length > 0 && (
-            <p className="error">Please fill out all required fields.</p>
+            <p className={styles.error}>Please fill out all required fields.</p>
           )}
-          <div>
-            <label>Title: </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Title: </label>
             <input
               type="text"
               value={input.title}
               name="title"
               onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter a title"
             />
-            {errors.title && <p className="error">{errors.title}</p>}
+            {errors.title && <p className={styles.error}>{errors.title}</p>}
           </div>
-          <div>
-            <label>Image: </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Image: </label>
             <input
               type="text"
               value={input.image}
               name="image"
               onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter an image URL"
             />
             {submitted && errors.image && (
-              <p className="error">{errors.image}</p>
+              <p className={styles.error}>{errors.image}</p>
             )}
           </div>
-          <div>
-            <label>Artist name: </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Artist name: </label>
             <input
               type="text"
               value={input.artistName}
               name="artistName"
               onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter an artist name"
             />
+            {submitted && errors.artistName && (
+              <p className={styles.error}>{errors.artistName}</p>
+            )}
           </div>
-          <div>
-            <label>Year: </label>
-            <input
-              type="text" // Lo puedo cambiar a "number"
-              value={input.completitionYear}
-              name="completitionYear"
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <label>Width: </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Year: </label>
             <input
               type="text"
+              value={input.completionYear}
+              name="completionYear"
+              onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter a year"
+            />
+            {submitted && errors.completionYear && (
+              <p className={styles.error}>{errors.completionYear}</p>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Width: </label>
+            <input
+              type="number"
               value={input.width}
               name="width"
               onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter a width"
             />
+            {submitted && errors.width && (
+              <p className={styles.error}>{errors.width}</p>
+            )}
           </div>
-          <div>
-            <label>Height: </label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Height: </label>
             <input
-              type="text"
+              type="number"
               value={input.height}
               name="height"
               onChange={handleChange}
+              className={styles.input}
+              placeholder="Enter a height"
+            />
+            {submitted && errors.height && (
+              <p className={styles.error}>{errors.height}</p>
+            )}
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Description: </label>
+            <textarea
+              value={input.description}
+              name="description"
+              onChange={handleChange}
+              className={styles.textarea}
+              placeholder="Enter a description..."
             />
           </div>
-
-          <button className="button" type="submit">
+          <button type="submit" className={styles.button}>
             Create
           </button>
           {showConfirmation && (
-            <p className="confirmation">Art created successfully!</p>
+            <p className={styles.confirmation}>Art created successfully!</p>
           )}
         </form>
       </div>
+      {showScrollButton && (
+        <button
+          className={styles.scrollButton}
+          onClick={handleScrollButton}
+        ></button>
+      )}
     </div>
   );
 }
