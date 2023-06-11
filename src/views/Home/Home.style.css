@@ -1,0 +1,20 @@
+@keyframes animatedBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
+.HomeViews{
+    display: flex;
+    flex-direction: column;
+    animation: animatedBackground 10s linear infinite;
+    background: linear-gradient(45deg, red, yellow, blue, green);
+    background-size: 400% 400%;
+}
