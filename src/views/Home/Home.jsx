@@ -3,7 +3,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { getAllUser } from '../../redux/actions';
 import Navbar from "../../components/Navbar/Navbar";
 import Cards from "../../components/Cards/Cards";
-import "./Home.style.css";
+import style from './Home.module.css';
 
 function Home() {
 
@@ -30,7 +30,7 @@ function Home() {
   },[dispatch]);
 
   return (
-    <div className='HomeViews'>
+    <div className={style['HomeViews']}>
       <Navbar className='navbar-style' handleChange={handleChange} handleSubmit={handleSubmit} />
       <Cards allUsers={filtered} />
     </div>
