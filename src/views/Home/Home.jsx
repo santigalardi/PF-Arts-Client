@@ -30,11 +30,9 @@ function Home() {
   },[dispatch]);
 
   return (
-    <div className="HomeViews">
-
-      <Navbar handleChange={handleChange} handleSubmit={handleSubmit}/>
-      <Cards allUsers={filtered}/>
-
+    <div className='HomeViews'>
+      <Navbar className='navbar-style' handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Cards allUsers={filtered} />
     </div>
   );
 }
