@@ -1,4 +1,5 @@
 //Este es un ejemplo de cómo quedaría
+//Poner funciones con la api
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Detail.module.css';
