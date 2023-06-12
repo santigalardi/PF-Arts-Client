@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 function Navbar({ handleChange, handleSubmit }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const toggleMenu = () => {
+  const toggleMenu = (event) => {
     event.stopPropagation();
     setMenuOpen(!menuOpen);
   };
