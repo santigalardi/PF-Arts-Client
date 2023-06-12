@@ -1,12 +1,12 @@
 import './Navbar.style.css';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function Navbar({ handleChange, handleSubmit }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
+    event.stopPropagation();
     setMenuOpen(!menuOpen);
   };
 
@@ -24,13 +24,6 @@ function Navbar({ handleChange, handleSubmit }) {
     };
   }, []);
 
-  //Botton EXiT
-  // const history = useHistory();
-
-  const handleSalir = () => {
-    history.push('/landing');
-  };
-
   return (
     <nav className='navbar'>
       <div
@@ -40,9 +33,11 @@ function Navbar({ handleChange, handleSubmit }) {
         <span></span>
       </div>
       <div className={`menu-options ${menuOpen ? 'active' : ''}`}>
-        <NavLink to='/artistas' onClick={toggleMenu}>Artistas</NavLink>
-        <NavLink to='/tecnicas' onClick={toggleMenu}>Técnicas</NavLink>
-        <NavLink to='/' onClick={toggleMenu}>Home</NavLink>
+        <ul>
+          <li><NavLink to='/artistas' onClick={toggleMenu}>Artistas</NavLink></li>
+          <li><NavLink to='/tecnicas' onClick={toggleMenu}>Técnicas</NavLink></li>
+          <li><NavLink to='/home' onClick={toggleMenu}>Home</NavLink></li>
+        </ul>
       </div>
       <div className='navbar-title'>Art & Culture</div>
       <div className='navlinks-container'>
@@ -56,7 +51,7 @@ function Navbar({ handleChange, handleSubmit }) {
         <button type='submit' onClick={handleSubmit}>Buscar</button>
       </form>
       <div className='navbar-user'>Usuario</div>
-      <button className='boton-out' onClick={handleSalir}>EXIT</button>
+      <Link className='boton-out' to= '/login'>EXIT</Link>
     </nav>
   );
 }

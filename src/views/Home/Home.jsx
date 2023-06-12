@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { getAllUser } from '../../redux/actions';
-import Navbar from "../../Components/Navbar/Navbar";
-import Cards from "../../Components/Cards/Cards";
+import Navbar from "../../components/Navbar/Navbar";
+import Cards from "../../components/Cards/Cards";
 import "./Home.style.css";
 
 function Home() {
@@ -30,11 +30,9 @@ function Home() {
   },[dispatch]);
 
   return (
-    <div className="HomeViews">
-
-      <Navbar handleChange={handleChange} handleSubmit={handleSubmit}/>
-      <Cards allUsers={filtered}/>
-
+    <div className='HomeViews'>
+      <Navbar className='navbar-style' handleChange={handleChange} handleSubmit={handleSubmit} />
+      <Cards allUsers={filtered} />
     </div>
   );
 }

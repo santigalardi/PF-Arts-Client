@@ -1,5 +1,3 @@
-
-
 const initialState = {
   arts: [],
   allUsers:[],
@@ -21,7 +19,9 @@ const rootReducer = (state = initialState, action) => {
         };
         case 'ADD_FAVORITE':return{
             ...state,
-            myFavorites:[...state.allCharacters, action.payload]
+            myFavorites:[
+              ...state.allUsers.id,
+              action.payload]
         };
         case 'DELETE_FAVORITE':return{
             ...state,
