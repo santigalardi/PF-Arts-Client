@@ -37,6 +37,7 @@ function Navbar({ handleChange, handleSubmit }) {
           <li><NavLink to='/artistas' onClick={toggleMenu}>Artistas</NavLink></li>
           <li><NavLink to='/tecnicas' onClick={toggleMenu}>Técnicas</NavLink></li>
           <li><NavLink to='/home' onClick={toggleMenu}>Home</NavLink></li>
+          <li><NavLink to='/create' onClick={toggleMenu}>Create</NavLink></li>
         </ul>
       </div>
       <div className='navbar-title'>Art & Culture</div>
