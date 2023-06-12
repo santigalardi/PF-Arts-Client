@@ -1,6 +1,12 @@
 const initialState = {
   arts: [],
+
   myFavorites: [],
+
+  allUsers:[],
+  Obras:[],
+  myFavorites:[],
+
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -10,6 +16,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         arts: action.payload,
       };
+
 
     case 'ADD_FAVORITE_SUCCESS':
       return {
@@ -25,6 +32,22 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
+      case 'GET_USER': 
+        return{
+            ...state,
+            allUsers: action.payload
+        };
+        case 'ADD_FAVORITE':return{
+            ...state,
+            myFavorites:[
+              ...state.allUsers.id,
+              action.payload]
+        };
+        case 'DELETE_FAVORITE':return{
+            ...state,
+            myFavorites: state.myFavorites
+            .filter(char=>char.id !== action.payload)
+        };
     default:
       return state;
   }
