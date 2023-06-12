@@ -1,32 +1,32 @@
 .container {
-  background-color: #f9c4d2;
+  background-color: #f4aec1;
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
 }
 
-form {
+.container form {
   display: flex;
   flex-direction: column;
   max-width: 400px;
   margin: 0 auto;
 }
 
-form div {
+.container form div {
   margin-bottom: 10px;
 }
 
-label {
+.container label {
   font-weight: bold;
 }
 
-input[type="text"] {
+.container input[type='text'] {
   padding: 5px;
   border-radius: 5px;
   border: none;
 }
 
-select[multiple] {
+.container select[multiple] {
   height: 100px;
   padding: 5px;
   border-radius: 5px;
