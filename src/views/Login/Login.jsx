@@ -1,11 +1,10 @@
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import googleLogo from '../../assets/img/google.png';
-// import styles from './Login.module.css';
+import styles from './Login.modules.css';
 
 const Login = () => {
   return (
-    // className={styles['login-container']}
-    <div>
+    <div className={styles.landing}>
       <Container className='w-100 bg-primary mt-5 rounded shadow'>
         {/* Background */}
         <Row className='bg-box align-items-stretch'>
