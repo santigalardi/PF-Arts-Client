@@ -1,35 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import styles from './Form.module.css';
 
-function validate(input) {
-  let errors = {};
-  if (!input.title) {
-    errors.title = 'Need a title';
-  }
-  if (!input.image) {
-    errors.image = 'Need an image URL';
-  }
-  if (!input.artistName) {
-    errors.artistName = 'Need an artist name';
-  }
-  if (!input.completionYear) {
-    errors.completionYear = 'Need a year';
-  }
-  if (!input.width) {
-    errors.width = 'Need a width';
-  }
-  if (!input.height) {
-    errors.height = 'Need a height';
-  }
-  return errors;
-}
-
 export default function Form() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     title: '',
@@ -45,27 +21,62 @@ export default function Form() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: '',
-    }));
+  function validate(input) {
+    let errors = {};
+    if (!input.title) {
+      errors.title = 'Need a title';
+    }
+    if (!input.image) {
+      errors.image = 'Need an image URL';
+    }
+    if (!input.artistName) {
+      errors.artistName = 'Need an artist name';
+    }
+    if (!input.completionYear) {
+      errors.completionYear = 'Need a year';
+    }
+    if (!input.width) {
+      errors.width = 'Need a width';
+    }
+    if (!input.height) {
+      errors.height = 'Need a height';
+    }
+    return errors;
+  }
+
+  function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
     setShowAlert(false);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const validationErrors = validate(input);
-    setErrors(validationErrors);
+    const errors = validate(input);
+    setErrors(errors);
     setSubmitted(true);
 
-    if (Object.keys(validationErrors).length === 0) {
-      dispatch(postArts(input));
+    if (
+      Object.keys(errors).length === 0 &&
+      input.title &&
+      input.image &&
+      input.artistName &&
+      input.completionYear &&
+      input.width &&
+      input.height
+    ) {
+      const updatedInput = {
+        ...input,
+      };
+      dispatch(postArts(updatedInput));
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -78,7 +89,6 @@ export default function Form() {
       });
       setSubmitted(false);
       setErrors({});
-      navigate('/home');
     } else {
       setShowAlert(true);
     }
