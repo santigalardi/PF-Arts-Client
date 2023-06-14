@@ -1,11 +1,11 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import './Card.style.css';
-import {useSelector, useDispatch} from 'react-redux';
-import {addFavorite, deleteFavorite} from '../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFavorite, deleteFavorite } from '../../redux/actions';
 import PropTypes from 'prop-types';
 
-function Card({user}) {
-  const {name, email, phone} = user;
+function Card({ user }) {
+  const { name, email, phone } = user;
   const dispatch = useDispatch();
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
@@ -15,7 +15,7 @@ function Card({user}) {
       dispatch(deleteFavorite(user));
     } else {
       setIsFav(true);
-      dispatch(addFavorite({user}));
+      dispatch(addFavorite({ user }));
     }
   };
 
@@ -44,6 +44,7 @@ function Card({user}) {
     </div>
   );
 }
+
 Card.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -51,6 +52,5 @@ Card.propTypes = {
     phone: PropTypes.string.isRequired,
   }).isRequired,
 };
-
 
 export default Card;
