@@ -3,10 +3,7 @@ import axios from 'axios';
 export function postArts(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        'http://localhost:5173/create',
-        payload
-      );
+      const response = await axios.post('http://localhost:5173/create', payload);
       dispatch({ type: 'POST_ARTS_SUCCESS', payload: response.data });
       return response;
     } catch (error) {
@@ -19,10 +16,7 @@ export function postArts(payload) {
 export function addFavorite(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        'http://localhost:5173/favorites/add',
-        payload
-      );
+      const response = await axios.post('http://localhost:5173/favorites/add', payload);
       dispatch({ type: 'ADD_FAVORITE_SUCCESS', payload: response.data });
       return response;
     } catch (error) {
@@ -35,9 +29,7 @@ export function addFavorite(payload) {
 export function deleteFavorite(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(
-        `http://localhost:5173/favorites/delete/${payload.id}`
-      );
+      const response = await axios.delete(`http://localhost:5173/favorites/delete/${payload.id}`);
       dispatch({ type: 'DELETE_FAVORITE_SUCCESS', payload: response.data });
 
       return response;

@@ -14,30 +14,20 @@
 }
 
 .formGroup {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .label {
-  display: block;
+  flex: 0 0 30%;
+  max-width: 30%;
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 5px;
-  flex: 0 0 30%;
-  max-width: 30%;
 }
 
-.textarea {
-  width: 100%;
-  padding: 10px;
-  font-size: 1em;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
-
+.textarea,
 .input {
   flex: 0 0 70%;
   max-width: 70%;
@@ -45,6 +35,10 @@
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.textarea {
+  resize: vertical;
 }
 
 .homeButton {
@@ -116,4 +110,5 @@
   font-size: 1em;
   margin-top: 10px;
   flex-basis: 100%;
+
 }
