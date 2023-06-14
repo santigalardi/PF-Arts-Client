@@ -1,7 +1,7 @@
-import { GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE } from './actions';
+import { GET_ARTS, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE } from './actions';
 
 const initialState = {
-  arts: [],
+  allArts: [],
   allUsers: [],
   Obras: [],
   myFavorites: [],
@@ -9,6 +9,12 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_ARTS:
+      return {
+        ...state,
+        allArts: action.payload,
+      };
+
     case GET_USERS:
       return {
         ...state,
