@@ -6,6 +6,7 @@ import { BsFillHouseFill, BsPersonFill, BsTools } from 'react-icons/bs';
 import { GiPencilBrush } from 'react-icons/gi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPowerOff } from 'react-icons/fa';
+import {MdManageSearch} from 'react-icons/md';
 
 function Navbar({ handleChange, handleSubmit }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,6 +71,14 @@ function Navbar({ handleChange, handleSubmit }) {
           </li>
           <hr />
           <li>
+            <GiPencilBrush />
+            <NavLink to='/MyCreations' onClick={toggleMenu}>
+              {' '}
+              My creations
+            </NavLink>
+          </li>
+          <hr />
+          <li>
             <FaPowerOff />
             <NavLink to='/login' onClick={toggleMenu}>
               {' '}
@@ -94,9 +103,9 @@ function Navbar({ handleChange, handleSubmit }) {
         </NavLink>
       </div>
       <form onChange={handleChange}>
-        <input placeholder='Search...' type='search' />
-        <button type='submit' onClick={handleSubmit}>
-          Search
+        <input className='NavSearch' placeholder='Search...' type='search' />
+        <button className='BottonSearch'type='submit' onClick={handleSubmit}>
+          <MdManageSearch className='icon'/>
         </button>
       </form>
       <div className='navbar-user'>Usuario</div>
