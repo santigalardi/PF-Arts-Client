@@ -4,6 +4,7 @@ import { getAllUser } from '../../redux/actions';
 import Navbar from "../../components/Navbar/Navbar";
 import Cards from "../../components/Cards/Cards";
 import style from './Home.module.css';
+import Footer from "../../components/Footer/Footer";
 
 function Home() {
 
@@ -33,6 +34,7 @@ function Home() {
     <div className={style['HomeViews']}>
       <Navbar className='navbar-style' handleChange={handleChange} handleSubmit={handleSubmit} />
       <Cards allUsers={filtered} />
+      <Footer/>
     </div>
   );
 }
