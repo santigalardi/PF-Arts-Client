@@ -1,3 +1,4 @@
+//Agregué nav y foot, falta poner un estilo o fondo de color
 import { useState, useEffect } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
