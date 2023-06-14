@@ -1,7 +1,11 @@
 import './Navbar.style.css';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { BsFillHouseFill, BsPersonFill, BsTools} from 'react-icons/bs';
+import { GiPencilBrush } from 'react-icons/gi';
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { FaPowerOff } from 'react-icons/fa'
 
 function Navbar({ handleChange, handleSubmit }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,17 +38,18 @@ function Navbar({ handleChange, handleSubmit }) {
       </div>
       <div className={`menu-options ${menuOpen ? 'active' : ''}`}>
         <ul>
-          <li><NavLink to='/artistas' onClick={toggleMenu}>Artistas</NavLink></li>
-          <li><NavLink to='/tecnicas' onClick={toggleMenu}>Técnicas</NavLink></li>
-          <li><NavLink to='/home' onClick={toggleMenu}>Home</NavLink></li>
-          <li><NavLink to='/create' onClick={toggleMenu}>Create</NavLink></li>
+          <li><BsPersonFill /><NavLink to='/artistas' onClick={toggleMenu}> Artists</NavLink></li><hr/>
+          <li><BsTools /><NavLink to='/tecnicas' onClick={toggleMenu}> Techniques</NavLink></li><hr/>
+          <li><BsFillHouseFill /><NavLink to='/home' onClick={toggleMenu}> Home</NavLink></li><hr/>
+          <li><GiPencilBrush /><NavLink to='/create' onClick={toggleMenu}> Create</NavLink></li><hr/>
+          <li><FaPowerOff/><NavLink to='/login' onClick={toggleMenu}> Login</NavLink></li>
         </ul>
       </div>
       <div className='navbar-title'>Art & Culture</div>
       <div className='navlinks-container'>
         <NavLink to='/home' className='navlinks'>Home</NavLink>
         <NavLink to='/explorer' className='navlinks'>Explorer</NavLink>
-        <NavLink to='/shopping' className='navlinks'>Carrito</NavLink>
+        
         <NavLink to='/favorites' className='navlinks'>Favorites</NavLink>
       </div>
       <form onChange={handleChange}>
@@ -52,7 +57,7 @@ function Navbar({ handleChange, handleSubmit }) {
         <button type='submit' onClick={handleSubmit}>Buscar</button>
       </form>
       <div className='navbar-user'>Usuario</div>
-      <Link className='boton-out' to= '/login'>EXIT</Link>
+      <NavLink to='/shopping' className='navlinks'><AiOutlineShoppingCart/>Shoppings</NavLink>
     </nav>
   );
 }
