@@ -97,3 +97,18 @@
   content: '\2191';
   font-size: 24px;
 }
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+  flex-basis: 100%;
+}
+
+.confirmation {
+  color: green;
+  font-size: 1em;
+  margin-top: 10px;
+  flex-basis: 100%;
+
+}
