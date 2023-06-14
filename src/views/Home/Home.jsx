@@ -22,7 +22,6 @@ function Home() {
   const artsPerPage = 2;
   const indexOfLastArt = currentPage * artsPerPage; //15
   const indexOfFirstArt = indexOfLastArt - artsPerPage; // 0
-  // eslint-disable-next-line no-unused-vars
   const currentArts = allArts.slice(indexOfFirstArt, indexOfLastArt); // Desde esta variable se renderizan las cards.
 
   const pagination = (pageNumber) => {
