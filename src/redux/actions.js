@@ -1,9 +1,21 @@
 import axios from 'axios';
+import apiJSON from '../assets/Api/api.json';
 
+export const GET_ARTS = 'GET_ARTS';
 export const GET_USERS = 'GET_USERS';
 export const POST_ART = 'POST_ART';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
+
+export const getAllArts = () => {
+  return async function (dispatch) {
+    const response = apiJSON;
+    return dispatch({
+      type: GET_ARTS,
+      payload: response.data,
+    });
+  };
+};
 
 export const getAllUsers = () => {
   return async function (dispatch) {
