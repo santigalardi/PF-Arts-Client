@@ -78,7 +78,7 @@ export default function Form() {
       });
       setSubmitted(false);
       setErrors({});
-      navigate('/home');
+      navigate('/');
     } else {
       setShowAlert(true);
     }
@@ -109,7 +109,7 @@ export default function Form() {
 
   return (
     <div>
-      <Link to='/home'>
+      <Link to='/'>
         <button className={`${styles.button} ${styles.homeButton}`}>Home</button>
       </Link>
       <div className={styles.container}>
