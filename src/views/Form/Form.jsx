@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import styles from './Form.module.css';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 export default function Form() {
   const dispatch = useDispatch();
@@ -119,11 +120,11 @@ export default function Form() {
 
   return (
     <div>
-      <Link to="/home">
-        <button className={`${styles.button} ${styles.homeButton}`}>
-          Home
-        </button>
-      </Link>
+      <Navbar
+        className="navbar-style"
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
       <div className={styles.container}>
         <h1 className={styles.heading}>Create a new art!</h1>
         <form onSubmit={handleSubmit}>
@@ -236,6 +237,7 @@ export default function Form() {
           onClick={handleScrollButton}
         ></button>
       )}
+      <Footer />
     </div>
   );
 }
