@@ -1,0 +1,23 @@
+.BottonSearch{
+    text-decoration: none;
+    background-color: red;
+    border-radius: 0px 0px 20px 0px;
+    border:0;
+    padding-top: 0px;
+   vertical-align: top;
+ }
+ .BottonSearch:hover{
+    background-color: rgb(64, 209, 84);
+    padding-bottom: 2.5px;
+ }
+ 
+ .NavSearch{
+    outline: none;
+ }
+ .icon{
+   font-size: 27px;
+    /* color: azure; */
+ }
+ .icon:hover{
+    font-size: 24px;
+ }

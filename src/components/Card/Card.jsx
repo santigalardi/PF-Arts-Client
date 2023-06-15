@@ -1,34 +1,36 @@
-import {useState, useEffect} from 'react';
-import './Card.style.css';
-import {useSelector, useDispatch} from 'react-redux';
-import {addFavorite, deleteFavorite} from '../../redux/actions';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addFavorite, deleteFavorite } from '../../redux/actions';
 import PropTypes from 'prop-types';
+import styles from './Card.module.css';
 
-function Card({user}) {
-  const {name, email, phone} = user;
+function Card({ art }) {
   const dispatch = useDispatch();
+  const { title, artistName, completitionYear, image } = art;
+
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
+
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(user));
+      dispatch(deleteFavorite(art));
     } else {
       setIsFav(true);
-      dispatch(addFavorite({user}));
+      dispatch(addFavorite({ art }));
     }
   };
 
   useEffect(() => {
     myFavorites.forEach((fav) => {
-      if (fav.name === name) {
+      if (fav.title === title) {
         setIsFav(true);
       }
     });
-  }, [name, myFavorites]);
+  }, [title, myFavorites]);
 
   return (
-    <div className='CarComponents'>
+    <div className={styles['cardContainer']}>
       {isFav ? (
         <button className='likeStyle' onClick={handleFavorite}>
           ❤️
@@ -38,19 +40,25 @@ function Card({user}) {
           🤍
         </button>
       )}
-      <h2>{name}</h2>
-      <p>{email}</p>
-      <p>{phone}</p>
+      <div className={styles['imgContainer']}>
+        <img src={image} alt={title} />
+      </div>
+      <div className={styles['propsContainer']}>
+        <h2>{title}</h2>
+        <p>{artistName}</p>
+        <p>{completitionYear}</p>
+      </div>
     </div>
   );
 }
+
 Card.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
+  art: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    artistName: PropTypes.string.isRequired,
+    completitionYear: PropTypes.number.isRequired,
   }).isRequired,
 };
-
 
 export default Card;

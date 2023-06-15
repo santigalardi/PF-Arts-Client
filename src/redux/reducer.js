@@ -1,30 +1,47 @@
+import {
+  GET_ARTS,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+} from './actions';
+
 const initialState = {
-  arts: [],
-
+  allArts: [],
+  allUsers: [],
+  Obras: [],
   myFavorites: [],
-
-  allUsers:[],
-  Obras:[],
-  myFavorites:[],
-
+  detail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SEARCH_ARTS_SUCCESS':
+    case GET_ARTS:
       return {
         ...state,
-        arts: action.payload,
+        allArts: action.payload,
       };
 
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
 
-    case 'ADD_FAVORITE_SUCCESS':
+    case POST_ART:
+      return {
+        ...state,
+        arts: [...state.arts, action.payload],
+      };
+
+    case ADD_FAVORITE:
       return {
         ...state,
         myFavorites: [...state.myFavorites, action.payload],
       };
 
-    case 'DELETE_FAVORITE_SUCCESS':
+    case DELETE_FAVORITE:
       return {
         ...state,
         myFavorites: state.myFavorites.filter(
@@ -32,22 +49,12 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-      case 'GET_USER': 
-        return{
-            ...state,
-            allUsers: action.payload
-        };
-        case 'ADD_FAVORITE':return{
-            ...state,
-            myFavorites:[
-              ...state.allUsers.id,
-              action.payload]
-        };
-        case 'DELETE_FAVORITE':return{
-            ...state,
-            myFavorites: state.myFavorites
-            .filter(char=>char.id !== action.payload)
-        };
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
+      };
+
     default:
       return state;
   }
