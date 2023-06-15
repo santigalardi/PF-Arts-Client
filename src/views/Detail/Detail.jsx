@@ -1,9 +1,8 @@
-//Este es un ejemplo de cómo quedaría
-//Poner funciones con la api
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { addFavorite, deleteFavorite, getDetail } from '../../redux/actions';
 import styles from './Detail.module.css';
-import { addFavorite, deleteFavorite } from '../../redux/actions';
 import {
   FaShoppingCart,
   FaTwitter,
@@ -12,79 +11,75 @@ import {
 } from 'react-icons/fa';
 
 const Detail = () => {
-  const artwork = {
-    id: '57727444edc2cb3880cb7bf6',
-    title: 'Mona Lisa',
-    artistName: 'Leonardo da Vinci',
-    completionYear: 1519,
-    width: 403,
-    image:
-      'https://uploads0.wikiart.org/00339/images/leonardo-da-vinci/mona-lisa-c-1503-1519.jpg!Large.jpg',
-    height: 600,
-  };
-
-  const dispatch = useDispatch();
+  const { id } = useParams();
   const [isFav, setIsFav] = useState(false);
-  const myFavorites = useSelector((state) => state.myFavorites);
-  const [showScrollButton, setShowScrollButton] = useState(false);
   const [rating, setRating] = useState(0);
+  const detail = useSelector((state) => state.detail);
+  const myFavorites = useSelector((state) => state.myFavorites);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDetail(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    myFavorites.forEach((fav) => {
+      if (fav.id === detail.id) {
+        setIsFav(true);
+      }
+    });
+  }, [detail.id, myFavorites]);
 
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(artwork));
+      dispatch(deleteFavorite(detail));
     } else {
       setIsFav(true);
-      dispatch(addFavorite({ artwork }));
+      dispatch(addFavorite({ artwork: detail }));
     }
   };
-
-  useEffect(() => {
-    myFavorites.forEach((fav) => {
-      if (fav.id === artwork.id) {
-        setIsFav(true);
-      }
-    });
-  }, [artwork.id, myFavorites]);
 
   const handleRatingChange = (value) => {
     setRating(value);
   };
 
-  function handleScrollButton() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+  if (!detail) {
+    return <div>Loading...</div>;
   }
 
-  useEffect(() => {
-    function handleScroll() {
-      const windowHeight = window.innerHeight;
-      const scrollY = window.scrollY || window.pageYOffset;
-      const bodyHeight = document.body.offsetHeight;
-      const isBottom = scrollY >= bodyHeight - windowHeight;
+  const handleTwitterShare = () => {
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      detail.title
+    )}&url=${encodeURIComponent(window.location.href)}`;
+    window.open(url, '_blank');
+  };
 
-      setShowScrollButton(isBottom);
-    }
+  const handleFacebookShare = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href
+    )}`;
+    window.open(url, '_blank');
+  };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const handleInstagramShare = () => {
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(
+      window.location.href
+    )}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.imgContainer}>
-        <img src={artwork.image} alt={artwork.title} />
+        <img src={detail.image} alt={detail.title} />
       </div>
       <div className={styles.propsContainer}>
-        <h3>{artwork.title}</h3>
-        <p>Artist: {artwork.artistName}</p>
-        <p>Year: {artwork.completionYear}</p>
+        <h3>{detail.title}</h3>
+        <p>Artist: {detail.artistName}</p>
+        <p>Year: {detail.completionYear}</p>
         <p>
-          Dimensions: {artwork.width} x {artwork.height}
+          Dimensions: {detail.width} x {detail.height}
         </p>
       </div>
       <div className={styles.actionsContainer}>
@@ -117,23 +112,17 @@ const Detail = () => {
           </div>
         </div>
         <div className={styles.shareButtons}>
-          <button className={styles.shareButton}>
+          <button className={styles.shareButton} onClick={handleTwitterShare}>
             <FaTwitter className={styles.shareIcon} />
           </button>
-          <button className={styles.shareButton}>
+          <button className={styles.shareButton} onClick={handleFacebookShare}>
             <FaFacebook className={styles.shareIcon} />
           </button>
-          <button className={styles.shareButton}>
+          <button className={styles.shareButton} onClick={handleInstagramShare}>
             <FaInstagram className={styles.shareIcon} />
           </button>
         </div>
       </div>
-      {showScrollButton && (
-        <button
-          className={styles.scrollButton}
-          onClick={handleScrollButton}
-        ></button>
-      )}
     </div>
   );
 };

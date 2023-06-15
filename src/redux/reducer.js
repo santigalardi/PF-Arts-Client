@@ -1,10 +1,18 @@
-import { GET_ARTS, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE } from './actions';
+import {
+  GET_ARTS,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+} from './actions';
 
 const initialState = {
   allArts: [],
   allUsers: [],
   Obras: [],
   myFavorites: [],
+  detail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -36,7 +44,15 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload.id),
+        myFavorites: state.myFavorites.filter(
+          (fav) => fav.id !== action.payload.id
+        ),
+      };
+
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
       };
 
     default:

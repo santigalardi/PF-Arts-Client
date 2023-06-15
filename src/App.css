@@ -1,0 +1,21 @@
+.dark {
+  background-color: #111;
+  color: #fff;
+}
+
+.darkModeButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.darkModeButton:hover {
+  color: #f2f2f2;
+}
+
+.icon {
+  background-color: transparent;
+}
