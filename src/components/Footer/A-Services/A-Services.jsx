@@ -21,7 +21,7 @@ const AdvisoryServices = () => {
       </p>
       {/* { servicios de asesoramiento */}
       </div>
-      <img className={style['imgS']} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC1loMMxJ9DTEL8PaCxuMcdjr0ROz9jG8B0Q&usqp=CAU'/>
+      {/* <img className={style['imgS']} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC1loMMxJ9DTEL8PaCxuMcdjr0ROz9jG8B0Q&usqp=CAU'/> */}
     </div>
   );
 };

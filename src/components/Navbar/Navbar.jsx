@@ -13,9 +13,6 @@ function Navbar() {
         <NavLink to='/' className='navlinks'>
           Home
         </NavLink>
-        <NavLink to='/explore' className='navlinks'>
-          Explore
-        </NavLink>
         <NavLink to='/favorites' className='navlinks'>
           Favorites
         </NavLink>
