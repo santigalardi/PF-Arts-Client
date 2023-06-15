@@ -25,7 +25,7 @@ const Searchbar = () => {
     <form onChange={handleChange}>
       <input className={style['NavSearch']} placeholder='Search...' type='search' />
       <button className={style['BottonSearch']} type='submit' onClick={handleSearch}>
-        <MdManageSearch className='icon' />
+        <MdManageSearch className={style['icon']} />
       </button>
     </form>
   );

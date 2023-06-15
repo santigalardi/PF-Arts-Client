@@ -1,0 +1,40 @@
+.BuyerStyle{
+    min-height: 100vh;
+}
+
+.BttBack {
+    text-decoration: none;
+    background-color: blue;
+    color: azure;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 5px;
+
+}
+ .BttBack:hover{
+     background-color: rgb(65, 204, 109);
+     font-size: 17px;
+ }
+ @keyframes animatedBackground {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+ .BttAcc{
+    animation: animatedBackground 10s linear infinite;
+    background: linear-gradient(45deg, red, yellow, blue, green);
+    background-size: 400% 400%;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 5px;
+ }
+ .BttAcc:hover{
+    animation: none;
+    background: rgb(62, 248, 75);
+ }

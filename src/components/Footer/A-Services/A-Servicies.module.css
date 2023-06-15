@@ -1,0 +1,31 @@
+.A-sevicesStyle {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+}
+.BttBack {
+   text-decoration: none;
+   background-color: blue;
+   color: azure;
+   border-radius: 10px;
+   font-weight: bold;
+   padding: 5px;
+}
+.BttBack:hover{
+    background-color: rgb(65, 204, 109);
+    font-size: 17px;
+}
+
+.textContainer {
+   background-color: #f5f5f5;
+   border: 1px solid #ccc;
+   padding: 20px;
+   margin-bottom: 10px;
+}
+.imgS{
+   border-radius: 10px 0px 10px 0px;
+   font-size: 50px;
+   margin-bottom: 10px;
+   margin-left: 8.5em;
+}
