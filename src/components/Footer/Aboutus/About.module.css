@@ -4,6 +4,10 @@
     min-height: 100vh;
     padding: 20px;
 }
+.txtContainer{
+    padding: 20px;
+    margin-bottom: 10px;
+}
 .BttBack {
     text-decoration: none;
     background-color: blue;
@@ -16,4 +20,49 @@
  .BttBack:hover{
      background-color: rgb(65, 204, 109);
      font-size: 17px;
+ }
+ .Admins{
+    border: 1px solid white;
+    border-radius: 20px 0px 150px 0px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 10px 10px 5px 0px rgba(212,184,184,0.75);
+    animation: border-animation 2s infinite alternate;
+    animation: shadow-animation 2s infinite alternate;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+ }
+ @keyframes border-animation {
+    0% {
+      border-color: red;
+      border-bottom-width: 1px;
+      border-right-width: 1px;
+    }
+    100% {
+      border-color: blue;
+      border-bottom-width: 5px;
+      border-right-width: 5px;
+    }
+  }
+  @keyframes shadow-animation {
+    0% {
+      box-shadow: 0 0 10px rgba(216, 30, 30, 0.968);
+    }
+    100% {
+      box-shadow: 0 0 20px rgba(10, 32, 234, 0.915);
+    }
+  }
+ .Participantes{
+    padding-left: 50px;
+    display: grid;  
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 28px; /* Ajusta el espacio entre los elementos */
+ }
+ .imgStyle{
+    border-radius: 15px 15px 20px ;
+    width: 176px;
+    height: 286px;
+ }
+ .Icons{
+    margin-right:10px ;
+    font-size: 25px;
  }
