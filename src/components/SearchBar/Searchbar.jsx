@@ -1,21 +1,34 @@
-import './Searchbar.css';
-import PropTypes from 'prop-types';
-import {MdManageSearch} from 'react-icons/md';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getAllArts, getArtsByTitle } from '../../redux/actions';
+import { MdManageSearch } from 'react-icons/md';
+import style from './Searchbar.module.css';
 
-const Searchbar=(handleChange, handleSubmit)=>{
-    return(
-    <form onChange={handleChange}>
-        <input className='NavSearch' placeholder='Search...' type='search' />
-        <button className='BottonSearch'type='submit' onClick={handleSubmit}>
-          <MdManageSearch className='icon'/>
-        </button>
-      </form>
+const Searchbar = () => {
+  const dispatch = useDispatch();
 
-    )
-}
-Searchbar.propTypes = {
-    handleChange: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+  const [title, setTitle] = useState('');
+
+  function handleChange(event) {
+    setTitle(event.target.value);
+  }
+
+  const handleSearch = () => {
+    if (!title) {
+      dispatch(getAllArts());
+    } else {
+      dispatch(getArtsByTitle(title));
+    }
   };
-  
-export default Searchbar
+
+  return (
+    <form onChange={handleChange}>
+      <input className={style['NavSearch']} placeholder='Search...' type='search' />
+      <button className={style['BottonSearch']} type='submit' onClick={handleSearch}>
+        <MdManageSearch className='icon' />
+      </button>
+    </form>
+  );
+};
+
+export default Searchbar;
