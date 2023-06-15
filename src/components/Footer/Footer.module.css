@@ -31,5 +31,6 @@
 }
 
 .links-container a:hover {
-  color: #ff00ff;
+  font-weight: bold;
+  color: blue;
 }
