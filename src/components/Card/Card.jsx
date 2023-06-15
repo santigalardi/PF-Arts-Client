@@ -30,7 +30,7 @@ function Card({ art }) {
   }, [title, myFavorites]);
 
   return (
-    <div className={styles['cardComponents']}>
+    <div className={styles['cardContainer']}>
       {isFav ? (
         <button className='likeStyle' onClick={handleFavorite}>
           ❤️
@@ -40,10 +40,14 @@ function Card({ art }) {
           🤍
         </button>
       )}
-      <h2>{title}</h2>
-      <img src={image} alt={title} />
-      <p>{artistName}</p>
-      <p>{completitionYear}</p>
+      <div className={styles['imgContainer']}>
+        <img src={image} alt={title} />
+      </div>
+      <div className={styles['propsContainer']}>
+        <h2>{title}</h2>
+        <p>{artistName}</p>
+        <p>{completitionYear}</p>
+      </div>
     </div>
   );
 }

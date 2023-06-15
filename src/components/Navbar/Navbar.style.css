@@ -1,76 +1,75 @@
 .navbar {
-   z-index: 9999; /* para que se muestre sobre los demas elementos */
-   display: flex;
-   align-items: center;
-   background-color: #47d1ba;
-   padding: 0;
+  z-index: 9999; /* para que se muestre sobre los demas elementos */
+  display: flex;
+  align-items: center;
+  background-color: #47d1ba;
+  height: 10vh;
 }
 
 .navbar-menu,
 .navbar-title,
 .navlinks-container,
 .navbar-user {
-   display: flex;
-   align-items: center;
-   padding-left: 0.7rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.7rem;
 }
 
 .navbar-title {
-   font-size: 1.3rem;
-   font-weight: bold;
-} 
+  font-size: 1.3rem;
+  font-weight: bold;
+}
 
 .navlinks-container {
-   margin-left: auto;
+  margin-left: auto;
 }
 
 .navlinks {
-   text-decoration: none;
-   color: black;
-   padding: 5px;
+  text-decoration: none;
+  color: black;
+  padding: 5px;
 }
 
 .navlinks:hover {
-   font-weight: bold;
-   color: blue;
+  font-weight: bold;
+  color: blue;
 }
 
 .navbar-user {
-   margin-left: auto;
-   padding-right: 10px;
+  margin-left: auto;
+  padding-right: 10px;
 }
 
 .boton-out {
-   text-decoration: none;
-   padding: 10px 20px;
-   background-color: rgb(0, 255, 94);
-   color: white;
-   border: none;
-   border-radius: 5px;
-   cursor: pointer;
-   position: relative;
-   overflow: hidden;
-   z-index: 1;
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: rgb(0, 255, 94);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .boton-out:hover {
-   background-color: red;
+  background-color: red;
 }
 
 .boton-out::before {
-   content: '';
-   position: absolute;
-   top: 0;
-   left: -100%;
-   width: 100%;
-   height: 100%;
-   background-color: rgba(255, 255, 255, 0.2);
-   transform: skewX(-20deg);
-   z-index: -1;
-   transition: left 0.3s ease;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: skewX(-20deg);
+  z-index: -1;
+  transition: left 0.3s ease;
 }
 
 .boton-out:hover::before {
-   left: 100%;
+  left: 100%;
 }
-

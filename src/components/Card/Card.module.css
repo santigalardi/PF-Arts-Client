@@ -1,17 +1,33 @@
-.CardComponents {
-  display: flex;
-  flex-direction: column;
-  background-color: #95dada;
-  border: 1px solid grey;
-  border-radius: 5px;
-  padding: 25px;
-  cursor: pointer;
-  -moz-osx-font-smoothing: grayscale;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  transition: transform 0.25s ease-out;
+.cardContainer {
+  border: 0.2px solid rgba(24, 187, 184, 0.447);
+  border-radius: 3px;
+  width: 280px;
+  height: 450px;
+  margin: 20px;
+  background-color: rgb(28, 212, 200);
+  transition: transform 0.5s;
 }
 
-.CardComponents:hover {
+.cardContainer:hover {
   transform: scale(1.02);
+  box-shadow: 0px 0px 15px #6623b8e7;
+  border: 1px solid #6623b8e7;
+  cursor: pointer;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  height: 70%;
+}
+
+.imgContainer > img {
+  height: 300px;
+}
+
+.propsContainer {
+  height: 30%;
+  text-align: center;
 }
