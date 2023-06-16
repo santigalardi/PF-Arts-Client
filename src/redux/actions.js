@@ -10,6 +10,7 @@ export const POST_ART = 'POST_ART';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
 export const GET_DETAIL = 'GET_DETAIL';
+export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 
 export const getAllArts = () => {
   return async function (dispatch) {
@@ -84,6 +85,24 @@ export const getDetail = (id) => {
       // Aquí realizas la lógica para obtener los detalles de la obra de arte por ID
       const detail = apiJSON.data.find((art) => art.id === id);
       dispatch({ type: GET_DETAIL, payload: detail });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const getArtsByFilters = (century, order, created) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${URL}/artworks`, {
+        params: {
+          century,
+          order,
+          created,
+        },
+      });
+      dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data });
+      return response;
     } catch (error) {
       console.error(error);
     }
