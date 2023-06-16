@@ -23,18 +23,18 @@ function App() {
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
       <Navbar />
-      <button className="darkModeButton" onClick={toggleDarkMode}>
-        {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+      <button className='darkModeButton' onClick={toggleDarkMode}>
+        {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/create" element={<Form />} />
-        <Route path="/advisory" element={<AdvisoryServices />} />
-        <Route path="/about-us" element={<Aboutus />} />
-        <Route path="/FAQ" element={<Buyer />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/detail/:id' element={<Detail />} />
+        <Route path='/create' element={<Form />} />
+        <Route path='/advisory' element={<AdvisoryServices />} />
+        <Route path='/about-us' element={<Aboutus />} />
+        <Route path='/FAQ' element={<Buyer />} />
+        <Route path='/favorites' element={<Favorites />} />
       </Routes>
       <Footer />
     </div>

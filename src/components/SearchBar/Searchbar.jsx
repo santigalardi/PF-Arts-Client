@@ -9,11 +9,12 @@ const Searchbar = () => {
 
   const [title, setTitle] = useState('');
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     setTitle(event.target.value);
-  }
+  };
 
-  const handleSearch = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (!title) {
       dispatch(getAllArts());
     } else {
@@ -22,9 +23,9 @@ const Searchbar = () => {
   };
 
   return (
-    <form onChange={handleChange}>
-      <input className={style['NavSearch']} placeholder='Search...' type='search' />
-      <button className={style['BottonSearch']} type='submit' onClick={handleSearch}>
+    <form onSubmit={handleSubmit}>
+      <input className={style['NavSearch']} placeholder='Search...' type='search' value={title} onChange={handleChange} />
+      <button className={style['BottonSearch']} type='submit'>
         <MdManageSearch className={style['icon']} />
       </button>
     </form>

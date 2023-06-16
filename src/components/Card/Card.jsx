@@ -6,6 +6,7 @@ import styles from './Card.module.css';
 
 function Card({ art }) {
   const dispatch = useDispatch();
+  // eslint-disable-next-line no-unused-vars
   const { title, artistName, completitionYear, image } = art;
 
   const [isFav, setIsFav] = useState(false);
