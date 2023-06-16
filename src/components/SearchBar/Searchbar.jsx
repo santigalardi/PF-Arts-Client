@@ -23,12 +23,20 @@ const Searchbar = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input className={style['NavSearch']} placeholder='Search...' type='search' value={title} onChange={handleChange} />
-      <button className={style['BottonSearch']} type='submit'>
-        <MdManageSearch className={style['icon']} />
-      </button>
-    </form>
+    <div className={style['searchbar-container']}>
+      <form onSubmit={handleSubmit}>
+        <input
+          className={style['NavSearch']}
+          placeholder="Search..."
+          type="search"
+          value={title}
+          onChange={handleChange}
+        />
+        <button className={style['BottonSearch']} type="submit">
+          <MdManageSearch className={style['icon']} />
+        </button>
+      </form>
+    </div>
   );
 };
 
