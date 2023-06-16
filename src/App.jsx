@@ -11,6 +11,7 @@ import AdvisoryServices from './components/Footer/A-Services/A-Services';
 import Buyer from './components/Footer/Buyer/Buyer';
 import Aboutus from './components/Footer/Aboutus';
 import Footer from './components/Footer/Footer';
+import Favorites from './views/Favorites/Favorites';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -33,6 +34,7 @@ function App() {
         <Route path="/advisory" element={<AdvisoryServices />} />
         <Route path="/about-us" element={<Aboutus />} />
         <Route path="/FAQ" element={<Buyer />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Routes>
       <Footer />
     </div>

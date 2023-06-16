@@ -36,7 +36,7 @@ const Detail = () => {
       dispatch(deleteFavorite(detail));
     } else {
       setIsFav(true);
-      dispatch(addFavorite({ artwork: detail }));
+      dispatch(addFavorite({ detail }));
     }
   };
 
