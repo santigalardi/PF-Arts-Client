@@ -1,10 +1,18 @@
-import { NavLink } from 'react-router-dom';
 import style from './About.module.css';
+import {BsLinkedin} from 'react-icons/bs';
+import {BsGithub} from 'react-icons/bs';
+import imgAlex from '../../../assets/img/descarga.jpg';
+import imgSantyG from '../../../assets/img/SantiG.jpg';
+import imgAni from '../../../assets/img/Ani.jpg';
+import imgJhon from '../../../assets/img/Jhon.jpg';
+import imgSantiM from '../../../assets/img/SantiM.jpg';
+import imgDave from '../../../assets/img/Dave.jpg'
 
 const AboutUs=()=> {
   return (
     <div className={style['about']}>
-        <NavLink className ={style['BttBack']} to='/'> ←BACK </NavLink>
+      <div className={style['txtContainer']}>
+        <a className ={style['BttBack']} href='/'> ←BACK </a>
         <hr />
         <h1>¿Como te desarrollaste y a que publico  te diriges? ¿Que ofreces como sitio web?</h1>
         <p>
@@ -18,9 +26,58 @@ const AboutUs=()=> {
         Asesoramiento y servicios adicionales: Proporciono servicios de asesoramiento para ayudar a los usuarios a elegir piezas de arte que se ajusten a su estilo, presupuesto y necesidades específicas. También ofrezco servicios de enmarcado personalizado, asistencia en la decoración de espacios y consejos para el cuidado y conservación de las obras adquiridas.
         En resumen, como un sitio web de venta de arte y pintura, mi objetivo es ofrecer una plataforma atractiva y fácil de usar, donde los usuarios pueden descubrir, comprar y vender obras de arte, conectar con artistas y disfrutar de una experiencia única en el mundo del arte.
         </p>
+      </div>
+      <div className={style['Participantes']}>
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgAlex} alt='Alex' />
+          <h1>Alex Robert CQ</h1>
+          <h2>Web Developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/alex-robert-calapuja-quispe-b35807261' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/AnabellaSimonpietri' target='_blank' rel="noreferrer" ><BsGithub/></a>
+        </div>
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgSantyG} alt='SantyG' />
+          <h1>Santy Galardi</h1>
+          <h2>Web Developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/santigalardi/' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/santigalardi' target='_blank' rel="noreferrer" ><BsGithub/></a>
+        </div>
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgAni} alt='Ani' />
+          <h1>Anabella Simon</h1>
+          <h2>Web Developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/anabellasimonpietri/' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/AnabellaSimonpietri' target='_blank' rel="noreferrer" ><BsGithub /></a>
+        </div>
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgJhon} alt='Jhon' />
+          <h1>Jhon Rojas</h1>
+          <h2>Web developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/jhon-daniel-rojas/' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/JhonDaniel01' target='_blank' rel="noreferrer" ><BsGithub/></a>
+        </div> 
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgSantiM} alt='SantiM' />
+          <h1>Santi Morales</h1>
+          <h2>Web developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/morales-santiago/' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/Ssamza' target='_blank' rel="noreferrer" ><BsGithub/></a>
+        </div>
+        <div className={style['Admins']}>
+          <img className={style['imgStyle']} src={imgDave} alt='David' />
+          <h1>David Miranda</h1>
+          <h2>Web developer</h2>
+          <h3>Full Stack</h3>
+          <a className={style['Icons']} href='https://www.linkedin.com/in/david-orlando-miranda-roa-7239b0264/' target='_blank' rel="noreferrer" ><BsLinkedin /></a>
+          <a className={style['Icons']} href='https://github.com/Davidongo93' target='_blank' rel="noreferrer" ><BsGithub/></a>
+        </div>
+      </div>
     </div>
-    
   );
-}
-
+};
 export default AboutUs;

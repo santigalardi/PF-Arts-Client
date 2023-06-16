@@ -1,16 +1,18 @@
 import {
   GET_ARTS,
+  GET_ARTS_BY_TITLE,
   GET_USERS,
   POST_ART,
   ADD_FAVORITE,
   DELETE_FAVORITE,
   GET_DETAIL,
+  GET_ARTS_BY_FILTERS,
 } from './actions';
 
 const initialState = {
   allArts: [],
   allUsers: [],
-  Obras: [],
+  arts: [],
   myFavorites: [],
   detail: {},
 };
@@ -23,11 +25,22 @@ const rootReducer = (state = initialState, action) => {
         allArts: action.payload,
       };
 
+    case GET_ARTS_BY_TITLE:
+      return {
+        ...state,
+        allArts: action.payload,
+      };
+
     case GET_USERS:
       return {
         ...state,
         allUsers: action.payload,
       };
+
+    /*     case FILTER_BY_ARTIST:
+      const allArts = state.allArts;
+      const filteredArts = action.payload === 'All' ? allArts : allArts.filter((art) => art.artistName === action.payload);
+      return { ...state, arts: filteredArts }; */
 
     case POST_ART:
       return {
@@ -53,6 +66,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         detail: action.payload,
+      };
+
+    case GET_ARTS_BY_FILTERS:
+      return {
+        ...state,
+        arts: action.payload,
       };
 
     default:
