@@ -7,7 +7,7 @@ import styles from './Card.module.css';
 function Card({ art }) {
   const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
-  const { title, artistName, completitionYear, image } = art;
+  const { title, authorName, date, image } = art;
 
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
@@ -47,8 +47,8 @@ function Card({ art }) {
       </div>
       <div className={styles['propsContainer']}>
         {/* <h2>{title}</h2>
-        <p>{artistName}</p>
-        <p>{completitionYear}</p> */}
+        <p>{authorName}</p>
+        <p>{date}</p> */}
       </div>
     </div>
   );
@@ -58,8 +58,8 @@ Card.propTypes = {
   art: PropTypes.shape({
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    artistName: PropTypes.string.isRequired,
-    completitionYear: PropTypes.number.isRequired,
+    authorName: PropTypes.string.isRequired,
+    date: PropTypes.number.isRequired,
   }).isRequired,
 };
 
