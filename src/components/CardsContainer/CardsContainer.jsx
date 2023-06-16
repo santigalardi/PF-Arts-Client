@@ -12,7 +12,7 @@ const CardsContainer = () => {
   const allArts = useSelector((state) => state.allArts);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const artsPerPage = 6;
+  const artsPerPage = 8;
   const indexOfLastArt = currentPage * artsPerPage; //15
   const indexOfFirstArt = indexOfLastArt - artsPerPage; // 0
   const currentArts = allArts.slice(indexOfFirstArt, indexOfLastArt); // Desde esta variable se renderizan las cards.
