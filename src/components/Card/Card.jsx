@@ -11,7 +11,8 @@ function Card({ art }) {
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
 
-  const handleFavorite = () => {
+  const handleFavorite = (event) => {
+    event.preventDefault(); // Detenemos el comportamiento predeterminado del enlace NavLink
     if (isFav) {
       setIsFav(false);
       dispatch(deleteFavorite(art));
@@ -32,11 +33,11 @@ function Card({ art }) {
   return (
     <div className={styles['cardContainer']}>
       {isFav ? (
-        <button className='likeStyle' onClick={handleFavorite}>
+        <button className={styles['likeStyle']} onClick={handleFavorite}>
           ❤️
         </button>
       ) : (
-        <button className='likeStyle' onClick={handleFavorite}>
+        <button className={styles['likeStyle']} onClick={handleFavorite}>
           🤍
         </button>
       )}
