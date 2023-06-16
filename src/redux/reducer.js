@@ -1,5 +1,6 @@
 import {
   GET_ARTS,
+  GET_ARTS_BY_TITLE,
   GET_USERS,
   POST_ART,
   ADD_FAVORITE,
@@ -10,7 +11,7 @@ import {
 const initialState = {
   allArts: [],
   allUsers: [],
-  Obras: [],
+  arts: [],
   myFavorites: [],
   detail: {},
 };
@@ -18,6 +19,12 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ARTS:
+      return {
+        ...state,
+        allArts: action.payload,
+      };
+
+    case GET_ARTS_BY_TITLE:
       return {
         ...state,
         allArts: action.payload,

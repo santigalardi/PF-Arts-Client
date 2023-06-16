@@ -1,7 +1,7 @@
 import axios from 'axios';
 import apiJSON from '../assets/Api/api.json';
 
-axios.defaults.baseURL = 'http://localhost:5173';
+axios.defaults.baseURL = 'https://pf-arts-api-production.up.railway.app';
 
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
@@ -23,7 +23,7 @@ export const getAllArts = () => {
 
 export const getArtsByTitle = (title) => {
   return async function (dispatch) {
-    const arts = (await axios.get(`${URL}?title=${title}`)).data;
+    const arts = (await axios.get(`${URL}/artworks?title=${title}`)).data;
     dispatch({ type: GET_ARTS_BY_TITLE, payload: arts });
   };
 };
