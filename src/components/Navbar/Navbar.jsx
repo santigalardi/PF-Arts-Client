@@ -13,19 +13,23 @@ function Navbar() {
         <NavLink to='/' className='navlinks'>
           Home
         </NavLink>
-        <NavLink to='/favorites' className='navlinks'>
-          Favorites
-        </NavLink>
+
         <NavLink to='/create' className='navlinks'>
           Create
         </NavLink>
       </div>
       <Searchbar />
-      <div className='navbar-user'>Usuario</div>
-      <NavLink to='/shopping' className='navlinks'>
-        <AiOutlineShoppingCart />
-        Shoppings
-      </NavLink>
+      <div className='navlinks-container'>
+        <NavLink to='/login' className='navlinks'>
+          Login
+        </NavLink>
+        <NavLink to='/favorites' className='navlinks'>
+          🤍
+        </NavLink>
+        <NavLink to='/cart' className='navlinks'>
+          <AiOutlineShoppingCart className='cartLogo' />
+        </NavLink>
+      </div>
     </nav>
   );
 }
