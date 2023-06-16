@@ -6,6 +6,7 @@ const URL = 'https://pf-arts-api-production.up.railway.app';
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
 export const GET_USERS = 'GET_USERS';
+export const FILTER_BY_ARTIST = 'FILTER_BY_ARTIST';
 export const POST_ART = 'POST_ART';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
@@ -13,7 +14,7 @@ export const GET_DETAIL = 'GET_DETAIL';
 
 export const getAllArts = () => {
   return async function (dispatch) {
-    const response = apiJSON;
+    const response = await axios.get(`${URL}/artworks`);
     return dispatch({
       type: GET_ARTS,
       payload: response.data,
@@ -31,7 +32,7 @@ export const getArtsByTitle = (title) => {
 
 export const getAllUsers = () => {
   return async function (dispatch) {
-    const response = await axios('https://jsonplaceholder.typicode.com/users');
+    const response = await axios(`${URL}/users`);
     return dispatch({
       type: GET_USERS,
       payload: response.data,
@@ -39,10 +40,14 @@ export const getAllUsers = () => {
   };
 };
 
+export const filterByArtist = (payload) => {
+  return { type: FILTER_BY_ARTIST, payload };
+};
+
 export function postArts(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post('/create', payload);
+      const response = await axios.post(`${URL}/artworks`, payload);
       dispatch({ type: POST_ART, payload: response.data });
       return response;
     } catch (error) {

@@ -1,0 +1,8 @@
+.login-container {
+  margin-bottom: 40px;
+}
+
+.login-container .bg-box {
+  background-image: url('https://elcomercio.pe/resizer/_mJV8ACbz_Pv1WRQatIIxnWKyk0=/1200x675/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/AM7FQGIGZNFLFOTPURUXFTA34Q.jpg');
+  background-position: bottom;
+}

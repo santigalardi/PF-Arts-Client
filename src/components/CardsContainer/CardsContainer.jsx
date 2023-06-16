@@ -25,6 +25,11 @@ const CardsContainer = () => {
     dispatch(getAllArts());
   }, [dispatch]);
 
+  /*   const handleArtistFilter = (event) => {
+    dispatch(filterArtsByArtist(event.target.value));
+    setCurrentPage(1);
+  }; */
+
   return (
     <div>
       <div className={styles['CardsContainer']}>
