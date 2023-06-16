@@ -45,9 +45,9 @@ function Card({ art }) {
         <img src={image} alt={title} />
       </div>
       <div className={styles['propsContainer']}>
-        <h2>{title}</h2>
+        {/* <h2>{title}</h2>
         <p>{artistName}</p>
-        <p>{completitionYear}</p>
+        <p>{completitionYear}</p> */}
       </div>
     </div>
   );

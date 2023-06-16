@@ -77,7 +77,7 @@ const Detail = () => {
       <div className={styles.propsContainer}>
         <h3>{detail.title}</h3>
         <p>Artist: {detail.artistName}</p>
-        <p>Year: {detail.completionYear}</p>
+        <p>Year: {detail.completitionYear}</p>
         <p>
           Dimensions: {detail.width} x {detail.height}
         </p>
