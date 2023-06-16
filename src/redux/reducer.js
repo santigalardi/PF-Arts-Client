@@ -28,6 +28,11 @@ const rootReducer = (state = initialState, action) => {
         allUsers: action.payload,
       };
 
+    /*     case FILTER_BY_ARTIST:
+      const allArts = state.allArts;
+      const filteredArts = action.payload === 'All' ? allArts : allArts.filter((art) => art.artistName === action.payload);
+      return { ...state, arts: filteredArts }; */
+
     case POST_ART:
       return {
         ...state,

@@ -1,9 +1,9 @@
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import googleLogo from '../../assets/img/google.png';
-import styles from './Login.module.css';
+import styles from './Register.module.css';
 
-const Login = () => {
+const Register = () => {
   return (
     <div className={styles['login-container']}>
       <Container className='w-100 bg-primary rounded shadow'>
@@ -14,7 +14,7 @@ const Login = () => {
 
           <Col className='bg-white p-3 p-md-5 rounded-end'>
             <div className='logo-box text-center'>{/* <Image src='./img/logo.jpg' id='logo' width='100' alt='' /> */}</div>
-            <h2 className='fw-bold text-center py-3 py-md-5'>Log In</h2>
+            <h2 className='fw-bold text-center py-3 py-md-5'>Register</h2>
             <div className='login'>
               <Form id='login'>
                 <Form.Group className='mb-3'>
@@ -32,7 +32,8 @@ const Login = () => {
                 </div>
                 <div className='mb-3'>
                   <p className='text-danger mt-2' id='mensaje'></p>
-                  <NavLink to='/register'>Register</NavLink>
+                  {/* ERRORS */}
+                  <NavLink to='/login'>Log in</NavLink>
                 </div>
               </Form>
 
@@ -62,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

@@ -7,6 +7,7 @@ import Detail from './views/Detail/Detail';
 import Form from './views/Form/Form';
 import Home from './views/Home/Home';
 import Login from './views/Login/Login';
+import Register from './views/Register/Register';
 import AdvisoryServices from './components/Footer/A-Services/A-Services';
 import Buyer from './components/Footer/Buyer/Buyer';
 import Aboutus from './components/Footer/Aboutus';
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/detail/:id' element={<Detail />} />
         <Route path='/create' element={<Form />} />
         <Route path='/advisory' element={<AdvisoryServices />} />
