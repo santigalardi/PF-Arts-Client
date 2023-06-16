@@ -13,6 +13,6 @@ body {
    padding: 0;
    margin: 0;
    animation: animatedBackground 10s linear infinite;
-   background: linear-gradient(45deg, red, yellow, rgb(15, 31, 134), rgb(19, 234, 19));
+   background: linear-gradient(45deg, red, yellow, rgb(8, 21, 30), rgb(82, 242, 82));
    background-size: 400% 400%;
 }
