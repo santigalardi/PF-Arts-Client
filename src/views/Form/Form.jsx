@@ -1,117 +1,99 @@
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import styles from './Form.module.css';
 
-function validate(input) {
-  let errors = {};
-  if (!input.title) {
-    errors.title = 'Need a title';
-  }
-  if (!input.image) {
-    errors.image = 'Need an image URL';
-  }
-  if (!input.artistName) {
-    errors.artistName = 'Need an artist name';
-  }
-  if (!input.completionYear) {
-    errors.completionYear = 'Need a year';
-  }
-  if (!input.width) {
-    errors.width = 'Need a width';
-  }
-  if (!input.height) {
-    errors.height = 'Need a height';
-  }
-  return errors;
-}
-
 export default function Form() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     title: '',
+    authorName: '',
     image: '',
-    artistName: '',
-    completionYear: '',
-    width: '',
+    date: '',
     height: '',
-    description: '',
+    width: '',
+    price: '',
+    userId: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [showScrollButton, setShowScrollButton] = useState(false);
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: '',
-    }));
+  function validate(input) {
+    let errors = {};
+    if (!input.title) {
+      errors.title = 'Need a title';
+    }
+    if (!input.image) {
+      errors.image = 'Need an image URL';
+    }
+    if (!input.authorName) {
+      errors.authorName = 'Need an artist name';
+    }
+    if (!input.date) {
+      errors.date = 'Need a year';
+    }
+    if (!input.width) {
+      errors.width = 'Need a width';
+    }
+    if (!input.height) {
+      errors.height = 'Need a height';
+    }
+    if (!input.price) {
+      errors.price = 'Need a price';
+    }
+    if (!input.userId) {
+      errors.userId = 'Need a userId';
+    }
+    return errors;
+  }
+
+  function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
     setShowAlert(false);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const validationErrors = validate(input);
-    setErrors(validationErrors);
+    const errors = validate(input);
+    setErrors(errors);
     setSubmitted(true);
 
-    if (Object.keys(validationErrors).length === 0) {
-      dispatch(postArts(input));
+    if (Object.keys(errors).length === 0 && input.title && input.image && input.authorName && input.date && input.width && input.height && input.price) {
+      const updatedInput = {
+        ...input,
+      };
+      dispatch(postArts(updatedInput));
       setShowConfirmation(true);
       setInput({
         title: '',
         image: '',
-        artistName: '',
-        completionYear: '',
+        authorName: '',
+        date: '',
         width: '',
         height: '',
-        description: '',
+        price: '',
+        userId: '',
       });
       setSubmitted(false);
       setErrors({});
-      navigate('/home');
     } else {
       setShowAlert(true);
     }
   }
 
-  function handleScrollButton() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }
-
-  useEffect(() => {
-    function handleScroll() {
-      const windowHeight = window.innerHeight;
-      const scrollY = window.scrollY || window.pageYOffset;
-      const bodyHeight = document.body.offsetHeight;
-      const isBottom = scrollY >= bodyHeight - windowHeight;
-
-      setShowScrollButton(isBottom);
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div>
-      <Link to='/home'>
-        <button className={`${styles.button} ${styles.homeButton}`}>Home</button>
-      </Link>
       <div className={styles.container}>
         <h1 className={styles.heading}>Create a new art!</h1>
         <form onSubmit={handleSubmit}>
@@ -129,12 +111,12 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Artist name: </label>
             <input type='text' value={input.artistName} name='artistName' onChange={handleChange} className={styles.input} placeholder='Enter an artist name' />
-            {submitted && errors.artistName && <p className={styles.error}>{errors.artistName}</p>}
+            {submitted && errors.authorName && <p className={styles.error}>{errors.authorName}</p>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Year: </label>
-            <input type='text' value={input.completionYear} name='completionYear' onChange={handleChange} className={styles.input} placeholder='Enter a year' />
-            {submitted && errors.completionYear && <p className={styles.error}>{errors.completionYear}</p>}
+            <input type='text' value={input.date} name='date' onChange={handleChange} className={styles.input} placeholder='Enter a year' />
+            {submitted && errors.date && <p className={styles.error}>{errors.date}</p>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Width: </label>
@@ -147,8 +129,13 @@ export default function Form() {
             {submitted && errors.height && <p className={styles.error}>{errors.height}</p>}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Description: </label>
-            <textarea value={input.description} name='description' onChange={handleChange} className={styles.textarea} placeholder='Enter a description...' />
+            <label className={styles.label}>Price: </label>
+            <input type='number' value={input.price} name='price' onChange={handleChange} className={styles.input} placeholder='Enter a price...' />
+            {submitted && errors.price && <p className={styles.error}>{errors.price}</p>}
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>userId: </label>
+            <input type='text' value={input.userId} name='userId' onChange={handleChange} className={styles.input} placeholder='Enter a userId...' />
           </div>
           <button type='submit' className={styles.button}>
             Create
@@ -156,7 +143,6 @@ export default function Form() {
           {showConfirmation && <p className={styles.confirmation}>Art created successfully!</p>}
         </form>
       </div>
-      {showScrollButton && <button className={styles.scrollButton} onClick={handleScrollButton}></button>}
     </div>
   );
 }

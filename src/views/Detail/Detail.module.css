@@ -1,16 +1,16 @@
 .detailContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center; /* Centrar horizontalmente */
   padding: 25px;
-  border: 1px solid #ccc;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #f6f6f6;
+  min-height: 75vh;
 }
 
 .imgContainer {
-  margin-bottom: 20px;
+  flex: 0 0 50%; /* Tamaño de la imagen (50% del contenedor) */
+  padding-right: 20px; /* Margen a la derecha */
 }
 
 .imgContainer img {
@@ -24,16 +24,23 @@
 .propsContainer {
   margin-bottom: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 50px;
 }
 
 .propsContainer h3 {
   margin-bottom: 5px;
+  margin-right: 80px;
   font-size: 1.5em;
   font-weight: bold;
+  text-align: center;
 }
 
 .propsContainer p {
   margin: 0;
+  margin-right: 80px;
   font-size: 1.2em;
 }
 
@@ -82,6 +89,8 @@
 
 .shareButtons {
   display: flex;
+  gap: 8px; /* Espacio horizontal entre los botones de compartir */
+  margin-top: 10px; /* Añadido para separar de los botones anteriores */
 }
 
 .shareButton {

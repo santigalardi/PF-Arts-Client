@@ -1,21 +1,19 @@
-import { Route,Swictch } from "react-redux";
-import "./Favorites.modules.css";
-import Card from '../../components/Card'
+import { useSelector } from 'react-redux';
+import './Favorites.modules.css';
+import Card from '../../components/Card/Card';
 
-const Favorites =(myFavorites)=>{
-    return(
-        <div>
-            <Swictch>
-                <Route path='/favorites'>
-                {myFavorites.map((user)=>{
-                        <div className="boxFav">
-                            <Card key={user.id} user={user} />
-                        </div>
-                    })
-                }
-                </Route>
-            </Swictch>
+const Favorites = () => {
+  const myFavorites = useSelector((state) => state.myFavorites);
+
+  return (
+    <div>
+      {myFavorites.map((user) => (
+        <div className="boxFav" key={user.id}>
+          <Card user={user} />
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
+
 export default Favorites;

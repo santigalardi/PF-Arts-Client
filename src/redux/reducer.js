@@ -1,30 +1,60 @@
+import {
+  GET_ARTS,
+  GET_ARTS_BY_TITLE,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+  GET_ARTS_BY_FILTERS,
+} from './actions';
+
 const initialState = {
+  allArts: [],
+  allUsers: [],
   arts: [],
-
   myFavorites: [],
-
-  allUsers:[],
-  Obras:[],
-  myFavorites:[],
-
+  detail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SEARCH_ARTS_SUCCESS':
+    case GET_ARTS:
       return {
         ...state,
-        arts: action.payload,
+        allArts: action.payload,
       };
 
+    case GET_ARTS_BY_TITLE:
+      return {
+        ...state,
+        allArts: action.payload,
+      };
 
-    case 'ADD_FAVORITE_SUCCESS':
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
+
+    /*     case FILTER_BY_ARTIST:
+      const allArts = state.allArts;
+      const filteredArts = action.payload === 'All' ? allArts : allArts.filter((art) => art.artistName === action.payload);
+      return { ...state, arts: filteredArts }; */
+
+    case POST_ART:
+      return {
+        ...state,
+        arts: [...state.arts, action.payload],
+      };
+
+    case ADD_FAVORITE:
       return {
         ...state,
         myFavorites: [...state.myFavorites, action.payload],
       };
 
-    case 'DELETE_FAVORITE_SUCCESS':
+    case DELETE_FAVORITE:
       return {
         ...state,
         myFavorites: state.myFavorites.filter(
@@ -32,22 +62,18 @@ const rootReducer = (state = initialState, action) => {
         ),
       };
 
-      case 'GET_USER': 
-        return{
-            ...state,
-            allUsers: action.payload
-        };
-        case 'ADD_FAVORITE':return{
-            ...state,
-            myFavorites:[
-              ...state.allUsers.id,
-              action.payload]
-        };
-        case 'DELETE_FAVORITE':return{
-            ...state,
-            myFavorites: state.myFavorites
-            .filter(char=>char.id !== action.payload)
-        };
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
+      };
+
+    case GET_ARTS_BY_FILTERS:
+      return {
+        ...state,
+        arts: action.payload,
+      };
+
     default:
       return state;
   }
