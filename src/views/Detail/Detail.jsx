@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addFavorite, deleteFavorite, getDetail } from '../../redux/actions';
+import {
+  addFavorite,
+  clearDetail,
+  deleteFavorite,
+  getDetail,
+} from '../../redux/actions';
 import styles from './Detail.module.css';
 import {
   FaShoppingCart,
@@ -20,6 +25,9 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getDetail(id));
+    return () => {
+      dispatch(clearDetail());
+    };
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -76,11 +84,16 @@ const Detail = () => {
       </div>
       <div className={styles.propsContainer}>
         <h3>{detail.title}</h3>
-        <p>Artist: {detail.artistName}</p>
-        <p>Year: {detail.completitionYear}</p>
+        <p>Artist: {detail.authorName}</p>
+        <p>Year: {detail.date}</p>
         <p>
           Dimensions: {detail.width} x {detail.height}
         </p>
+        {detail.user && detail.user.userName.length > 0 ? (
+          <div>
+            <p>Author: {detail.user.userName}</p>
+          </div>
+        ) : null}
       </div>
       <div className={styles.actionsContainer}>
         {isFav ? (

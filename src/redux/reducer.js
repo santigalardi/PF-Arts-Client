@@ -1,13 +1,4 @@
-import {
-  GET_ARTS,
-  GET_ARTS_BY_TITLE,
-  GET_USERS,
-  POST_ART,
-  ADD_FAVORITE,
-  DELETE_FAVORITE,
-  GET_DETAIL,
-  GET_ARTS_BY_FILTERS,
-} from './actions';
+import { GET_ARTS, GET_ARTS_BY_TITLE, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS } from './actions';
 
 const initialState = {
   allArts: [],
@@ -37,11 +28,6 @@ const rootReducer = (state = initialState, action) => {
         allUsers: action.payload,
       };
 
-    /*     case FILTER_BY_ARTIST:
-      const allArts = state.allArts;
-      const filteredArts = action.payload === 'All' ? allArts : allArts.filter((art) => art.artistName === action.payload);
-      return { ...state, arts: filteredArts }; */
-
     case POST_ART:
       return {
         ...state,
@@ -57,9 +43,7 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter(
-          (fav) => fav.id !== action.payload.id
-        ),
+        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload.id),
       };
 
     case GET_DETAIL:
@@ -68,10 +52,16 @@ const rootReducer = (state = initialState, action) => {
         detail: action.payload,
       };
 
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        detail: {},
+      };
+
     case GET_ARTS_BY_FILTERS:
       return {
         ...state,
-        arts: action.payload,
+        allArts: action.payload,
       };
 
     default:
