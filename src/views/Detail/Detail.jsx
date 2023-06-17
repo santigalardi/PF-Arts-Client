@@ -89,6 +89,7 @@ const Detail = () => {
         <p>
           Dimensions: {detail.width} x {detail.height}
         </p>
+        <p>Price: {detail.price} M</p>
         {detail.user && detail.user.userName.length > 0 ? (
           <div>
             <p>Author: {detail.user.userName}</p>
