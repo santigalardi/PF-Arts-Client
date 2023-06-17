@@ -18,12 +18,12 @@ function Navbar() {
         </NavLink>
       </div>
       <div className="navlinks-container">
-        <NavLink to="/login" className="navlinks">
-          Login
+        <NavLink to="/register" className="navlinks">
+          Register
         </NavLink>
-        <NavLink to="/favorites" className="navlinks">
+        {/* <NavLink to="/favorites" className="navlinks">
           🤍
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/cart" className="navlinks">
           <AiOutlineShoppingCart className="cartLogo" />
         </NavLink>

@@ -12,6 +12,7 @@ export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
 export const GET_DETAIL = 'GET_DETAIL';
 export const CLEAR_DETAIL = 'CLEAR_DETAIL';
+export const POST_USERS = 'POST_USERS';
 
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 
@@ -35,7 +36,7 @@ export const getArtsByTitle = (title) => {
 
 export const getAllUsers = () => {
   return async function (dispatch) {
-    const response = await axios(`${URL}/users`);
+    const response = await axios.get(`${URL}/users`);
     return dispatch({
       type: GET_USERS,
       payload: response.data,
@@ -52,6 +53,18 @@ export function postArts(payload) {
     try {
       const response = await axios.post(`${URL}/artworks`, payload);
       dispatch({ type: POST_ART, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function postUsers(payload) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(`${URL}/artworks`, payload);
+      dispatch({ type: POST_USERS, payload: response.data });
       return response;
     } catch (error) {
       console.error(error);
