@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const URL = 'https://pf-arts-api-production.up.railway.app';
-const URL = 'http://localhost:3001';
+const URL = 'https://pf-arts-api-production.up.railway.app';
+// const URL = 'http://localhost:3001';
 
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
@@ -106,7 +106,9 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
+    console.log(
+      `Filters received: century=${century}, order=${order}, created=${created}`
+    );
     try {
       const response = await axios.get(`${URL}/artworks/db`, {
         params: {
