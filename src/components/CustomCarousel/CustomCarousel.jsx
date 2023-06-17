@@ -5,11 +5,11 @@ import styles from './CustomCarousel.module.css';
 function CustomCarousel() {
   const allArts = useSelector((state) => state.allArts);
 
-  const currentArts = allArts.slice(8, 11);
+  const currentArts = allArts && Array.isArray(allArts) && allArts.slice(8, 11);
 
   return (
     <div className={styles.carouselContainer}>
-      {currentArts.length > 0 && (
+      {currentArts && currentArts.length > 0 && (
         <Carousel className={styles.carousel}>
           <Carousel.Item>
             <div className={styles.imgContainer}>

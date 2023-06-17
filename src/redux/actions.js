@@ -106,6 +106,7 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
+    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
     try {
       const response = await axios.get(`${URL}/artworks/db`, {
         params: {
@@ -114,7 +115,7 @@ export const getArtsByFilters = (century, order, created) => {
           created,
         },
       });
-      dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data });
+      dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data.rows });
       return response;
     } catch (error) {
       console.error(error);
