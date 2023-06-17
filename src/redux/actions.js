@@ -110,13 +110,21 @@ export const getArtsByFilters = (century, order, created) => {
       `Filters received: century=${century}, order=${order}, created=${created}`
     );
     try {
-      const response = await axios.get(`${URL}/artworks/db`, {
-        params: {
-          century,
-          order,
-          created,
-        },
-      });
+      const params = {};
+
+      if (century) {
+        params.century = century;
+      }
+
+      if (order) {
+        params.order = order;
+      }
+
+      if (created) {
+        params.created = created;
+      }
+
+      const response = await axios.get(`${URL}/artworks/db`, { params });
       dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data.rows });
       return response;
     } catch (error) {
