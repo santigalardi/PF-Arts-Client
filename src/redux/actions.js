@@ -1,7 +1,7 @@
 import axios from 'axios';
-import apiJSON from '../assets/Api/api.json';
 
-const URL = 'https://pf-arts-api-production.up.railway.app';
+// const URL = 'https://pf-arts-api-production.up.railway.app';
+const URL = 'http://localhost:3001';
 
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
@@ -11,6 +11,8 @@ export const POST_ART = 'POST_ART';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
 export const GET_DETAIL = 'GET_DETAIL';
+export const CLEAR_DETAIL = 'CLEAR_DETAIL';
+
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 
 export const getAllArts = () => {
@@ -87,19 +89,25 @@ export function deleteFavorite(payload) {
 export const getDetail = (id) => {
   return async function (dispatch) {
     try {
-      // Aquí realizas la lógica para obtener los detalles de la obra de arte por ID
-      const detail = apiJSON.data.find((art) => art.id === id);
-      dispatch({ type: GET_DETAIL, payload: detail });
+      const response = await axios.get(`${URL}/artworks/detail/${id}`);
+      return dispatch({
+        type: GET_DETAIL,
+        payload: response.data,
+      });
     } catch (error) {
       console.error(error);
     }
   };
 };
 
+export function clearDetail() {
+  return { type: CLEAR_DETAIL };
+}
+
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/artworks`, {
+      const response = await axios.get(`${URL}/artworks/db`, {
         params: {
           century,
           order,

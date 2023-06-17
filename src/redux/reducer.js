@@ -6,6 +6,7 @@ import {
   ADD_FAVORITE,
   DELETE_FAVORITE,
   GET_DETAIL,
+  CLEAR_DETAIL,
   GET_ARTS_BY_FILTERS,
 } from './actions';
 
@@ -66,6 +67,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         detail: action.payload,
+      };
+
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        detail: {},
       };
 
     case GET_ARTS_BY_FILTERS:
