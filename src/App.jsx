@@ -31,7 +31,7 @@ function App() {
       </button>
       <Routes>
         {isHomePage && <Route path="/" element={<Home />} />}
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} /> */}
         <Route path="/register" element={<Register />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/create" element={<Form />} />
