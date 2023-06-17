@@ -1,4 +1,15 @@
-import { GET_ARTS, GET_ARTS_BY_TITLE, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS } from './actions';
+import {
+  GET_ARTS,
+  GET_ARTS_BY_TITLE,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+  CLEAR_DETAIL,
+  GET_ARTS_BY_FILTERS,
+  POST_USERS,
+} from './actions';
 
 const initialState = {
   allArts: [],
@@ -34,6 +45,12 @@ const rootReducer = (state = initialState, action) => {
         arts: [...state.arts, action.payload],
       };
 
+    case POST_USERS:
+      return {
+        ...state,
+        allUsers: [...state.allUsers, action.payload],
+      };
+
     case ADD_FAVORITE:
       return {
         ...state,
@@ -43,7 +60,9 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload.id),
+        myFavorites: state.myFavorites.filter(
+          (fav) => fav.id !== action.payload.id
+        ),
       };
 
     case GET_DETAIL:
