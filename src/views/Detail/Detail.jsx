@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addFavorite, deleteFavorite, getDetail } from '../../redux/actions';
+import {
+  addFavorite,
+  clearDetail,
+  deleteFavorite,
+  getDetail,
+  deleteArt,
+} from '../../redux/actions';
 import styles from './Detail.module.css';
 import {
   FaShoppingCart,
@@ -9,6 +15,7 @@ import {
   FaFacebook,
   FaInstagram,
 } from 'react-icons/fa';
+import frame from './pngegg.png';
 
 const Detail = () => {
   const { id } = useParams();
@@ -20,6 +27,9 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getDetail(id));
+    return () => {
+      dispatch(clearDetail());
+    };
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -36,12 +46,17 @@ const Detail = () => {
       dispatch(deleteFavorite(detail));
     } else {
       setIsFav(true);
-      dispatch(addFavorite({ artwork: detail }));
+      dispatch(addFavorite({ detail }));
     }
   };
 
   const handleRatingChange = (value) => {
     setRating(value);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteArt(detail.id));
+    // Aquí puedes redirigir al usuario a una página o hacer cualquier otra acción necesaria después de borrar la obra
   };
 
   if (!detail) {
@@ -72,15 +87,37 @@ const Detail = () => {
   return (
     <div className={styles.detailContainer}>
       <div className={styles.imgContainer}>
-        <img src={detail.image} alt={detail.title} />
+        <div className={styles.frameContainer}>
+          <div className={styles.frame}>
+            <img src={frame} alt="" />
+          </div>
+        </div>
+        <div className={styles.imageWrapper}>
+          <img src={detail.image} alt={detail.title} />
+        </div>
       </div>
       <div className={styles.propsContainer}>
         <h3>{detail.title}</h3>
-        <p>Artist: {detail.artistName}</p>
-        <p>Year: {detail.completionYear}</p>
+        <hr className={styles.hr} />
         <p>
-          Dimensions: {detail.width} x {detail.height}
+          <span>Artist:</span> {detail.authorName}
         </p>
+        <p>
+          <span>Year:</span> {detail.date}
+        </p>
+        <p>
+          <span>Dimensions:</span> {detail.width} x {detail.height}
+        </p>
+        <p>
+          <span>Price:</span> {detail.price} M
+        </p>
+        {detail.user && detail.user.userName.length > 0 ? (
+          <div>
+            <p>
+              <span>Published By:</span> {detail.user.userName}
+            </p>
+          </div>
+        ) : null}
       </div>
       <div className={styles.actionsContainer}>
         {isFav ? (
@@ -96,6 +133,11 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
+        {detail.created && detail.created === detail.user.userName ? (
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            Delete
+          </button>
+        ) : null}
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (

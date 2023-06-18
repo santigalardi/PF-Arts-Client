@@ -22,7 +22,7 @@
     top: 100%;
     left: 0;
     width: 18%;
-    background-color: #47d1ba;
+    background-color: rgba(213, 209, 209, 0.9); /* Fondo transparente */
     padding: 10px;
  }
  .menu-options ul {
