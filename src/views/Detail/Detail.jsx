@@ -14,6 +14,7 @@ import {
   FaFacebook,
   FaInstagram,
 } from 'react-icons/fa';
+import frame from './pngegg.png';
 
 const Detail = () => {
   const { id } = useParams();
@@ -80,19 +81,35 @@ const Detail = () => {
   return (
     <div className={styles.detailContainer}>
       <div className={styles.imgContainer}>
-        <img src={detail.image} alt={detail.title} />
+        <div className={styles.frameContainer}>
+          <div className={styles.frame}>
+            <img src={frame} alt='' />
+          </div>
+        </div>
+        <div className={styles.imageWrapper}>
+          <img src={detail.image} alt={detail.title} />
+        </div>
       </div>
       <div className={styles.propsContainer}>
         <h3>{detail.title}</h3>
-        <p>Artist: {detail.authorName}</p>
-        <p>Year: {detail.date}</p>
+        <hr className={styles.hr} />
         <p>
-          Dimensions: {detail.width} x {detail.height}
+          <span>Artist:</span> {detail.authorName}
         </p>
-        <p>Price: {detail.price} M</p>
+        <p>
+          <span>Year:</span> {detail.date}
+        </p>
+        <p>
+          <span>Dimensions:</span> {detail.width} x {detail.height}
+        </p>
+        <p>
+          <span>Price:</span> {detail.price} M
+        </p>
         {detail.user && detail.user.userName.length > 0 ? (
           <div>
-            <p>Author: {detail.user.userName}</p>
+            <p>
+              <span>Published By:</span> {detail.user.userName}
+            </p>
           </div>
         ) : null}
       </div>

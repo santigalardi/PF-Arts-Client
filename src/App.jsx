@@ -17,7 +17,7 @@ import Favorites from './views/Favorites/Favorites';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isLandingPage = location.pathname === '/register';
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -26,19 +26,20 @@ function App() {
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
       <Navbar />
-      <button className="darkModeButton" onClick={toggleDarkMode}>
-        {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+      <button className='darkModeButton' onClick={toggleDarkMode}>
+        {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
       <Routes>
-        {isHomePage && <Route path="/" element={<Home />} />}
+        {isLandingPage && <Route path='/' element={<Home />} />}
         {/* <Route path="/login" element={<Login />} /> */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/create" element={<Form />} />
-        <Route path="/advisory" element={<AdvisoryServices />} />
-        <Route path="/about-us" element={<Aboutus />} />
-        <Route path="/FAQ" element={<Buyer />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/detail/:id' element={<Detail />} />
+        <Route path='/create' element={<Form />} />
+        <Route path='/advisory' element={<AdvisoryServices />} />
+        <Route path='/about-us' element={<Aboutus />} />
+        <Route path='/FAQ' element={<Buyer />} />
+        <Route path='/favorites' element={<Favorites />} />
       </Routes>
       <Footer />
     </div>
