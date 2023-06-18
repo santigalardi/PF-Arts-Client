@@ -2,7 +2,7 @@
   z-index: 9999; /* para que se muestre sobre los demas elementos */
   display: flex;
   align-items: center;
-  background-color: #47d1ba;
+  background-color: #666666;
   height: 10vh;
 }
 
