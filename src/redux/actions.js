@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL = 'https://pf-arts-api-production.up.railway.app';
-// const URL = 'http://localhost:3001';
+// const URL = 'https://pf-arts-api-production.up.railway.app';
+const URL = 'http://localhost:3001';
 
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
@@ -63,7 +63,7 @@ export function postArts(payload) {
 export function postUsers(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`${URL}/artworks`, payload);
+      const response = await axios.post(`${URL}/users`, payload);
       dispatch({ type: POST_USERS, payload: response.data });
       return response;
     } catch (error) {

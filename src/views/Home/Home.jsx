@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div className={styles.HomeContainer}>
-      {showCarousel && <CustomCarousel />}
+      {/* {showCarousel && <CustomCarousel />} */}
       <CardsContainer />
     </div>
   );

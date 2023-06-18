@@ -29,7 +29,7 @@ export default function Form() {
       errors.image = 'Need an image URL';
     }
     if (!input.authorName) {
-      errors.authorName = 'Need an artist name';
+      errors.authorName = 'Need an author name';
     }
     if (!input.date) {
       errors.date = 'Need a year';
@@ -112,38 +112,38 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Title: </label>
             <input
-              type="text"
+              type='text'
               value={input.title}
-              name="title"
+              name='title'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a title"
+              placeholder='Enter a title'
             />
             {errors.title && <p className={styles.error}>{errors.title}</p>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Image: </label>
             <input
-              type="text"
+              type='text'
               value={input.image}
-              name="image"
+              name='image'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter an image URL"
+              placeholder='Enter an image URL'
             />
             {submitted && errors.image && (
               <p className={styles.error}>{errors.image}</p>
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Artist name: </label>
+            <label className={styles.label}>Author: </label>
             <input
-              type="text"
-              value={input.artistName}
-              name="artistName"
+              type='text'
+              value={input.authorName}
+              name='authorName'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter an artist name"
+              placeholder='Enter an author name'
             />
             {submitted && errors.authorName && (
               <p className={styles.error}>{errors.authorName}</p>
@@ -152,12 +152,12 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Year: </label>
             <input
-              type="text"
+              type='text'
               value={input.date}
-              name="date"
+              name='date'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a year"
+              placeholder='Enter a year'
             />
             {submitted && errors.date && (
               <p className={styles.error}>{errors.date}</p>
@@ -166,12 +166,12 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Width: </label>
             <input
-              type="number"
+              type='number'
               value={input.width}
-              name="width"
+              name='width'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a width"
+              placeholder='Enter a width'
             />
             {submitted && errors.width && (
               <p className={styles.error}>{errors.width}</p>
@@ -180,12 +180,12 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Height: </label>
             <input
-              type="number"
+              type='number'
               value={input.height}
-              name="height"
+              name='height'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a height"
+              placeholder='Enter a height'
             />
             {submitted && errors.height && (
               <p className={styles.error}>{errors.height}</p>
@@ -194,12 +194,12 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Price: </label>
             <input
-              type="number"
+              type='number'
               value={input.price}
-              name="price"
+              name='price'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a price..."
+              placeholder='Enter a price...'
             />
             {submitted && errors.price && (
               <p className={styles.error}>{errors.price}</p>
@@ -208,18 +208,18 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>userId: </label>
             <input
-              type="text"
+              type='text'
               value={input.userId}
-              name="userId"
+              name='userId'
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter a userId..."
+              placeholder='Enter a userId...'
             />
             {submitted && errors.userId && (
               <p className={styles.error}>{errors.userId}</p>
             )}
           </div>
-          <button type="submit" className={styles.button}>
+          <button type='submit' className={styles.button}>
             Create
           </button>
           {showConfirmation && (
