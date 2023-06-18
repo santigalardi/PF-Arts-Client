@@ -4,7 +4,6 @@
   align-items: center;
   background-color: #666666;
   height: 10vh;
-  margin-bottom: 3 em;
 }
 
 .navbar-menu,
@@ -19,7 +18,6 @@
 .navbar-title {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-bottom: 1em;
 }
 
 .navlinks-container {
