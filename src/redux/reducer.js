@@ -1,6 +1,7 @@
 import {
   GET_ARTS,
   GET_ARTS_BY_TITLE,
+  GET_ARTS_BY_AUTHOR_NAME,
   GET_USERS,
   POST_ART,
   ADD_FAVORITE,
@@ -9,6 +10,7 @@ import {
   CLEAR_DETAIL,
   GET_ARTS_BY_FILTERS,
   POST_USERS,
+  DELETE_ART,
 } from './actions';
 
 const initialState = {
@@ -28,6 +30,12 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case GET_ARTS_BY_TITLE:
+      return {
+        ...state,
+        allArts: action.payload,
+      };
+
+    case GET_ARTS_BY_AUTHOR_NAME:
       return {
         ...state,
         allArts: action.payload,
@@ -63,6 +71,12 @@ const rootReducer = (state = initialState, action) => {
         myFavorites: state.myFavorites.filter(
           (fav) => fav.id !== action.payload.id
         ),
+      };
+
+    case DELETE_ART:
+      return {
+        ...state,
+        arts: state.arts.filter((art) => art.id !== action.payload.id),
       };
 
     case GET_DETAIL:
