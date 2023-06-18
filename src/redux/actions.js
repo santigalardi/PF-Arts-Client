@@ -10,10 +10,11 @@ export const FILTER_BY_ARTIST = 'FILTER_BY_ARTIST';
 export const POST_ART = 'POST_ART';
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const DELETE_FAVORITE = 'DELETE_FAVORITE';
+export const DELETE_ART = 'DELETE_ART';
 export const GET_DETAIL = 'GET_DETAIL';
 export const CLEAR_DETAIL = 'CLEAR_DETAIL';
 export const POST_USERS = 'POST_USERS';
-
+export const GET_ARTS_BY_AUTHOR_NAME = 'GET_ARTS_BY_AUTHOR_NAME;';
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 
 export const getAllArts = () => {
@@ -31,6 +32,14 @@ export const getArtsByTitle = (title) => {
     const arts = await axios.get(`${URL}/artworks?title=${title}`);
     console.log(arts.data); // Imprime la respuesta completa en la consola
     dispatch({ type: GET_ARTS_BY_TITLE, payload: arts.data });
+  };
+};
+
+export const getArtsByAuthor = (authorName) => {
+  return async function (dispatch) {
+    const arts = await axios.get(`${URL}/artworks?authorName=${authorName}`);
+    console.log(arts.data); // Imprime la respuesta completa en la consola
+    dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
 };
 
@@ -145,3 +154,15 @@ export const getArtsByFilters = (century, order, created) => {
     }
   };
 };
+
+export function deleteArt(payload) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(`${URL}/artworks/${payload.id}`);
+      dispatch({ type: DELETE_ART, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}

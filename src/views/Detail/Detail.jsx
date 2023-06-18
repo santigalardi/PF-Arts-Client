@@ -6,6 +6,7 @@ import {
   clearDetail,
   deleteFavorite,
   getDetail,
+  deleteArt,
 } from '../../redux/actions';
 import styles from './Detail.module.css';
 import {
@@ -53,6 +54,11 @@ const Detail = () => {
     setRating(value);
   };
 
+  const handleDelete = () => {
+    dispatch(deleteArt(detail.id));
+    // Aquí puedes redirigir al usuario a una página o hacer cualquier otra acción necesaria después de borrar la obra
+  };
+
   if (!detail) {
     return <div>Loading...</div>;
   }
@@ -83,7 +89,7 @@ const Detail = () => {
       <div className={styles.imgContainer}>
         <div className={styles.frameContainer}>
           <div className={styles.frame}>
-            <img src={frame} alt='' />
+            <img src={frame} alt="" />
           </div>
         </div>
         <div className={styles.imageWrapper}>
@@ -127,6 +133,11 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
+        {detail.created && detail.created === detail.user.userName ? (
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            Delete
+          </button>
+        ) : null}
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
