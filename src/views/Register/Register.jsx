@@ -80,13 +80,13 @@ const Register = () => {
             <h2 className="fw-bold text-center py-3 py-md-5">
               Create an account
             </h2>
-            <div className="login">
-              <Form id="login" onSubmit={handleSubmit}>
+            <div className="register">
+              <Form id="register" onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="userName">User</Form.Label>
                   <Form.Control
                     type="text"
-                    id="userName"
+                    name="userName"
                     value={input.userName}
                     onChange={handleChange}
                     className={styles.input}
@@ -100,7 +100,7 @@ const Register = () => {
                   <Form.Label htmlFor="email">Email</Form.Label>
                   <Form.Control
                     type="email"
-                    id="email"
+                    name="email"
                     value={input.email}
                     onChange={handleChange}
                     className={styles.input}
@@ -120,6 +120,11 @@ const Register = () => {
                     Register
                   </Button>
                 </div>
+                {showConfirmation && (
+                  <p className={styles.confirmation}>
+                    Account created successfully!
+                  </p>
+                )}
                 <div className="mb-3">
                   <p className="text-danger mt-2" id="mensaje"></p>
                   {/* ERRORS */}
