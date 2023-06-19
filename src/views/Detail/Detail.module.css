@@ -4,7 +4,6 @@
   justify-content: center;
   padding: 25px;
   margin: 50px 50px 150px 40px;
-
 }
 
 .imgContainer {
@@ -17,7 +16,6 @@
   height: auto;
 }
 
-
 .frame {
   position: absolute;
   top: -45px;
@@ -25,7 +23,6 @@
   right: -35px;
   bottom: -45px;
   z-index: 1;
-
 }
 
 .frameContainer {
@@ -43,9 +40,7 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
-
 }
-
 
 .propsContainer {
   background-color: white;
@@ -61,18 +56,15 @@
 }
 
 .propsContainer h3 {
-  /* margin-bottom: 5px;
-  margin-right: 80px; */
-
   font-size: 1.5em;
   font-weight: bold;
   font-style: italic;
-  /* text-align: center; */
 }
 
 .user {
   color: #3498db;
   font-weight: 100;
+  text-decoration: none;
 }
 
 .hr {
@@ -84,11 +76,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  background-color: #ff0000;
+  font-size: 12px;
+  background-color: #999999;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 5px 10px;
   margin-bottom: 10px;
   cursor: pointer;
   color: #fff;
@@ -157,9 +149,7 @@
 .shareButtons {
   display: flex;
   gap: 8px;
-  /* Espacio horizontal entre los botones de compartir */
   margin-top: 10px;
-  /* Añadido para separar de los botones anteriores */
 }
 
 .shareButton {
@@ -185,33 +175,6 @@
   margin-right: 4px;
 }
 
-.scrollButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  background-color: #646cff;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.scrollButton:hover {
-  background-color: #535bf2;
-}
-
-.scrollButton::before {
-  content: '\2191';
-  /* Código de la flecha hacia arriba */
-  font-size: 24px;
-}
-
 .ratingContainer {
   display: flex;
   justify-content: center;
@@ -230,4 +193,64 @@
 
 .ratingStarActive {
   color: #ffcc00;
+}
+
+/* Estilos para botones Save y Cancel del edit */
+.updateButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  color: #ccc;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  padding: 8px 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.updateButton:focus {
+  outline: none;
+}
+
+.updateButton:hover {
+  color: #ffebeb;
+}
+
+.updateIcon {
+  margin-right: 8px;
+}
+
+/* Estilos para la edición y lápiz */
+.editButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  color: #999999;
+}
+
+.editButton:focus {
+  outline: none;
+}
+
+.editIcon {
+  margin-right: 8px;
+}
+
+.editInput {
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 1em;
+  width: 80px;
+  margin-left: 5px;
 }

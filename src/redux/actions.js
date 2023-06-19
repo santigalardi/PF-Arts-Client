@@ -16,6 +16,7 @@ export const CLEAR_DETAIL = 'CLEAR_DETAIL';
 export const POST_USERS = 'POST_USERS';
 export const GET_ARTS_BY_AUTHOR_NAME = 'GET_ARTS_BY_AUTHOR_NAME;';
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
+export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
 
 export const getAllArts = () => {
   return async function (dispatch) {
@@ -30,7 +31,7 @@ export const getAllArts = () => {
 export const getArtsByTitle = (title) => {
   return async function (dispatch) {
     const arts = await axios.get(`${URL}/artworks?title=${title}`);
-    console.log(arts.data); // Imprime la respuesta completa en la consola
+    console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_TITLE, payload: arts.data });
   };
 };
@@ -38,7 +39,7 @@ export const getArtsByTitle = (title) => {
 export const getArtsByAuthor = (authorName) => {
   return async function (dispatch) {
     const arts = await axios.get(`${URL}/artworks?authorName=${authorName}`);
-    console.log(arts.data); // Imprime la respuesta completa en la consola
+    console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
 };
@@ -128,7 +129,9 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
+    console.log(
+      `Filters received: century=${century}, order=${order}, created=${created}`
+    );
     try {
       const params = {};
 
@@ -164,3 +167,15 @@ export function deleteArt(id) {
     }
   };
 }
+
+export const updateArtwork = (id, updatedArtwork) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`${URL}/artworks/${id}`, updatedArtwork);
+      dispatch({ type: UPDATE_ARTWORK, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
