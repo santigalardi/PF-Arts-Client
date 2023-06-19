@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts } from '../../redux/actions';
+import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork } from '../../redux/actions';
 import Loader from '../../components/Loader/Loader';
 import styles from './Detail.module.css';
 import {
