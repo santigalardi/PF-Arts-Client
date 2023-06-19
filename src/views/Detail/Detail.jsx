@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts } from '../../redux/actions';
-import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
-import frame from './pngegg.png';
 import styles from './Detail.module.css';
 import {
   FaShoppingCart,
