@@ -13,6 +13,7 @@ import Buyer from './components/Footer/Buyer/Buyer';
 import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
+import Users from './views/Users/Users';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -26,20 +27,21 @@ function App() {
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
       {location.pathname !== '/register' && <Navbar />}
-      <button className='darkModeButton' onClick={toggleDarkMode}>
-        {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
+      <button className="darkModeButton" onClick={toggleDarkMode}>
+        {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
       </button>
       <Routes>
-        {isLandingPage && <Route path='/' element={<Home />} />}
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/' element={<Home />} />
-        <Route path='/detail/:id' element={<Detail />} />
-        <Route path='/create' element={<Form />} />
-        <Route path='/advisory' element={<AdvisoryServices />} />
-        <Route path='/about-us' element={<Aboutus />} />
-        <Route path='/FAQ' element={<Buyer />} />
-        <Route path='/favorites' element={<Favorites />} />
+        {isLandingPage && <Route path="/" element={<Home />} />}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/create" element={<Form />} />
+        <Route path="/advisory" element={<AdvisoryServices />} />
+        <Route path="/about-us" element={<Aboutus />} />
+        <Route path="/FAQ" element={<Buyer />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
       {location.pathname !== '/register' && <Footer />}
     </div>

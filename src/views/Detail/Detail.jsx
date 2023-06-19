@@ -1,16 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts } from '../../redux/actions';
-import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
-import frame from './pngegg.png';
 import styles from './Detail.module.css';
+import {
+  FaShoppingCart,
+  FaTwitter,
+  FaFacebook,
+  FaInstagram,
+  FaPencilAlt,
+} from 'react-icons/fa';
+import frame from './pngegg.png';
 
 const Detail = () => {
+  const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
   const [isFav, setIsFav] = useState(false);
   const [rating, setRating] = useState(0);
+  const [artist, setArtist] = useState('');
+  const [year, setYear] = useState('');
+  const [dimensions, setDimensions] = useState('');
+  const [price, setPrice] = useState('');
   const detail = useSelector((state) => state.detail);
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
@@ -36,6 +47,13 @@ const Detail = () => {
     });
   }, [detail.id, myFavorites]);
 
+  useEffect(() => {
+    setArtist(detail.authorName);
+    setYear(detail.date);
+    setDimensions(`${detail.width} x ${detail.height}`);
+    setPrice(detail.price);
+  }, [detail]);
+
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
@@ -53,9 +71,45 @@ const Detail = () => {
   const handleDelete = () => {
     dispatch(deleteArt(detail.id));
     window.alert('Artwork deleted successfully');
+  };
+
+  const handleUpdate = () => {
+    setIsEditing(true);
+  };
+
+  const handleSave = () => {
+    const updatedArtwork = {
+      ...detail,
+      authorName: artist,
+      date: year,
+      width: dimensions.split(' x ')[0],
+      height: dimensions.split(' x ')[1],
+      price: price,
+    };
+    dispatch(updateArtwork(detail.id, updatedArtwork))
+      .then((response) => {
+        console.log('Artwork updated successfully:', response.data);
+        setIsEditing(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error updating artwork:', error);
+        window.alert('Error updating artwork. Please try again.');
+      });
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  function homeButton() {
     dispatch(getAllArts());
     navigate('/');
-  };
+  }
+
+  if (!detail) {
+    return <div>Loading...</div>;
+  }
 
   const handleTwitterShare = () => {
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
@@ -75,6 +129,7 @@ const Detail = () => {
   if (isLoading || !detail) {
     return <Loader />;
   }
+  const isCreatedByUser = detail.user && detail.user.userName.length > 0;
 
   return (
     <div className={styles.detailContainer}>
@@ -92,24 +147,97 @@ const Detail = () => {
         <h3>{detail.title}</h3>
         <hr className={styles.hr} />
         <p>
-          <span>Artist:</span> {detail.authorName}
+          <span>Artist:</span>{' '}
+          {isEditing ? (
+            <input
+              type="text"
+              value={artist}
+              onChange={(e) => setArtist(e.target.value)}
+            />
+          ) : (
+            <span>{detail.authorName}</span>
+          )}
         </p>
         <p>
-          <span>Year:</span> {detail.date}
+          <span>Year:</span>{' '}
+          {isEditing ? (
+            <input
+              type="text"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          ) : (
+            <span>{detail.date}</span>
+          )}
         </p>
         <p>
-          <span>Dimensions:</span> {detail.width} x {detail.height}
+          <span>Dimensions:</span>{' '}
+          {isEditing ? (
+            <input
+              type="text"
+              value={dimensions}
+              onChange={(e) => setDimensions(e.target.value)}
+            />
+          ) : (
+            <span>
+              {detail.width} x {detail.height}
+            </span>
+          )}
         </p>
         <p>
-          <span>Price:</span> {detail.price} M
+          <span>Price:</span>{' '}
+          {isEditing ? (
+            <input
+              type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          ) : (
+            <span>{detail.price} M</span>
+          )}
         </p>
-        {detail.user && detail.user.userName.length > 0 ? (
+        {isCreatedByUser && (
           <div>
             <p>
-              <span>Published By:</span> <span className={styles.user}> {detail.user.userName} </span>
+              <span>Published By:</span>{' '}
+              <Link to="/users" className={styles.user}>
+                {detail.user.userName}
+              </Link>
             </p>
           </div>
-        ) : null}
+        )}
+        <div>
+          {isEditing ? (
+            <>
+              <button className={styles.updateButton} onClick={handleSave}>
+                Save
+              </button>
+              <button className={styles.updateButton} onClick={handleCancel}>
+                Cancel
+              </button>
+            </>
+          ) : (
+            isCreatedByUser && (
+              <button
+                className={`${styles.updateButton} ${styles.editButton}`}
+                onClick={handleUpdate}
+              >
+                <FaPencilAlt className={styles.updateIcon} />
+              </button>
+            )
+          )}
+          {isEditing && isCreatedByUser && (
+            <button
+              className={styles.deleteButton}
+              onClick={() => {
+                handleDelete();
+                homeButton();
+              }}
+            >
+              Delete
+            </button>
+          )}
+        </div>
       </div>
       <div className={styles.actionsContainer}>
         {isFav ? (
@@ -125,11 +253,6 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
-        {detail.created && (
-          <button className={styles.deleteButton} onClick={handleDelete}>
-            Delete
-          </button>
-        )}
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
