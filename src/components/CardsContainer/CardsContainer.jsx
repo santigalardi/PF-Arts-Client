@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { getAllArts } from '../../redux/actions';
 import Card from '../../components/Card/Card';
 import Searchbar from '../../components/SearchBar/Searchbar';
@@ -10,7 +10,8 @@ import styles from './CardsContainer.module.css';
 
 const CardsContainer = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const allArts = useSelector((state) => state.allArts);
   const [currentPage, setCurrentPage] = useState(1);
   const artsPerPage = 8;
@@ -20,23 +21,38 @@ const CardsContainer = () => {
 
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', pageNumber);
+    const newSearch = searchParams.toString();
+    navigate(`/?${newSearch}`);
   };
 
   useEffect(() => {
-    dispatch(getAllArts());
-  }, [dispatch]);
+    if (allArts.length === 0) {
+      dispatch(getAllArts());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setCurrentArts(allArts.slice(indexOfFirstArt, indexOfLastArt));
   }, [allArts, currentPage, indexOfFirstArt, indexOfLastArt]);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = Number(searchParams.get('page')) || 1;
+    setCurrentPage(page);
+  }, [location.search]);
+
   return (
     <div>
       <div>
-        <Searchbar setCurrentPage={setCurrentPage} />
-        <Filters setCurrentPage={setCurrentPage} />
+        <div className={styles['searchContainer']}>
+          <Searchbar setCurrentPage={setCurrentPage} />
+          <Filters setCurrentPage={setCurrentPage} />
+        </div>
         {currentArts.length === 0 ? (
-          <p>No se encontraron resultados.</p>
+          <p className={styles['no-results']}>No se encontraron resultados.</p>
         ) : (
           <div className={styles['CardsContainer']}>
             {currentArts.map((art) => (
