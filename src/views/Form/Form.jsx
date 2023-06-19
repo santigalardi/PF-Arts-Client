@@ -117,7 +117,7 @@ export default function Form() {
           </div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Year: </label>
-            <input type='text' value={input.date} name='date' onChange={handleChange} className={styles.input} placeholder='Enter a year' />
+            <input type='number' value={input.date} name='date' onChange={handleChange} className={styles.input} placeholder='Enter a year' />
             {submitted && errors.date && <p className={styles.error}>{errors.date}</p>}
           </div>
           <div className={styles.formGroup}>
