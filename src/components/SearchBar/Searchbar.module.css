@@ -1,13 +1,17 @@
 .BottonSearch {
   text-decoration: none;
-  background-color: red;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  cursor: pointer;
   border-radius: 0px 0px 20px 0px;
-  border: 0;
   padding-top: 0px;
   vertical-align: top;
+  height: 28px;
 }
+
 .BottonSearch:hover {
-  background-color: rgb(64, 209, 84);
+  background-color: #eaeaea;
+  ;
 }
 
 

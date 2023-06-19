@@ -35,7 +35,7 @@ const Filters = ({ setCurrentPage }) => {
     <div className={styles.container}>
       <form onSubmit={handleFilterSubmit}>
         <label>
-          Century
+          <span className={styles.span}>By Century{' '}</span>
           <select name='century' value={filters.century} onChange={handleFilterChange}>
             <option value=''>All</option>
             <option value='15'>15th</option>
@@ -48,7 +48,7 @@ const Filters = ({ setCurrentPage }) => {
           </select>
         </label>
         <label>
-          Price
+         <span className={styles.span}>By Price{' '}</span> 
           <select name='order' value={filters.order} onChange={handleFilterChange}>
             <option value=''>All</option>
             <option value='ASC'>Lowest</option>
@@ -56,7 +56,7 @@ const Filters = ({ setCurrentPage }) => {
           </select>
         </label>
         <label>
-          Source
+          <span className={styles.span}>By Source{' '}</span>
           <select name='created' value={filters.created} onChange={handleFilterChange}>
             <option value=''>All</option>
             <option value='true'>Users Art</option>

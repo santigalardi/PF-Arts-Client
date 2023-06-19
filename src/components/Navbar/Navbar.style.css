@@ -3,11 +3,13 @@
   left: 0;
   width: 100%;
   z-index: 9999;
-  background-color: rgba(213, 209, 209, 0.9); /* Fondo transparente */
+  background-color: rgba(213, 209, 209, 0.9);
+  /* Fondo transparente */
   display: flex;
   align-items: center;
   height: 10vh;
-  transition: background-color 0.3s ease; /* Transición de color de fondo */
+  transition: background-color 0.3s ease;
+  /* Transición de color de fondo */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -17,17 +19,23 @@
   left: 0;
   width: 100%;
   z-index: 9999;
-  backdrop-filter: blur(10px); /* Efecto blur */
-  background-color: rgba(213, 209, 209, 0.4); /* Fondo transparente */
+  backdrop-filter: blur(10px);
+  /* Efecto blur */
+  background-color: rgba(213, 209, 209, 0.4);
+  /* Fondo transparente */
   display: flex;
   align-items: center;
   height: 10vh;
-  transition: background-color 0.3s ease; /* Transición de color de fondo */
+  transition: background-color 0.3s ease;
+  /* Transición de color de fondo */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+
 .navbar img {
-  margin-left: 10px; /* Ajusta el margen izquierdo según tus necesidades */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ajusta los valores de sombra según tus necesidades */
+  margin-left: 10px;
+  /* Ajusta el margen izquierdo según tus necesidades */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Ajusta los valores de sombra según tus necesidades */
 }
 
 
@@ -38,12 +46,15 @@
   display: flex;
   align-items: center;
   padding-left: 0.7rem;
+
 }
 
 .navbar-title {
   font-size: 1.3rem;
-  font-weight: bold;
-  color: rgb(53, 53, 53); /* Color de texto */
+  font-weight: 400;
+  font-style: oblique;
+  color: rgb(53, 53, 53);
+  /* Color de texto */
   text-shadow: black 0.4px 0.4px;
 }
 
@@ -53,10 +64,12 @@
 
 .navlinks {
   text-decoration: none;
-  color: rgb(53, 53, 53); /* Color de texto */
+  color: rgb(53, 53, 53);
+  /* Color de texto */
   padding: 10px;
   font-size: 20px;
-  transition: color 0.3s ease; /* Transición de color de texto */
+  transition: color 0.3s ease;
+  /* Transición de color de texto */
   text-shadow: black 0.4px 0.4px;
 }
 
@@ -80,7 +93,8 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transition: background-color 0.3s ease; /* Transición de color de fondo del botón */
+  transition: background-color 0.3s ease;
+  /* Transición de color de fondo del botón */
 }
 
 .boton-out:hover {
