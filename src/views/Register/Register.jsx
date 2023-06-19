@@ -62,16 +62,12 @@ const Register = () => {
       });
       setSubmitted(false);
       setErrors({});
+      navigate('/'); // Redirige al usuario a la ruta especificada
     } else {
       setShowAlert(true);
     }
   }
 
-  function homeButton() {
-    setTimeout(function () {
-      navigate('/');
-    }, 1500);
-  }
 
   return (
     <div className={styles['login-container']}>
@@ -123,7 +119,7 @@ const Register = () => {
                     type='submit'
                     id='ingresar'
                     className='btn-sm'
-                    onClick={homeButton}
+                    onClick={handleSubmit}
                   >
                     Register
                   </Button>
