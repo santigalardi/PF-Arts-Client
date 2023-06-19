@@ -8,7 +8,7 @@ function CustomCarousel() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
-  const currentArts = allArts && Array.isArray(allArts) && allArts.slice(8, 11);
+  const currentArts = allArts && Array.isArray(allArts) && allArts.slice(2, 5);
 
   return (
     <>
@@ -18,50 +18,31 @@ function CustomCarousel() {
             <Carousel className={styles.carousel}>
               <Carousel.Item>
                 <div className={styles.imgContainer}>
-                  <img
-                    className={styles.carouselImage}
-                    src={currentArts[0].image}
-                    alt="First slide"
-                  />
+                  <img className={styles.carouselImage} src={currentArts[0].image} alt='First slide' />
                 </div>
                 <Carousel.Caption className={styles.captionContainer}>
                   <h3>{currentArts[0].title}</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
+                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <div className={styles.imgContainer}>
-                  <img
-                    className={styles.carouselImage}
-                    src={currentArts[1].image}
-                    alt="Second slide"
-                  />
+                  <img className={styles.carouselImage} src={currentArts[1].image} alt='Second slide' />
                 </div>
 
                 <Carousel.Caption className={styles.captionContainer}>
                   <h3>{currentArts[1].title}</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </Carousel.Caption>
               </Carousel.Item>
               <Carousel.Item>
                 <div className={styles.imgContainer}>
-                  <img
-                    className={styles.carouselImage}
-                    src={currentArts[2].image}
-                    alt="Third slide"
-                  />
+                  <img className={styles.carouselImage} src={currentArts[2].image} alt='Third slide' />
                 </div>
 
                 <Carousel.Caption className={styles.captionContainer}>
                   <h3>{currentArts[2].title}</h3>
-                  <p>
-                    Praesent commodo cursus magna, vel scelerisque nisl
-                    consectetur.
-                  </p>
+                  <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                 </Carousel.Caption>
               </Carousel.Item>
             </Carousel>
