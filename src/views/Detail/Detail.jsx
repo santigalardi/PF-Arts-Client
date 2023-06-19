@@ -114,7 +114,7 @@ const Detail = () => {
         {detail.user && detail.user.userName.length > 0 ? (
           <div>
             <p>
-              <span>Published By:</span> {detail.user.userName}
+              <span>Published By:</span> <span> {detail.user.userName} </span>
             </p>
           </div>
         ) : null}

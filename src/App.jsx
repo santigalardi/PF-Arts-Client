@@ -10,7 +10,7 @@ import Login from './views/Login/Login';
 import Register from './views/Register/Register';
 import AdvisoryServices from './components/Footer/A-Services/A-Services';
 import Buyer from './components/Footer/Buyer/Buyer';
-import Aboutus from './components/Footer/Aboutus';
+import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 

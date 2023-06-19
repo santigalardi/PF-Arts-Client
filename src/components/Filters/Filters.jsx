@@ -33,41 +33,41 @@ const Filters = ({ setCurrentPage }) => {
       <form onSubmit={handleFilterSubmit}>
         <label>
           <select
-            name="century"
+            name='century'
             value={filters.century}
             onChange={handleFilterChange}
           >
-            <option value="">All</option>
-            <option value="17">17th Century</option>
-            <option value="18">18th Century</option>
-            <option value="19">19th Century</option>
-            <option value="20">20th Century</option>
-            <option value="21">21st Century</option>
+            <option value=''>All</option>
+            <option value='17'>17th Century</option>
+            <option value='18'>18th Century</option>
+            <option value='19'>19th Century</option>
+            <option value='20'>20th Century</option>
+            <option value='21'>21st Century</option>
           </select>
         </label>
         <label>
           <select
-            name="order"
+            name='order'
             value={filters.order}
             onChange={handleFilterChange}
           >
-            <option value="">All</option>
-            <option value="ASC">Ascending</option>
-            <option value="DESC">Descending</option>
+            <option value=''>All</option>
+            <option value='ASC'>Ascending</option>
+            <option value='DESC'>Descending</option>
           </select>
         </label>
         <label>
           <select
-            name="created"
+            name='created'
             value={filters.created}
             onChange={handleFilterChange}
           >
-            <option value="">All</option>
-            <option value="true">Created Art</option>
-            <option value="false">API Art</option>
+            <option value=''>All</option>
+            <option value='true'>Created Art</option>
+            <option value='false'>API Art</option>
           </select>
         </label>
-        <button type="submit">Apply Filters</button>
+        <button type='submit'>Apply Filters</button>
       </form>
     </div>
   );
