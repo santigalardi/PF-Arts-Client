@@ -1,5 +1,5 @@
 .loaderContainer {
-  min-width: 100vw;
+  width: 100vw;
   min-height: 80vh;
   display: flex;
   justify-content: center;
@@ -7,5 +7,6 @@
 }
 
 .loader {
+  margin-right: 30px;
   width: 300px;
 }
