@@ -25,14 +25,14 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu />
       <div className="navbar-title">Henry Art Gallery</div>
-      <div className="navlinks-container">
+      {/* <div className="navlinks-container">
         <NavLink to="/" className="navlinks">
           Home
         </NavLink>
         <NavLink to="/create" className="navlinks">
           Create
         </NavLink>
-      </div>
+      </div> */}
       <div className="navlinks-container">
         <NavLink to="/register" className="navlinks">
           Register

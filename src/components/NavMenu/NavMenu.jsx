@@ -27,7 +27,10 @@ const NavMenu = () => {
   }, []);
   return (
     <nav>
-      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+      <div
+        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -36,48 +39,48 @@ const NavMenu = () => {
         {/* por favor no usar pretier aqui */}
         <ul>
           <li>
-            <BsPersonFill />
-            <NavLink to='/users' onClick={toggleMenu}>
-              {' '}
-              Artists
-            </NavLink>
-          </li>
-          <hr />
-          <li>
-            <BsTools />
-            <NavLink to='/tecnicas' onClick={toggleMenu}>
-              {' '}
-              Techniques
-            </NavLink>
-          </li>
-          <hr />
-          <li>
             <BsFillHouseFill />
-            <NavLink to='/' onClick={toggleMenu}>
+            <NavLink to="/" onClick={toggleMenu}>
               {' '}
               Home
             </NavLink>
           </li>
           <hr />
           <li>
+            <BsPersonFill />
+            <NavLink to="/users" onClick={toggleMenu}>
+              {' '}
+              Artists
+            </NavLink>
+          </li>
+          <hr />
+          {/* <li>
+            <BsTools />
+            <NavLink to='/tecnicas' onClick={toggleMenu}>
+              {' '}
+              Techniques
+            </NavLink>
+          </li> */}
+          {/* <hr /> */}
+          <li>
             <GiPencilBrush />
-            <NavLink to='/create' onClick={toggleMenu}>
+            <NavLink to="/create" onClick={toggleMenu}>
               {' '}
               Create
             </NavLink>
           </li>
           <hr />
-          <li>
+          {/* <li>
             <GiPencilBrush />
-            <NavLink to='/MyCreations' onClick={toggleMenu}>
+            <NavLink to="/MyCreations" onClick={toggleMenu}>
               {' '}
               My creations
             </NavLink>
           </li>
-          <hr />
+          <hr /> */}
           <li>
             <FaPowerOff />
-            <NavLink to='/login' onClick={toggleMenu}>
+            <NavLink to="/login" onClick={toggleMenu}>
               {' '}
               Login
             </NavLink>
