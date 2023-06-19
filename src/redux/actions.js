@@ -129,9 +129,7 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(
-      `Filters received: century=${century}, order=${order}, created=${created}`
-    );
+    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
     try {
       const params = {};
 

@@ -3,15 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork } from '../../redux/actions';
 import Loader from '../../components/Loader/Loader';
+import frame from '../../assets/img/marco.png';
 import styles from './Detail.module.css';
-import {
-  FaShoppingCart,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-  FaPencilAlt,
-} from 'react-icons/fa';
-import frame from './pngegg.png';
+import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 'react-icons/fa';
 
 const Detail = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -26,13 +20,21 @@ const Detail = () => {
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
-    dispatch(getDetail(id)).finally(() => {
-      setIsLoading(false);
-    });
+    const timeout = setTimeout(() => {
+      setShowLoader(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    dispatch(getDetail(id));
+    dispatch(clearDetail());
 
     return () => {
       dispatch(clearDetail());
@@ -107,8 +109,8 @@ const Detail = () => {
     navigate('/');
   }
 
-  if (!detail) {
-    return <div>Loading...</div>;
+  if (!detail || showLoader) {
+    return <Loader />;
   }
 
   const handleTwitterShare = () => {
@@ -126,9 +128,6 @@ const Detail = () => {
     window.open(url, '_blank');
   };
 
-  if (isLoading || !detail) {
-    return <Loader />;
-  }
   const isCreatedByUser = detail.user && detail.user.userName.length > 0;
 
   return (
@@ -140,44 +139,22 @@ const Detail = () => {
           </div>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={detail.image} alt={detail.title} onLoad={() => setIsLoading(false)} />
+          <img src={detail.image} alt={detail.title} />
         </div>
       </div>
       <div className={styles.propsContainer}>
         <h3>{detail.title}</h3>
         <hr className={styles.hr} />
         <p>
-          <span>Artist:</span>{' '}
-          {isEditing ? (
-            <input
-              type="text"
-              value={artist}
-              onChange={(e) => setArtist(e.target.value)}
-            />
-          ) : (
-            <span>{detail.authorName}</span>
-          )}
+          <span>Artist:</span> {isEditing ? <input type='text' value={artist} onChange={(e) => setArtist(e.target.value)} /> : <span>{detail.authorName}</span>}
         </p>
         <p>
-          <span>Year:</span>{' '}
-          {isEditing ? (
-            <input
-              type="text"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-            />
-          ) : (
-            <span>{detail.date}</span>
-          )}
+          <span>Year:</span> {isEditing ? <input type='text' value={year} onChange={(e) => setYear(e.target.value)} /> : <span>{detail.date}</span>}
         </p>
         <p>
           <span>Dimensions:</span>{' '}
           {isEditing ? (
-            <input
-              type="text"
-              value={dimensions}
-              onChange={(e) => setDimensions(e.target.value)}
-            />
+            <input type='text' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
           ) : (
             <span>
               {detail.width} x {detail.height}
@@ -185,22 +162,13 @@ const Detail = () => {
           )}
         </p>
         <p>
-          <span>Price:</span>{' '}
-          {isEditing ? (
-            <input
-              type="text"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          ) : (
-            <span>{detail.price} M</span>
-          )}
+          <span>Price:</span> {isEditing ? <input type='text' value={price} onChange={(e) => setPrice(e.target.value)} /> : <span>{detail.price} M</span>}
         </p>
         {isCreatedByUser && (
           <div>
             <p>
               <span>Published By:</span>{' '}
-              <Link to="/users" className={styles.user}>
+              <Link to='/users' className={styles.user}>
                 {detail.user.userName}
               </Link>
             </p>
@@ -218,10 +186,7 @@ const Detail = () => {
             </>
           ) : (
             isCreatedByUser && (
-              <button
-                className={`${styles.updateButton} ${styles.editButton}`}
-                onClick={handleUpdate}
-              >
+              <button className={`${styles.updateButton} ${styles.editButton}`} onClick={handleUpdate}>
                 <FaPencilAlt className={styles.updateIcon} />
               </button>
             )
