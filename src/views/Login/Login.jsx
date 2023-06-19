@@ -2,8 +2,74 @@ import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import googleLogo from '../../assets/img/google.png';
 import styles from './Login.module.css';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { postUsers } from '../../redux/actions';
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
+  const [input, setInput] = useState({
+    userName: '',
+    email: '',
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  function validate(input) {
+    let errors = {};
+    if (!input.userName) {
+      errors.userName = 'Need a user';
+    }
+    if (!input.email) {
+      errors.email = 'Need an email';
+    }
+    return errors;
+  }
+
+  function handleChange(e) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
+    setShowAlert(false);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const errors = validate(input);
+    setErrors(errors);
+    setSubmitted(true);
+
+    if (Object.keys(errors).length === 0 && input.userName && input.email) {
+      const updatedInput = {
+        ...input,
+      };
+      dispatch(postUsers(updatedInput));
+      setShowConfirmation(true);
+      setInput({
+        userName: '',
+        email: '',
+      });
+      setSubmitted(false);
+      setErrors({});
+      navigate('/'); // Redirige al usuario a la ruta especificada
+    } else {
+      setShowAlert(true);
+    }
+  }
+
   return (
     <div className={styles['login-container']}>
       <Container className="w-100 bg-primary rounded shadow">
@@ -18,14 +84,32 @@ const Login = () => {
             </div>
             <h2 className="fw-bold text-center py-3 py-md-5">Log In</h2>
             <div className="login">
-              <Form id="login">
+              <Form id="login"  onSubmit={handleSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="user">User</Form.Label>
-                  <Form.Control type="text" id="user" />
+                  <Form.Control 
+                  id="user"
+                  type='text'
+                  name='userName'
+                  value={input.userName}
+                  onChange={handleChange}
+                  className={styles.input}
+                  placeholder='Enter a user' />
+                  {errors.userName && (
+                    <p className={styles.error}>{errors.userName}</p>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="pass">Email</Form.Label>
-                  <Form.Control type="email" id="pass" />
+                  <Form.Control type="email" id="pass" 
+                   name='email'
+                    value={input.email}
+                    onChange={handleChange}
+                    className={styles.input}
+                    placeholder='Enter an email' />
+                    {errors.email && (
+                    <p className={styles.error}>{errors.email}</p>
+                  )}
                 </Form.Group>
                 <div className="d-grid">
                   <Button
@@ -33,10 +117,16 @@ const Login = () => {
                     type="submit"
                     id="ingresar"
                     className="btn-sm"
+                    onClick={handleSubmit}
                   >
                     Log in
                   </Button>
                 </div>
+                 {showConfirmation && (
+                  <p className={styles.confirmation}>
+                    Ready!
+                  </p>
+                )}
                 <div className="mb-3">
                   <p className="text-danger mt-2" id="mensaje"></p>
                   <NavLink to="/register">Register</NavLink>
