@@ -4,9 +4,10 @@ import { BsFillHouseFill, BsPersonFill, BsTools } from 'react-icons/bs';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-//    por favor no usar pretier aqui en navmenu
+
 const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = (event) => {
     event.stopPropagation();
     setMenuOpen(!menuOpen);
@@ -25,6 +26,7 @@ const NavMenu = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+
   return (
     <nav>
       <div
@@ -36,12 +38,10 @@ const NavMenu = () => {
         <span></span>
       </div>
       <div className={`menu-options ${menuOpen ? 'active' : ''}`}>
-        {/* por favor no usar pretier aqui */}
         <ul>
           <li>
             <BsFillHouseFill />
             <NavLink to="/" onClick={toggleMenu}>
-              {' '}
               Home
             </NavLink>
           </li>
@@ -49,7 +49,6 @@ const NavMenu = () => {
           <li>
             <BsPersonFill />
             <NavLink to="/users" onClick={toggleMenu}>
-              {' '}
               Artists
             </NavLink>
           </li>
@@ -57,7 +56,6 @@ const NavMenu = () => {
           {/* <li>
             <BsTools />
             <NavLink to='/tecnicas' onClick={toggleMenu}>
-              {' '}
               Techniques
             </NavLink>
           </li> */}
@@ -65,7 +63,6 @@ const NavMenu = () => {
           <li>
             <GiPencilBrush />
             <NavLink to="/create" onClick={toggleMenu}>
-              {' '}
               Create
             </NavLink>
           </li>
@@ -73,7 +70,6 @@ const NavMenu = () => {
           {/* <li>
             <GiPencilBrush />
             <NavLink to="/MyCreations" onClick={toggleMenu}>
-              {' '}
               My creations
             </NavLink>
           </li>
@@ -81,7 +77,6 @@ const NavMenu = () => {
           <li>
             <FaPowerOff />
             <NavLink to="/login" onClick={toggleMenu}>
-              {' '}
               Login
             </NavLink>
           </li>
@@ -90,4 +85,5 @@ const NavMenu = () => {
     </nav>
   );
 };
+
 export default NavMenu;
