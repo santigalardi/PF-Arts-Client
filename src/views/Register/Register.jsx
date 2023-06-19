@@ -1,5 +1,5 @@
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import googleLogo from '../../assets/img/google.png';
@@ -8,6 +8,7 @@ import styles from './Register.module.css';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     userName: '',
@@ -66,56 +67,63 @@ const Register = () => {
     }
   }
 
+  function homeButton() {
+    setTimeout(function () {
+      navigate('/');
+    }, 1500);
+  }
+
   return (
     <div className={styles['login-container']}>
-      <Container className="w-100 bg-primary rounded shadow">
+      <Container className='w-100 bg-primary rounded shadow'>
         {/* Background */}
         <Row className={`${styles['bg-box']} align-items-stretch`}>
-          <Col className="d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded"></Col>
+          <Col className='d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded'></Col>
           {/*  */}
-          <Col className="bg-white p-3 p-md-5 rounded-end">
-            <div className="logo-box text-center">
+          <Col className='bg-white p-3 p-md-5 rounded-end'>
+            <div className='logo-box text-center'>
               {/* <Image src='./img/logo.jpg' id='logo' width='100' alt='' /> */}
             </div>
-            <h2 className="fw-bold text-center py-3 py-md-5">
+            <h2 className='fw-bold text-center py-3 py-md-5'>
               Create an account
             </h2>
-            <div className="register">
-              <Form id="register" onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                  <Form.Label htmlFor="userName">User</Form.Label>
+            <div className='register'>
+              <Form id='register' onSubmit={handleSubmit}>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='userName'>User</Form.Label>
                   <Form.Control
-                    type="text"
-                    name="userName"
+                    type='text'
+                    name='userName'
                     value={input.userName}
                     onChange={handleChange}
                     className={styles.input}
-                    placeholder="Enter a user"
+                    placeholder='Enter a user'
                   />
                   {errors.userName && (
                     <p className={styles.error}>{errors.userName}</p>
                   )}
                 </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label htmlFor="email">Email</Form.Label>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='email'>Email</Form.Label>
                   <Form.Control
-                    type="email"
-                    name="email"
+                    type='email'
+                    name='email'
                     value={input.email}
                     onChange={handleChange}
                     className={styles.input}
-                    placeholder="Enter an email"
+                    placeholder='Enter an email'
                   />
                   {errors.email && (
                     <p className={styles.error}>{errors.email}</p>
                   )}
                 </Form.Group>
-                <div className="d-grid">
+                <div className='d-grid'>
                   <Button
-                    variant="primary"
-                    type="submit"
-                    id="ingresar"
-                    className="btn-sm"
+                    variant='primary'
+                    type='submit'
+                    id='ingresar'
+                    className='btn-sm'
+                    onClick={homeButton}
                   >
                     Register
                   </Button>
@@ -125,22 +133,22 @@ const Register = () => {
                     Account created successfully!
                   </p>
                 )}
-                <div className="mb-3">
-                  <p className="text-danger mt-2" id="mensaje"></p>
+                <div className='mb-3'>
+                  <p className='text-danger mt-2' id='mensaje'></p>
                   {/* ERRORS */}
-                  <NavLink to="/login">Log in</NavLink>
+                  <NavLink to='/login'>Log in</NavLink>
                 </div>
               </Form>
               {/* LOGIN REDES SOCIALES */}
-              <Container className="w-100 my-3">
+              <Container className='w-100 my-3'>
                 <Row>
                   <Col>
-                    <Button variant="outline-danger" className="w-100 my-1">
-                      <Row className="align-items-center">
-                        <Col xs={1} className="d-block">
-                          <Image src={googleLogo} width="24" alt="" />
+                    <Button variant='outline-danger' className='w-100 my-1'>
+                      <Row className='align-items-center'>
+                        <Col xs={1} className='d-block'>
+                          <Image src={googleLogo} width='24' alt='' />
                         </Col>
-                        <Col xs={10} md={10} className="text-center">
+                        <Col xs={10} md={10} className='text-center'>
                           Log in with Google
                         </Col>
                       </Row>
