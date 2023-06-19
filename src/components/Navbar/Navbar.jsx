@@ -10,7 +10,8 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0 && location.pathname !== '/detail/';
+      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
+
       setScrolled(isScrolled);
     };
 
