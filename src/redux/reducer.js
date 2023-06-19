@@ -62,7 +62,7 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_ART:
       return {
         ...state,
-        arts: state.arts.filter((art) => art.id !== action.payload.id),
+        arts: state.arts.filter((art) => art.id !== action.payload),
       };
 
     case GET_DETAIL:

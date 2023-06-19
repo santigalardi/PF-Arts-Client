@@ -153,10 +153,10 @@ export const getArtsByFilters = (century, order, created) => {
   };
 };
 
-export function deleteArt(payload) {
+export function deleteArt(id) {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`${URL}/artworks/${payload.id}`);
+      const response = await axios.delete(`${URL}/artworks/${id}`);
       dispatch({ type: DELETE_ART, payload: response.data });
       return response;
     } catch (error) {

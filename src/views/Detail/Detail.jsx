@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   addFavorite,
   clearDetail,
   deleteFavorite,
   getDetail,
   deleteArt,
+  getAllArts,
 } from '../../redux/actions';
 import styles from './Detail.module.css';
 import {
@@ -24,6 +25,7 @@ const Detail = () => {
   const detail = useSelector((state) => state.detail);
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getDetail(id));
@@ -56,8 +58,15 @@ const Detail = () => {
 
   const handleDelete = () => {
     dispatch(deleteArt(detail.id));
+    window.alert('Artwork deleted successfully');
+      
     // Aquí puedes redirigir al usuario a una página o hacer cualquier otra acción necesaria después de borrar la obra
   };
+
+  function homeButton () {
+    dispatch(getAllArts());
+    navigate('/')
+  }
 
   if (!detail) {
     return <div>Loading...</div>;
@@ -83,6 +92,7 @@ const Detail = () => {
     )}`;
     window.open(url, '_blank');
   };
+
 
   return (
     <div className={styles.detailContainer}>
@@ -114,9 +124,19 @@ const Detail = () => {
         {detail.user && detail.user.userName.length > 0 ? (
           <div>
             <p>
-              <span>Published By:</span> <span> {detail.user.userName} </span>
+              <span>Published By:</span> <span className={styles.user}> {detail.user.userName} </span>
             </p>
           </div>
+        ) : null}
+      </div>
+      <div>
+       {detail.created ? (
+          <button className={styles.deleteButton} onClick={() => {
+            handleDelete();
+            homeButton();
+          }}>
+            Delete
+          </button>
         ) : null}
       </div>
       <div className={styles.actionsContainer}>
@@ -133,11 +153,7 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
-        {detail.created && detail.created === detail.user.userName ? (
-          <button className={styles.deleteButton} onClick={handleDelete}>
-            Delete
-          </button>
-        ) : null}
+       
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
