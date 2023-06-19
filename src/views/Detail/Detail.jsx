@@ -1,22 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  addFavorite,
-  clearDetail,
-  deleteFavorite,
-  getDetail,
-  deleteArt,
-  getAllArts,
-} from '../../redux/actions';
-import styles from './Detail.module.css';
-import {
-  FaShoppingCart,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-} from 'react-icons/fa';
+import { useParams, useNavigate } from 'react-router-dom';
+import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts } from '../../redux/actions';
+import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
+import Loader from '../../components/Loader/Loader';
 import frame from './pngegg.png';
+import styles from './Detail.module.css';
 
 const Detail = () => {
   const { id } = useParams();
@@ -26,9 +15,14 @@ const Detail = () => {
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getDetail(id));
+    setIsLoading(true);
+    dispatch(getDetail(id)).finally(() => {
+      setIsLoading(false);
+    });
+
     return () => {
       dispatch(clearDetail());
     };
@@ -59,51 +53,39 @@ const Detail = () => {
   const handleDelete = () => {
     dispatch(deleteArt(detail.id));
     window.alert('Artwork deleted successfully');
-      
-    // Aquí puedes redirigir al usuario a una página o hacer cualquier otra acción necesaria después de borrar la obra
+    dispatch(getAllArts());
+    navigate('/');
   };
 
-  function homeButton () {
-    dispatch(getAllArts());
-    navigate('/')
-  }
-
-  if (!detail) {
-    return <div>Loading...</div>;
-  }
-
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      detail.title
-    )}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
+  if (isLoading || !detail) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.detailContainer}>
       <div className={styles.imgContainer}>
         <div className={styles.frameContainer}>
           <div className={styles.frame}>
-            <img src={frame} alt="" />
+            <img src={frame} alt='' />
           </div>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={detail.image} alt={detail.title} />
+          <img src={detail.image} alt={detail.title} onLoad={() => setIsLoading(false)} />
         </div>
       </div>
       <div className={styles.propsContainer}>
@@ -129,16 +111,6 @@ const Detail = () => {
           </div>
         ) : null}
       </div>
-      <div>
-       {detail.created ? (
-          <button className={styles.deleteButton} onClick={() => {
-            handleDelete();
-            homeButton();
-          }}>
-            Delete
-          </button>
-        ) : null}
-      </div>
       <div className={styles.actionsContainer}>
         {isFav ? (
           <button className={styles.likeStyle} onClick={handleFavorite}>
@@ -153,17 +125,15 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
-       
+        {detail.created && (
+          <button className={styles.deleteButton} onClick={handleDelete}>
+            Delete
+          </button>
+        )}
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                className={`${styles.ratingStar} ${
-                  value <= rating ? styles.ratingStarActive : ''
-                }`}
-                onClick={() => handleRatingChange(value)}
-              >
+              <button key={value} className={`${styles.ratingStar} ${value <= rating ? styles.ratingStarActive : ''}`} onClick={() => handleRatingChange(value)}>
                 ★
               </button>
             ))}

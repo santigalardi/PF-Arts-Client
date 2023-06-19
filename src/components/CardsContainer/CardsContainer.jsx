@@ -6,6 +6,7 @@ import Card from '../../components/Card/Card';
 import Searchbar from '../../components/SearchBar/Searchbar';
 import Filters from '../../components/Filters/Filters';
 import CustomPagination from '../../components/Pagination/Pagination';
+import Loader from '../Loader/Loader';
 import styles from './CardsContainer.module.css';
 
 const CardsContainer = () => {
@@ -18,6 +19,7 @@ const CardsContainer = () => {
   const indexOfLastArt = currentPage * artsPerPage;
   const indexOfFirstArt = indexOfLastArt - artsPerPage;
   const [currentArts, setCurrentArts] = useState(allArts.slice(indexOfFirstArt, indexOfLastArt));
+  const [isLoading, setIsLoading] = useState(false);
 
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -28,8 +30,13 @@ const CardsContainer = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     if (allArts.length === 0) {
-      dispatch(getAllArts());
+      dispatch(getAllArts()).finally(() => {
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -51,8 +58,12 @@ const CardsContainer = () => {
           <Searchbar setCurrentPage={setCurrentPage} />
           <Filters setCurrentPage={setCurrentPage} />
         </div>
-        {currentArts.length === 0 ? (
-          <p className={styles['no-results']}>No se encontraron resultados.</p>
+        {isLoading ? (
+          <Loader />
+        ) : currentArts.length === 0 ? (
+          <div className={styles['no-results']}>
+            <p>No results found</p>
+          </div>
         ) : (
           <div className={styles['CardsContainer']}>
             {currentArts.map((art) => (
