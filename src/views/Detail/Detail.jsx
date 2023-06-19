@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
-import {
-  addFavorite,
-  clearDetail,
-  deleteFavorite,
-  getDetail,
-  deleteArt,
-  getAllArts,
-  updateArtwork,
-} from '../../redux/actions';
+import { useParams, useNavigate } from 'react-router-dom';
+import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts } from '../../redux/actions';
+import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram } from 'react-icons/fa';
+import Loader from '../../components/Loader/Loader';
+import frame from './pngegg.png';
 import styles from './Detail.module.css';
 import {
   FaShoppingCart,
@@ -32,9 +27,15 @@ const Detail = () => {
   const detail = useSelector((state) => state.detail);
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getDetail(id));
+    setIsLoading(true);
+    dispatch(getDetail(id)).finally(() => {
+      setIsLoading(false);
+    });
+
     return () => {
       dispatch(clearDetail());
     };
@@ -113,26 +114,23 @@ const Detail = () => {
   }
 
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      detail.title
-    )}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
+  if (isLoading || !detail) {
+    return <Loader />;
+  }
   const isCreatedByUser = detail.user && detail.user.userName.length > 0;
 
   return (
@@ -140,11 +138,11 @@ const Detail = () => {
       <div className={styles.imgContainer}>
         <div className={styles.frameContainer}>
           <div className={styles.frame}>
-            <img src={frame} alt="" />
+            <img src={frame} alt='' />
           </div>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={detail.image} alt={detail.title} />
+          <img src={detail.image} alt={detail.title} onLoad={() => setIsLoading(false)} />
         </div>
       </div>
       <div className={styles.propsContainer}>
@@ -257,17 +255,10 @@ const Detail = () => {
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
-
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                className={`${styles.ratingStar} ${
-                  value <= rating ? styles.ratingStarActive : ''
-                }`}
-                onClick={() => handleRatingChange(value)}
-              >
+              <button key={value} className={`${styles.ratingStar} ${value <= rating ? styles.ratingStarActive : ''}`} onClick={() => handleRatingChange(value)}>
                 ★
               </button>
             ))}
