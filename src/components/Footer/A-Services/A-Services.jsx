@@ -16,7 +16,7 @@ const AdvisoryServices = () => {
         <br />
         <br />
         <p>
-          <span>HENRY ART GALLERY ©</span> is a vibrant hub where art thrives
+          HENRY ART GALLERY © is a vibrant hub where art thrives
           and masterpieces find new homes. Whether you're an artist looking to
           showcase your work or an art enthusiast seeking visual inspiration,
           Arte&Pinturas has you covered. With a user-friendly platform, artists

@@ -9,6 +9,11 @@
   height: 30px;
 }
 
+.NavSearch::placeholder {
+  font-size: 12px;
+  font-style: oblique;
+}
+
 .BottonSearch:hover {
   background-color: #eaeaea;
   ;

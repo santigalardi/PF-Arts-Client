@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork } from '../../redux/actions';
+import {
+  addFavorite,
+  clearDetail,
+  deleteFavorite,
+  getDetail,
+  deleteArt,
+  getAllArts,
+  updateArtwork,
+} from '../../redux/actions';
 import Loader from '../../components/Loader/Loader';
 import frame from '../../assets/img/marco.png';
 import styles from './Detail.module.css';
-import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 'react-icons/fa';
+import {
+  FaShoppingCart,
+  FaTwitter,
+  FaFacebook,
+  FaInstagram,
+  FaPencilAlt,
+} from 'react-icons/fa';
 
 const Detail = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -114,17 +128,23 @@ const Detail = () => {
   }
 
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      detail.title
+    )}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
 
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href
+    )}`;
     window.open(url, '_blank');
   };
 
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(
+      window.location.href
+    )}`;
     window.open(url, '_blank');
   };
 
@@ -142,39 +162,72 @@ const Detail = () => {
           <img src={detail.image} alt={detail.title} />
         </div>
       </div>
-      <div className={styles.propsContainer}>
-        <h3>{detail.title}</h3>
-        <hr className={styles.hr} />
-        <p>
-          <span>Artist:</span> {isEditing ? <input type='text' value={artist} onChange={(e) => setArtist(e.target.value)} /> : <span>{detail.authorName}</span>}
-        </p>
-        <p>
-          <span>Year:</span> {isEditing ? <input type='text' value={year} onChange={(e) => setYear(e.target.value)} /> : <span>{detail.date}</span>}
-        </p>
-        <p>
-          <span>Dimensions:</span>{' '}
-          {isEditing ? (
-            <input type='text' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
-          ) : (
-            <span>
-              {detail.width} x {detail.height}
-            </span>
+      <div className={styles.all}>
+        <div className={styles.propsContainer}>
+          <h3>{detail.title}</h3>
+          <hr className={styles.hr} />
+          <p>
+            <span className={styles.prop}>Artist:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={artist}
+                onChange={(e) => setArtist(e.target.value)}
+              />
+            ) : (
+              <span>{detail.authorName}</span>
+            )}
+          </p>
+          <p>
+            <span className={styles.prop}>Year:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              />
+            ) : (
+              <span>{detail.date}</span>
+            )}
+          </p>
+          <p>
+            <span className={styles.prop}>Dimensions:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={dimensions}
+                onChange={(e) => setDimensions(e.target.value)}
+              />
+            ) : (
+              <span>
+                {detail.width} x {detail.height}
+              </span>
+            )}
+          </p>
+          <p>
+            <span className={styles.prop}>Price:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            ) : (
+              <span>{detail.price} M</span>
+            )}
+          </p>
+          {isCreatedByUser && (
+            <div>
+              <p>
+                <span className={styles.prop}>Published By:</span>{' '}
+                <Link to='/users' className={styles.user}>
+                  {detail.user.userName}
+                </Link>
+              </p>
+            </div>
           )}
-        </p>
-        <p>
-          <span>Price:</span> {isEditing ? <input type='text' value={price} onChange={(e) => setPrice(e.target.value)} /> : <span>{detail.price} M</span>}
-        </p>
-        {isCreatedByUser && (
-          <div>
-            <p>
-              <span>Published By:</span>{' '}
-              <Link to='/users' className={styles.user}>
-                {detail.user.userName}
-              </Link>
-            </p>
-          </div>
-        )}
-        <div>
+        </div>
+        <div className={styles.editC}>
           {isEditing ? (
             <>
               <button className={styles.updateButton} onClick={handleSave}>
@@ -186,7 +239,10 @@ const Detail = () => {
             </>
           ) : (
             isCreatedByUser && (
-              <button className={`${styles.updateButton} ${styles.editButton}`} onClick={handleUpdate}>
+              <button
+                className={`${styles.updateButton} ${styles.editButton}`}
+                onClick={handleUpdate}
+              >
                 <FaPencilAlt className={styles.updateIcon} />
               </button>
             )
@@ -221,7 +277,13 @@ const Detail = () => {
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
-              <button key={value} className={`${styles.ratingStar} ${value <= rating ? styles.ratingStarActive : ''}`} onClick={() => handleRatingChange(value)}>
+              <button
+                key={value}
+                className={`${styles.ratingStar} ${
+                  value <= rating ? styles.ratingStarActive : ''
+                }`}
+                onClick={() => handleRatingChange(value)}
+              >
                 ★
               </button>
             ))}
