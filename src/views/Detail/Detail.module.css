@@ -197,29 +197,56 @@
 }
 
 /* Estilos para botones Save y Cancel del edit */
-.updateButton {
+.updateButtonSave {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  background-color: transparent;
+  font-size: 12px;
+  background-color: rgb(146, 194, 146); /*fondo*/
   border: none;
   cursor: pointer;
   padding: 0;
   margin-bottom: 10px;
-  color: #ccc;
+  margin-right: 2px;
+  color: #ffffff; /*texto*/
   border-radius: 5px;
-  border: 2px solid #ccc;
   padding: 4px 5px;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.updateButton:focus {
+.updateButtonSave:focus {
   outline: none;
 }
 
-.updateButton:hover {
-  color: #000000;
+.updateButtonSave:hover {
+  background-color: rgb(95, 129, 95);
+  color: #ffffff;
+}
+
+.updateButtonCancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: rgb(121, 165, 190);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.updateButtonCancel:focus {
+  outline: none;
+}
+
+.updateButtonCancel:hover {
+  background-color: #3498db;
+  color: #ffffff;
 }
 
 .updateIcon {
@@ -248,8 +275,14 @@
   border: none;
   cursor: pointer;
   color: #999999;
+  background-color: transparent;
   padding:0;
   margin: 10px 0 0 0;
+}
+
+.editButton:hover {
+  background-color: transparent;
+  color: #c7c7c7;
 }
 
 .editButton:focus {

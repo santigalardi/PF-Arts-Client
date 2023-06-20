@@ -66,10 +66,6 @@ const Register = () => {
       });
       setSubmitted(false);
       setErrors({});
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
       navigate('/');
     } else {
       setShowAlert(true);
