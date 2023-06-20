@@ -34,12 +34,12 @@ const Searchbar = ({ setCurrentPage }) => {
       <form onSubmit={handleSubmit}>
         <input
           className={style['NavSearch']}
-          placeholder="Search..."
-          type="search"
+          placeholder='Search by title/author...'
+          type='search'
           value={searchQuery}
           onChange={handleChange}
         />
-        <button className={style['BottonSearch']} type="submit">
+        <button className={style['BottonSearch']} type='submit'>
           <MdManageSearch className={style['icon']} />
         </button>
       </form>

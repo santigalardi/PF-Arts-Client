@@ -26,6 +26,10 @@ const Register = () => {
     }
     if (!input.email) {
       errors.email = 'Need an email';
+    } else if (
+      !/^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/.test(input.email)
+    ) {
+      errors.email = 'Invalid email address';
     }
     return errors;
   }
@@ -62,20 +66,34 @@ const Register = () => {
       });
       setSubmitted(false);
       setErrors({});
-      navigate('/'); // Redirige al usuario a la ruta especificada
+
+      navigate('/');
     } else {
       setShowAlert(true);
     }
   }
 
-
   return (
     <div className={styles['login-container']}>
+      <div className={styles['landing-text']}>
+        <div className={styles['landing-title']}>
+          <h2>Welcome to Henry Art Gallery!</h2>
+        </div>
+        <p>
+          Discover a world of artistic inspiration and talent at HenryArt
+          Gallery, a premier platform dedicated to showcasing emerging artists.
+          <br />
+          <br />
+          Our mission is to provide a space where artists can share their work,
+          connect with fellow creatives, and find endless inspiration.
+        </p>
+      </div>
       <Container className='w-100 bg-primary rounded shadow'>
         {/* Background */}
         <Row className={`${styles['bg-box']} align-items-stretch`}>
           <Col className='d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded'></Col>
           {/*  */}
+
           <Col className='bg-white p-3 p-md-5 rounded-end'>
             <div className='logo-box text-center'>
               {/* <Image src='./img/logo.jpg' id='logo' width='100' alt='' /> */}

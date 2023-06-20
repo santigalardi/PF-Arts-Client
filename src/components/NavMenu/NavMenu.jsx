@@ -41,14 +41,16 @@ const NavMenu = () => {
         <ul>
           <li>
             <BsFillHouseFill />
-            <NavLink to="/" onClick={toggleMenu}>
+            <NavLink to='/' onClick={toggleMenu}>
+              {' '}
               Home
             </NavLink>
           </li>
           <hr />
           <li>
             <BsPersonFill />
-            <NavLink to="/users" onClick={toggleMenu}>
+            <NavLink to='/users' onClick={toggleMenu}>
+              {' '}
               Artists
             </NavLink>
           </li>
@@ -62,7 +64,8 @@ const NavMenu = () => {
           {/* <hr /> */}
           <li>
             <GiPencilBrush />
-            <NavLink to="/create" onClick={toggleMenu}>
+            <NavLink to='/create' onClick={toggleMenu}>
+              {' '}
               Create
             </NavLink>
           </li>
@@ -76,7 +79,8 @@ const NavMenu = () => {
           <hr /> */}
           <li>
             <FaPowerOff />
-            <NavLink to="/login" onClick={toggleMenu}>
+            <NavLink to='/login' onClick={toggleMenu}>
+              {' '}
               Login
             </NavLink>
           </li>
