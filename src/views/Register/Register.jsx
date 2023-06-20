@@ -66,6 +66,7 @@ const Register = () => {
       });
       setSubmitted(false);
       setErrors({});
+
       navigate('/');
     } else {
       setShowAlert(true);
