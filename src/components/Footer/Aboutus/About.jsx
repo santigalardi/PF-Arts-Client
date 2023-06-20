@@ -58,7 +58,7 @@ const AboutUs = () => {
           </a>
           <a
             className={style['Icons']}
-            href='https://github.com/AnabellaSimonpietri'
+            href='https://github.com/alexrobertCQ'
             target='_blank'
             rel='noreferrer'
           >

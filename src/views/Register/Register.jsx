@@ -1,5 +1,5 @@
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import googleLogo from '../../assets/img/google.png';
@@ -66,7 +66,6 @@ const Register = () => {
       });
       setSubmitted(false);
       setErrors({});
-
       navigate('/');
     } else {
       setShowAlert(true);

@@ -230,17 +230,17 @@ const Detail = () => {
         <div className={styles.editC}>
           {isEditing ? (
             <>
-              <button className={styles.updateButton} onClick={handleSave}>
+              <button className={styles.updateButtonSave} onClick={handleSave}>
                 Save
               </button>
-              <button className={styles.updateButton} onClick={handleCancel}>
+              <button className={styles.updateButtonCancel} onClick={handleCancel}>
                 Cancel
               </button>
             </>
           ) : (
             isCreatedByUser && (
               <button
-                className={`${styles.updateButton} ${styles.editButton}`}
+                className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`}
                 onClick={handleUpdate}
               >
                 <FaPencilAlt className={styles.updateIcon} />
