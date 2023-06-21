@@ -21,7 +21,7 @@ const UsersPage = () => {
     <div className={styles.usersPage}>
       <div className={styles.userCards}>
         {users.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <UserCard key={user.userId} user={user} />
         ))}
       </div>
     </div>

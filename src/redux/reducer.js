@@ -1,12 +1,27 @@
-import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART } from './actions';
+import {
+  GET_ARTS,
+  GET_ARTS_BY_TITLE,
+  GET_ARTS_BY_AUTHOR_NAME,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+  CLEAR_DETAIL,
+  GET_ARTS_BY_FILTERS,
+  POST_USERS,
+  DELETE_ART,
+  UPDATE_USER,
+} from './actions';
 
 const initialState = {
   allArts: [],
-  allUsers: [],
+  allUsers: [], //almacena todos los usuarios.
   filteredArts: [],
   arts: [],
   myFavorites: [],
   detail: {},
+  users: [], //almacena datos de usuarios individuales.
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -53,10 +68,26 @@ const rootReducer = (state = initialState, action) => {
         myFavorites: [...state.myFavorites, action.payload],
       };
 
+    case UPDATE_USER:
+      const updatedUser = action.payload;
+      const updatedUsers = state.allUsers.map((user) => {
+        if (user.userId === updatedUser.userId) {
+          return updatedUser;
+        }
+        return user;
+      });
+      return {
+        ...state,
+        allUsers: updatedUsers,
+        users: updatedUsers,
+      };
+
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload),
+        myFavorites: state.myFavorites.filter(
+          (fav) => fav.id !== action.payload
+        ),
       };
 
     case DELETE_ART:
