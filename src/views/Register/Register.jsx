@@ -17,6 +17,8 @@ const Register = () => {
   const [input, setInput] = useState({
     userName: '',
     email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -32,6 +34,14 @@ const Register = () => {
       errors.email = 'Need an email';
     } else if (!/^[\w.-]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+$/.test(input.email)) {
       errors.email = 'Invalid email address';
+    }
+    if (!input.password) {
+      errors.password = 'Need a password';
+    } else if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(input.password)) {
+      errors.password = 'Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number';
+    }
+    if (input.password !== input.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
     }
     return errors;
   }
@@ -55,25 +65,38 @@ const Register = () => {
     const errors = validate(input);
     setErrors(errors);
     setSubmitted(true);
-
-    if (Object.keys(errors).length === 0 && input.userName && input.email) {
+  
+    if (Object.keys(errors).length === 0 && input.userName && input.email && input.password && input.confirmPassword) {
       const updatedInput = {
-        ...input,
+        userName: input.userName,
+        email: input.email,
+        password: input.password,
       };
-      dispatch(postUsers(updatedInput));
-      setShowConfirmation(true);
-      setInput({
-        userName: '',
-        email: '',
-      });
-      setSubmitted(false);
-      setErrors({});
+      dispatch(postUsers(updatedInput))
+  .then(() => {
+    setShowConfirmation(true);
+    setInput({
+      userName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
+    setSubmitted(false);
+    setErrors({});
+    if (!showAlert) { //Revisar que realmente no redireccione al tener errores(user exists)
       navigate('/');
+    }
+  })
+  .catch((error) => {
+    setShowAlert(true);
+    console.log('Error:', error);
+  });
+
     } else {
       setShowAlert(true);
     }
   }
-
+  
   const handleClick = () => {
     signInWithPopup(auth, googleProvider).then((data) => {
       setValue(data.user.email);
@@ -120,14 +143,24 @@ const Register = () => {
             <div className='register'>
               <Form id='register' onSubmit={handleSubmit}>
                 <Form.Group className='mb-3'>
-                  <Form.Label htmlFor='userName'>User</Form.Label>
+                  <Form.Label htmlFor='userName'>Username:</Form.Label>
                   <Form.Control type='text' name='userName' value={input.userName} onChange={handleChange} className={styles.input} placeholder='Enter a user' />
                   {errors.userName && <p className={styles.error}>{errors.userName}</p>}
                 </Form.Group>
                 <Form.Group className='mb-3'>
-                  <Form.Label htmlFor='email'>Email</Form.Label>
+                  <Form.Label htmlFor='email'>Email:</Form.Label>
                   <Form.Control type='email' name='email' value={input.email} onChange={handleChange} className={styles.input} placeholder='Enter an email' />
                   {errors.email && <p className={styles.error}>{errors.email}</p>}
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='password'>Password:</Form.Label>
+                  <Form.Control type='password' name='password' value={input.password} onChange={handleChange} className={styles.input} placeholder='Enter a password' />
+                  {errors.password && <p className={styles.error}>{errors.password}</p>}
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                  <Form.Label htmlFor='confirmPassword'>Confirm Password:</Form.Label>
+                  <Form.Control type='password' name='confirmPassword' value={input.confirmPassword} onChange={handleChange} className={styles.input} placeholder='Confirm your password' />
+                  {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword}</p>}
                 </Form.Group>
                 <div className='d-grid'>
                   <Button variant='primary' type='submit' id='ingresar' className='btn-sm' onClick={handleSubmit}>
