@@ -14,6 +14,7 @@ export const DELETE_ART = 'DELETE_ART';
 export const GET_DETAIL = 'GET_DETAIL';
 export const CLEAR_DETAIL = 'CLEAR_DETAIL';
 export const POST_USERS = 'POST_USERS';
+export const UPDATE_USER = 'UPDATE_USER';
 export const GET_ARTS_BY_AUTHOR_NAME = 'GET_ARTS_BY_AUTHOR_NAME;';
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
@@ -82,6 +83,18 @@ export function postUsers(payload) {
   };
 }
 
+export function updateUser(userId, updatedUser) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`${URL}/users/${userId}`, updatedUser);
+      dispatch({ type: UPDATE_USER, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
 // Acción para agregar un favorito
 export function addFavorite(payload) {
   return async function (dispatch) {
@@ -129,7 +142,9 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
+    console.log(
+      `Filters received: century=${century}, order=${order}, created=${created}`
+    );
     try {
       const params = {};
 
