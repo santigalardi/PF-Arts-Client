@@ -12,6 +12,7 @@ import {
   POST_USERS,
   DELETE_ART,
   UPDATE_USER,
+  GET_FAVORITES//
 } from './actions';
 
 const initialState = {
@@ -48,6 +49,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allUsers: action.payload,
+      };
+    
+    case GET_FAVORITES://para mostrar los favorites
+      return {
+        ...state,
+        myFavorites: action.payload,
       };
 
     case POST_ART:

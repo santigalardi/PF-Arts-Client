@@ -18,6 +18,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const GET_ARTS_BY_AUTHOR_NAME = 'GET_ARTS_BY_AUTHOR_NAME;';
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
+export const GET_FAVORITES = 'GET_FAVORITES;'
 
 export const getAllArts = () => {
   return async function (dispatch) {
@@ -121,6 +122,18 @@ export function deleteFavorite(payload) {
     }
   };
 }
+//Ojo para mostrar los favoritos
+export const getFavorites = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get('/favorites');
+      dispatch({ type: GET_FAVORITES, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
 export const getDetail = (id) => {
   return async function (dispatch) {
