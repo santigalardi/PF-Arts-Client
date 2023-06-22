@@ -1,35 +1,31 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { postUsers } from '../../redux/actions';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { auth, googleProvider } from '../../Firebase/config';
 import { signInWithPopup } from 'firebase/auth';
+import axios from 'axios';
 import googleLogo from '../../assets/img/google.png';
 import styles from './Login.module.css';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
-  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
-    userName: '',
-    email: '',
+    username: '',
+    password: '',
   });
-
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   function validate(input) {
     let errors = {};
-    if (!input.userName) {
-      errors.userName = 'Need a user';
+    if (!input.username) {
+      errors.username = 'Username is required';
     }
-    if (!input.email) {
-      errors.email = 'Need an email';
+    if (!input.password) {
+      errors.password = 'Password is required';
     }
     return errors;
   }
@@ -48,35 +44,54 @@ const Login = () => {
     setShowAlert(false);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const errors = validate(input);
     setErrors(errors);
     setSubmitted(true);
 
-    if (Object.keys(errors).length === 0 && input.userName && input.email) {
-      const updatedInput = {
-        ...input,
-      };
-      dispatch(postUsers(updatedInput));
-      setShowConfirmation(true);
-      setInput({
-        userName: '',
-        email: '',
-      });
-      setSubmitted(false);
-      setErrors({});
-      navigate('/'); // Redirige al usuario a la ruta especificada
+    if (Object.keys(errors).length === 0 && input.username && input.password) {
+      try {
+        const response = await axios.post('http://localhost:3001/users/login', {
+          username: input.username,
+          password: input.password,
+        });
+
+        const { token, success } = response.data;
+
+        if (success) {
+          localStorage.setItem('token', token);
+          console.log(token);
+          setInput({
+            username: '',
+            password: '',
+          });
+          navigate('/');
+        } else {
+          setLoginError(true); // Mostrar mensaje de error
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setLoginError(true); // Mostrar mensaje de error
+      }
     } else {
-      setShowAlert(true);
+      setLoginError(true); // Mostrar mensaje de error
     }
   }
 
-  const handleClick = () => {
-    signInWithPopup(auth, googleProvider).then((data) => {
-      setValue(data.user.email);
-      localStorage.setItem('email', data.user.email);
-    });
+  const handleGoogleSignIn = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((data) => {
+        setInput({
+          ...input,
+          username: data.user.email,
+        });
+        localStorage.setItem('email', data.user.email);
+      })
+      .catch((error) => {
+        console.error('Google Sign-in Error:', error);
+        setLoginError(true); // Mostrar mensaje de error
+      });
   };
 
   useEffect(() => {
@@ -90,7 +105,10 @@ const Login = () => {
   }, [navigate]);
 
   useEffect(() => {
-    setValue(localStorage.getItem('email'));
+    setInput({
+      ...input,
+      username: localStorage.getItem('email') || '',
+    });
   }, []);
 
   return (
@@ -107,14 +125,30 @@ const Login = () => {
             <div className='login'>
               <Form id='login' onSubmit={handleSubmit}>
                 <Form.Group className='mb-3'>
-                  <Form.Label htmlFor='user'>User</Form.Label>
-                  <Form.Control id='user' type='text' name='userName' value={input.userName} onChange={handleChange} className={styles.input} placeholder='Enter a user' />
-                  {errors.userName && <p className={styles.error}>{errors.userName}</p>}
+                  <Form.Label htmlFor='username'>Username:</Form.Label>
+                  <Form.Control
+                    id='username'
+                    type='text'
+                    name='username'
+                    value={input.username}
+                    onChange={handleChange}
+                    className={styles.input}
+                    placeholder='Enter your username'
+                  />
+                  {errors.username && <p className={styles.error}>{errors.username}</p>}
                 </Form.Group>
                 <Form.Group className='mb-3'>
-                  <Form.Label htmlFor='pass'>Email</Form.Label>
-                  <Form.Control type='email' id='pass' name='email' value={input.email} onChange={handleChange} className={styles.input} placeholder='Enter an email' />
-                  {errors.email && <p className={styles.error}>{errors.email}</p>}
+                  <Form.Label htmlFor='password'>Password:</Form.Label>
+                  <Form.Control
+                    id='password'
+                    type='password'
+                    name='password'
+                    value={input.password}
+                    onChange={handleChange}
+                    className={styles.input}
+                    placeholder='Enter your password'
+                  />
+                  {errors.password && <p className={styles.error}>{errors.password}</p>}
                 </Form.Group>
                 <div className='d-grid'>
                   <Button variant='primary' type='submit' id='ingresar' className='btn-sm' onClick={handleSubmit}>
@@ -122,8 +156,9 @@ const Login = () => {
                   </Button>
                 </div>
                 {showConfirmation && <p className={styles.confirmation}>Ready!</p>}
+                {showAlert && <p className={styles.error}>Invalid username or password</p>}
+                {loginError && <p className={styles.error}>Invalid username or password</p>}
                 <div className='mb-3'>
-                  <p className='text-danger mt-2' id='mensaje'></p>
                   <p>
                     Don&apos;t have an account? <NavLink to='/register'>Sign up</NavLink>
                   </p>
@@ -135,7 +170,7 @@ const Login = () => {
               <Container className='w-100 my-3'>
                 <Row>
                   <Col>
-                    <Button variant='outline-danger' className='w-100 my-1' onClick={handleClick}>
+                    <Button variant='outline-danger' className='w-100 my-1' onClick={handleGoogleSignIn}>
                       <Row className='align-items-center'>
                         <Col xs={1} className='d-block'>
                           <Image src={googleLogo} width='24' alt='' />
