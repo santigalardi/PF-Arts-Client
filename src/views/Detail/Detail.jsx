@@ -80,6 +80,11 @@ const Detail = () => {
     }
   };
 
+  const handleBuy = () => {
+    dispatch(getDetail(id));
+    navigate('/cart');
+  };
+
   const handleRatingChange = (value) => {
     setRating(value);
   };
@@ -233,7 +238,10 @@ const Detail = () => {
               <button className={styles.updateButtonSave} onClick={handleSave}>
                 Save
               </button>
-              <button className={styles.updateButtonCancel} onClick={handleCancel}>
+              <button
+                className={styles.updateButtonCancel}
+                onClick={handleCancel}
+              >
                 Cancel
               </button>
             </>
@@ -270,7 +278,7 @@ const Detail = () => {
             🤍
           </button>
         )}
-        <button className={styles.cartButton}>
+        <button className={styles.cartButton} onClick={handleBuy}>
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
