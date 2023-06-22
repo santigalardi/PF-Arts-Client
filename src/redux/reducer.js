@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_ARTS,
   GET_ARTS_BY_TITLE,
