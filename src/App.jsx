@@ -14,6 +14,7 @@ import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 import Users from './views/Users/Users';
+import Cart from './views/Cart/Cart';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -28,22 +29,23 @@ function App() {
     <div className={`App ${darkMode ? 'dark' : ''}`}>
       {location.pathname !== '/register' && <Navbar />}
 
-      <button className="darkModeButton" onClick={toggleDarkMode}>
-        {darkMode ? <FaSun className="icon" /> : <FaMoon className="icon" />}
+      <button className='darkModeButton' onClick={toggleDarkMode}>
+        {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
 
       <Routes>
-        {isLandingPage && <Route path="/" element={<Home />} />}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/create" element={<Form />} />
-        <Route path="/advisory" element={<AdvisoryServices />} />
-        <Route path="/about-us" element={<Aboutus />} />
-        <Route path="/FAQ" element={<Buyer />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/users" element={<Users />} />
+        {isLandingPage && <Route path='/' element={<Home />} />}
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/detail/:id' element={<Detail />} />
+        <Route path='/create' element={<Form />} />
+        <Route path='/advisory' element={<AdvisoryServices />} />
+        <Route path='/about-us' element={<Aboutus />} />
+        <Route path='/FAQ' element={<Buyer />} />
+        <Route path='/favorites' element={<Favorites />} />
+        <Route path='/users' element={<Users />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
       {location.pathname !== '/register' && <Footer />}
     </div>
