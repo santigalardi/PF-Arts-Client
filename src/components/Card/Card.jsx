@@ -7,7 +7,7 @@ import styles from './Card.module.css';
 
 function Card({  art }) {
   const dispatch = useDispatch();
-  const { image } = art;
+  const { imageURL } = art;
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector(state => state.myFavorites);
 
@@ -33,7 +33,7 @@ function Card({  art }) {
         {isFav ? '❤️' : '🤍'}
       </button>
       <div className={styles['imgContainer']}>
-        <img src={image} alt={'pic'} />
+        <img src={imageURL} alt={'pic'} />
       </div>
       <div className={styles['propsContainer']}/>
     </div>
@@ -42,7 +42,7 @@ function Card({  art }) {
 
 Card.propTypes = {
   art: PropTypes.shape({
-    image: PropTypes.string.isRequired,
+    imageURL: PropTypes.string.isRequired,
   }).isRequired,
 };
 
