@@ -33,7 +33,7 @@ const UserCard = ({ user }) => {
         image: image,
       };
 
-      dispatch(updateUser(user.userId, updatedUser))
+      dispatch(updateUser(updatedUser))
         .then(() => {
           setIsEditing(false);
         })
