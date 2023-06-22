@@ -83,11 +83,17 @@ export function postUsers(payload) {
     }
   };
 }
-
-export function updateUser(userId, updatedUser) {
+export function updateUser(updatedUser) {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`${URL}/users/${userId}`, updatedUser);
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log(token);
+      const response = await axios.put(`${URL}/users/edit`, updatedUser, config);
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -95,6 +101,7 @@ export function updateUser(userId, updatedUser) {
     }
   };
 }
+
 
 // Acción para agregar un favorito
 export function addFavorite(payload) {

@@ -84,7 +84,7 @@ const Register = () => {
     setSubmitted(false);
     setErrors({});
     if (!showAlert) { //Revisar que realmente no redireccione al tener errores(user exists)
-      navigate('/');
+      navigate('/login');
     }
   })
   .catch((error) => {
