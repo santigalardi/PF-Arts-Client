@@ -1,7 +1,12 @@
-// import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+import {
+  FaUser,
+  FaArrowsAltH,
+  FaArrowsAltV,
+  FaDollarSign,
+} from 'react-icons/fa';
 import styles from './Form.module.css';
 
 export default function Form() {
@@ -26,14 +31,7 @@ export default function Form() {
     if (!input.title) {
       errors.title = 'Need a title';
     }
-    if (!input.image && !input.imageUrl) {
-      errors.image = 'Need an image URL or upload an image';
-    } else if (
-      input.image &&
-      !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(input.image)
-    ) {
-      errors.image = 'Invalid URL';
-    }
+
     if (!input.authorName) {
       errors.authorName = 'Need an author name';
     }
@@ -56,21 +54,16 @@ export default function Form() {
   }
 
   function handleChange(e) {
+    console.log('handleChange called');
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-    setErrors(
-      validate({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-    );
-    setShowAlert(false);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log('handleSubmit called');
 
     const errors = validate(input);
     setErrors(errors);
@@ -79,7 +72,6 @@ export default function Form() {
     if (
       Object.keys(errors).length === 0 &&
       input.title &&
-      input.image &&
       input.authorName &&
       input.date &&
       input.width &&
@@ -90,6 +82,7 @@ export default function Form() {
         ...input,
       };
       dispatch(postArts(updatedInput));
+      console.log('dispatch called');
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -110,7 +103,7 @@ export default function Form() {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    //acá logica de clou
+    // lógica para procesar el archivo seleccionado
     console.log('Imagen seleccionada:', file);
   };
 
@@ -134,31 +127,37 @@ export default function Form() {
             />
             {errors.title && <p className={styles.error}>{errors.title}</p>}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Image URL: </label>
-            <input
-              type='text'
-              value={input.image}
-              name='image'
-              onChange={handleChange}
-              className={styles.input}
-              placeholder='Enter an image URL or...'
-            />
-            {submitted && errors.image && (
-              <p className={styles.error}>{errors.image}</p>
-            )}
-          </div>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Image: </label>
+            <label className={styles.label}>Image:</label>
             <label className={styles.uploadButton}>
               <input
                 type='file'
+                value={input.image}
+                name='image'
                 accept='image/*'
                 onChange={handleImageChange}
               />
               Upload Image
             </label>
+            {input.image && (
+              <p className={styles.fileInfo}>
+                Selected file {input.image.name}
+              </p>
+            )}
           </div>
+          <div className={styles.formGroup}>
+            <label className={styles.labelImageURL}> or image URL: </label>
+            <input
+              type='text'
+              value={input.image}
+              name='image'
+              onChange={handleChange}
+              className={styles.inputImageURL}
+              placeholder='Enter an image URL'
+            />
+          </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Author: </label>
             <input
@@ -187,8 +186,12 @@ export default function Form() {
               <p className={styles.error}>{errors.date}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Width: </label>
+            <label className={styles.label}>
+              {' '}
+              <FaArrowsAltH className={`${styles.icon} icon`} /> Width:{' '}
+            </label>
             <input
               type='number'
               value={input.width}
@@ -202,7 +205,9 @@ export default function Form() {
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Height: </label>
+            <label className={styles.label}>
+              <FaArrowsAltV className={`${styles.icon} icon`} /> Height:{' '}
+            </label>
             <input
               type='number'
               value={input.height}
@@ -215,29 +220,36 @@ export default function Form() {
               <p className={styles.error}>{errors.height}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Price: </label>
+            <label className={styles.label}>
+              {' '}
+              <FaDollarSign className={`${styles.icon} icon`} /> Price:{' '}
+            </label>
             <input
               type='number'
               value={input.price}
               name='price'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter a price...'
+              placeholder='Enter a price'
             />
             {submitted && errors.price && (
               <p className={styles.error}>{errors.price}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>userId: </label>
+            <label className={styles.label}>
+              <FaUser className={`${styles.icon} icon`} /> userId:{' '}
+            </label>
             <input
               type='text'
               value={input.userId}
               name='userId'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter a userId...'
+              placeholder='Enter a userId'
             />
             {submitted && errors.userId && (
               <p className={styles.error}>{errors.userId}</p>
