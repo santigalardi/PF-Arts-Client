@@ -26,9 +26,12 @@ export default function Form() {
     if (!input.title) {
       errors.title = 'Need a title';
     }
-    if (!input.image) {
-      errors.image = 'Need an image URL';
-    } else if (!/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(input.image)) {
+    if (!input.image && !input.imageUrl) {
+      errors.image = 'Need an image URL or upload an image';
+    } else if (
+      input.image &&
+      !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(input.image)
+    ) {
       errors.image = 'Invalid URL';
     }
     if (!input.authorName) {
@@ -105,6 +108,12 @@ export default function Form() {
     }
   }
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    //acá logica de clou
+    console.log('Imagen seleccionada:', file);
+  };
+
   return (
     <div>
       <div className={styles.container}>
@@ -126,18 +135,29 @@ export default function Form() {
             {errors.title && <p className={styles.error}>{errors.title}</p>}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Image: </label>
+            <label className={styles.label}>Image URL: </label>
             <input
               type='text'
               value={input.image}
               name='image'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter an image URL'
+              placeholder='Enter an image URL or...'
             />
             {submitted && errors.image && (
               <p className={styles.error}>{errors.image}</p>
             )}
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Image: </label>
+            <label className={styles.uploadButton}>
+              <input
+                type='file'
+                accept='image/*'
+                onChange={handleImageChange}
+              />
+              Upload Image
+            </label>
           </div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Author: </label>

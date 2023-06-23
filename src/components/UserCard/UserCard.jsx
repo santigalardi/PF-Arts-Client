@@ -127,12 +127,19 @@ const UserCard = ({ user }) => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className={styles.input}
-              placeholder='Enter an location'
+              placeholder='Enter a location'
             />
           </p>
           <p>
             Profile picture:{' '}
-            <input type='file' accept='image/*' onChange={handleImageChange} />
+            <label className={styles.uploadButton}>
+              <input
+                type='file'
+                accept='image/*'
+                onChange={handleImageChange}
+              />
+              Upload Image
+            </label>
           </p>
           <button className={styles.saveButton} onClick={handleSave}>
             Save

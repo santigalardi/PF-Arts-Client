@@ -164,7 +164,7 @@ const Detail = () => {
           </div>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={detail.imageURL} alt={detail.title} />
+          <img src={detail.image} alt={detail.title} />
         </div>
       </div>
       <div className={styles.all}>
