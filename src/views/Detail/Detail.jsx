@@ -164,7 +164,7 @@ const Detail = () => {
           </div>
         </div>
         <div className={styles.imageWrapper}>
-          <img src={detail.imageURL} alt={detail.title} />
+          <img src={detail.image} alt={detail.title} />
         </div>
       </div>
       <div className={styles.all}>
@@ -218,7 +218,7 @@ const Detail = () => {
                 onChange={(e) => setPrice(e.target.value)}
               />
             ) : (
-              <span>{detail.price} M</span>
+              <span>{detail.price} USD</span>
             )}
           </p>
           {isCreatedByUser && (
