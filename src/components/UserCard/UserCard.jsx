@@ -116,15 +116,15 @@ const UserCard = ({ user }) => {
               <span className={styles.error}>{errors.userName}</span>
             )}
           </p>
-          <p>
+          {/* <p>
             Description:{' '}
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={styles.input}
+              className={styles.inputDescription}
               placeholder='Enter a description'
             />
-          </p>
+          </p> */}
           <p>
             Phone Number:{' '}
             <input
@@ -173,9 +173,9 @@ const UserCard = ({ user }) => {
         <>
           <p>Email: {user.email}</p>
           <p>UserId: {user.userId}</p>
-          <p>Description: {user.description}</p>
+          {/* <p>Description: {user.description}</p> */}
           <p>Phone Number: {user.phoneNumber}</p>
-          <p>Location: {user.location}</p>
+          <p>Country: {user.location}</p>
           <button className={styles.editButton} onClick={handleEdit}>
             <i className={`fas fa-pencil-alt ${styles.editIcon}`} />
           </button>
