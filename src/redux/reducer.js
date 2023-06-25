@@ -91,6 +91,7 @@ const rootReducer = (state = initialState, action) => {
         }
         return user;
       });
+
       return {
         ...state,
         allUsers: updatedUsers,
@@ -100,9 +101,7 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter(
-          (fav) => fav.id !== action.payload
-        ),
+        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload),
       };
 
     case DELETE_ART:

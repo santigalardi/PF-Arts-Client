@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import { auth, googleProvider } from '../../Firebase/config';
-import { signInWithPopup } from 'firebase/auth';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import axios from 'axios';
-import googleLogo from '../../assets/img/google.png';
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
   function validate(input) {
     let errors = {};
     if (!input.username) {
-      errors.username = 'Username is required';
+      errors.username = 'Username is required|';
     }
     if (!input.password) {
       errors.password = 'Password is required';
@@ -79,31 +79,6 @@ const Login = () => {
     }
   }
 
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, googleProvider)
-      .then((data) => {
-        setInput({
-          ...input,
-          username: data.user.email,
-        });
-        localStorage.setItem('email', data.user.email);
-      })
-      .catch((error) => {
-        console.error('Google Sign-in Error:', error);
-        setLoginError(true); // Mostrar mensaje de error
-      });
-  };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate('/');
-      }
-    });
-
-    return unsubscribe;
-  }, [navigate]);
-
   useEffect(() => {
     setInput({
       ...input,
@@ -126,28 +101,12 @@ const Login = () => {
               <Form id='login' onSubmit={handleSubmit}>
                 <Form.Group className='mb-3'>
                   <Form.Label htmlFor='username'>Username:</Form.Label>
-                  <Form.Control
-                    id='username'
-                    type='text'
-                    name='username'
-                    value={input.username}
-                    onChange={handleChange}
-                    className={styles.input}
-                    placeholder='Enter your username'
-                  />
+                  <Form.Control id='username' type='text' name='username' value={input.username} onChange={handleChange} className={styles.input} placeholder='Enter your username' />
                   {errors.username && <p className={styles.error}>{errors.username}</p>}
                 </Form.Group>
                 <Form.Group className='mb-3'>
                   <Form.Label htmlFor='password'>Password:</Form.Label>
-                  <Form.Control
-                    id='password'
-                    type='password'
-                    name='password'
-                    value={input.password}
-                    onChange={handleChange}
-                    className={styles.input}
-                    placeholder='Enter your password'
-                  />
+                  <Form.Control id='password' type='password' name='password' value={input.password} onChange={handleChange} className={styles.input} placeholder='Enter your password' />
                   {errors.password && <p className={styles.error}>{errors.password}</p>}
                 </Form.Group>
                 <div className='d-grid'>
@@ -164,25 +123,8 @@ const Login = () => {
                   </p>
                 </div>
               </Form>
-
               {/* LOGIN REDES SOCIALES */}
-
-              <Container className='w-100 my-3'>
-                <Row>
-                  <Col>
-                    <Button variant='outline-danger' className='w-100 my-1' onClick={handleGoogleSignIn}>
-                      <Row className='align-items-center'>
-                        <Col xs={1} className='d-block'>
-                          <Image src={googleLogo} width='24' alt='' />
-                        </Col>
-                        <Col xs={10} md={10} className='text-center'>
-                          Log in with Google
-                        </Col>
-                      </Row>
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
+              <GoogleButton />
             </div>
           </Col>
         </Row>

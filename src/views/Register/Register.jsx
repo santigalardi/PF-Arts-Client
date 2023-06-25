@@ -2,17 +2,14 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { auth, googleProvider } from '../../Firebase/config';
-import { signInWithPopup } from 'firebase/auth';
 import { postUsers } from '../../redux/actions';
-import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import googleLogo from '../../assets/img/google.png';
+import GoogleButton from '../../components/GoogleButton/GoogleButton';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './Register.module.css';
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [value, setValue] = useState('');
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     userName: '',
@@ -65,7 +62,7 @@ const Register = () => {
     const errors = validate(input);
     setErrors(errors);
     setSubmitted(true);
-  
+
     if (Object.keys(errors).length === 0 && input.userName && input.email && input.password && input.confirmPassword) {
       const updatedInput = {
         userName: input.userName,
@@ -73,54 +70,33 @@ const Register = () => {
         password: input.password,
       };
       dispatch(postUsers(updatedInput))
-  .then(() => {
-    setShowConfirmation(true);
-    setInput({
-      userName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
-    setSubmitted(false);
-    setErrors({});
-    if (!showAlert) { //Revisar que realmente no redireccione al tener errores(user exists)
-      navigate('/login');
-    }
-  })
-  .catch((error) => {
-    setShowAlert(true);
-    console.log('Error:', error);
-  });
-
+        .then(() => {
+          setShowConfirmation(true);
+          setInput({
+            userName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          });
+          setSubmitted(false);
+          setErrors({});
+          if (!showAlert) {
+            //Revisar que realmente no redireccione al tener errores(user exists)
+            navigate('/login');
+          }
+        })
+        .catch((error) => {
+          setShowAlert(true);
+          console.log('Error:', error);
+        });
     } else {
       setShowAlert(true);
     }
   }
-  
-  const handleClick = () => {
-    signInWithPopup(auth, googleProvider).then((data) => {
-      setValue(data.user.email);
-      localStorage.setItem('email', data.user.email);
-    });
-  };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate('/');
-      }
-    });
-
-    return unsubscribe;
-  }, [navigate]);
-
-  useEffect(() => {
-    setValue(localStorage.getItem('email'));
-  }, []);
 
   return (
     <div className={styles['login-container']}>
-      <div className={styles['landing-text']}>
+      {/* <div className={styles['landing-text']}>
         <div className={styles['landing-title']}>
           <h2>Welcome to Henry Art Gallery!</h2>
         </div>
@@ -130,7 +106,7 @@ const Register = () => {
           <br />
           Our mission is to provide a space where artists can share their work, connect with fellow creatives, and find endless inspiration.
         </p>
-      </div>
+      </div> */}
       <Container className='w-100 bg-primary rounded shadow'>
         {/* Background */}
         <Row className={`${styles['bg-box']} align-items-stretch`}>
@@ -177,22 +153,7 @@ const Register = () => {
                 </div>
               </Form>
               {/* LOGIN REDES SOCIALES */}
-              <Container className='w-100 my-3'>
-                <Row>
-                  <Col>
-                    <Button variant='outline-danger' className='w-100 my-1' onClick={handleClick}>
-                      <Row className='align-items-center'>
-                        <Col xs={1} className='d-block'>
-                          <Image src={googleLogo} width='24' alt='' />
-                        </Col>
-                        <Col xs={10} md={10} className='text-center'>
-                          Continue with Google
-                        </Col>
-                      </Row>
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
+              <GoogleButton />
             </div>
           </Col>
         </Row>
