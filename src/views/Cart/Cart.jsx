@@ -13,22 +13,41 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loadScript } from '@paypal/paypal-js';
-import { clearDetail } from '../../redux/actions';
+import { clearDetail, setCart } from '../../redux/actions'; //FALTA SETCART
 import styles from './Cart.module.css';
 
 //Poner json web token para almacenar carrito
 const Checkout = () => {
   const [showDetail, setShowDetail] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
   const selectedArtwork = useSelector((state) => state.detail);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   let paypal;
 
+  const saveCartToLocalStorage = () => {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+  };
+
+  useEffect(() => {
+    const cartFromLocalStorage = localStorage.getItem('cart');
+    if (cartFromLocalStorage) {
+      dispatch(setCart(JSON.parse(cartFromLocalStorage)));
+    }
+  }, []);
+
+  useEffect(() => {
+    saveCartToLocalStorage();
+  }, [cartItems]);
+
   const removeArtworkFromCart = () => {
     // Lógica para eliminar el artículo del carrito
-    // Me falta despachar una acción de Redux para actualizar el estado del carrito
-    // Por ejemplo: dispatch(removeArtwork(selectedArtwork.id));
+    const updatedCart = cartItems.filter(
+      (item) => item.id !== selectedArtwork.id
+    );
+    setCartItems(updatedCart);
     setShowDetail(false);
+    dispatch(setCart(updatedCart)); // Actualizar el carrito en Redux
   };
 
   useEffect(() => {
