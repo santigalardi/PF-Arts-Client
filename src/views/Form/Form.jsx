@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import {
@@ -54,16 +54,23 @@ export default function Form() {
   }
 
   function handleChange(e) {
-    console.log('handleChange called');
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'title') {
+      const title = e.target.value;
+      const capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+      setInput({
+        ...input,
+        title: capitalizedTitle,
+      });
+    } else {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('handleSubmit called');
 
     const errors = validate(input);
     setErrors(errors);
@@ -82,7 +89,6 @@ export default function Form() {
         ...input,
       };
       dispatch(postArts(updatedInput));
-      console.log('dispatch called');
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -103,8 +109,7 @@ export default function Form() {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    // lógica para procesar el archivo seleccionado
-    console.log('Imagen seleccionada:', file);
+    setInput({ ...input, image: file });
   };
 
   return (
@@ -130,21 +135,13 @@ export default function Form() {
           <div className={styles.separator}></div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Image:</label>
-            <label className={styles.uploadButton}>
-              <input
-                type='file'
-                value={input.image}
-                name='image'
-                accept='image/*'
-                onChange={handleImageChange}
-              />
-              Upload Image
-            </label>
-            {input.image && (
-              <p className={styles.fileInfo}>
-                Selected file {input.image.name}
-              </p>
-            )}
+            <input
+              type='file'
+              name='image'
+              accept='image/*'
+              onChange={handleImageChange}
+            />
+            {input.image && <p className={styles.fileInfo}>Selected file</p>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.labelImageURL}> or image URL: </label>
@@ -244,7 +241,7 @@ export default function Form() {
               <FaUser className={`${styles.icon} icon`} /> userId:{' '}
             </label>
             <input
-              type='text'
+              type='number'
               value={input.userId}
               name='userId'
               onChange={handleChange}
