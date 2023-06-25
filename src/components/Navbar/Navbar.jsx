@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { auth } from '../../Firebase/config';
@@ -10,6 +11,9 @@ function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +31,7 @@ function Navbar() {
 
   const handleLogout = () => {
     signOut(auth).then(() => {
-      localStorage.removeItem('email');
+      localStorage.clear();
       setLoggedIn(false);
     });
   };
@@ -37,12 +41,15 @@ function Navbar() {
       if (user) {
         localStorage.setItem('email', user.email);
         setLoggedIn(true);
+        const storedProfilePhotoUrl = localStorage.getItem('profilePhotoUrl'); // Leer la URL del localStorage
+        setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
+        const storedFirstName = localStorage.getItem('firstName');
+        setFirstName(storedFirstName);
       } else {
         localStorage.removeItem('email');
         setLoggedIn(false);
       }
     });
-
     return unsubscribe;
   }, []);
 
@@ -52,12 +59,15 @@ function Navbar() {
       <div className='navbar-title'>Henry Art Gallery</div>
       <div className='navlinks-container'>
         {loggedIn ? (
-          <NavLink className='navlinks' onClick={handleLogout}>
-            Log out
-          </NavLink>
+          <div className='profile-menu' onClick={handleLogout}>
+            <p className='user-welcome'>{firstName}</p>
+            <div className='profile-menu-photo-container'>
+              <img src={profilePhotoUrl} alt='' className='profile-menu-photo' />
+            </div>
+          </div>
         ) : (
           <NavLink to='/login' className='navlinks'>
-            Log in / Sign up
+            Log in
           </NavLink>
         )}
         <NavLink to='/cart' className='navlinks'>

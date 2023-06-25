@@ -38,7 +38,6 @@
   /* Ajusta los valores de sombra según tus necesidades */
 }
 
-
 .navbar-menu,
 .navbar-title,
 .navlinks-container,
@@ -46,7 +45,6 @@
   display: flex;
   align-items: center;
   padding-left: 0.7rem;
-
 }
 
 .navbar-title {
@@ -66,7 +64,6 @@
   text-decoration: none;
   color: rgb(53, 53, 53);
   /* Color de texto */
-  padding: 10px;
   font-size: 20px;
   transition: color 0.3s ease;
   /* Transición de color de texto */
@@ -121,4 +118,31 @@
 .cartLogo {
   width: 30px;
   height: 30px;
+}
+
+.profile-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.user-welcome {
+  margin: 10px 10px;
+}
+
+.profile-menu-photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 10px 0 0;
+}
+
+.profile-menu-photo-container .profile-menu-photo {
+  width: 30px;
+  margin: 0;
 }

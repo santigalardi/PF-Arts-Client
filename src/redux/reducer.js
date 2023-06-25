@@ -1,20 +1,5 @@
 /* eslint-disable no-case-declarations */
-import {
-  GET_ARTS,
-  GET_ARTS_BY_TITLE,
-  GET_ARTS_BY_AUTHOR_NAME,
-  GET_USERS,
-  POST_ART,
-  ADD_FAVORITE,
-  DELETE_FAVORITE,
-  GET_DETAIL,
-  CLEAR_DETAIL,
-  GET_ARTS_BY_FILTERS,
-  POST_USERS,
-  DELETE_ART,
-  UPDATE_USER,
-  GET_FAVORITES,
-} from './actions';
+import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, GET_FAVORITES } from './actions';
 
 const initialState = {
   allArts: [],
@@ -84,6 +69,7 @@ const rootReducer = (state = initialState, action) => {
         }
         return user;
       });
+
       return {
         ...state,
         allUsers: updatedUsers,
@@ -93,9 +79,7 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter(
-          (fav) => fav.id !== action.payload
-        ),
+        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload),
       };
 
     case DELETE_ART:

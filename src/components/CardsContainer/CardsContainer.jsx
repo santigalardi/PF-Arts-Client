@@ -67,7 +67,7 @@ const CardsContainer = () => {
         ) : (
           <div className={styles['CardsContainer']}>
             {currentArts.map((art) => (
-              <NavLink to={`/detail/${art.id}`} key={art.id} className={styles.link}>
+              <NavLink to={`/detail/${art.artworkId}`} key={art.artworkId} className={styles.link}>
                 <Card art={art} />
               </NavLink>
             ))}

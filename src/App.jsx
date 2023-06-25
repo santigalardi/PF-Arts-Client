@@ -27,12 +27,10 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
-      {location.pathname !== '/register' && <Navbar />}
-
+      {location.pathname !== '/register' && location.pathname !== '/login' && <Navbar />}
       <button className='darkModeButton' onClick={toggleDarkMode}>
         {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
-
       <Routes>
         {isLandingPage && <Route path='/' element={<Home />} />}
         <Route path='/login' element={<Login />} />
@@ -47,7 +45,7 @@ function App() {
         <Route path='/users' element={<Users />} />
         <Route path='/cart' element={<Cart />} />
       </Routes>
-      {location.pathname !== '/register' && <Footer />}
+      {location.pathname !== '/register' && location.pathname !== '/login' && <Footer />}
     </div>
   );
 }
