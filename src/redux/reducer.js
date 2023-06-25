@@ -14,6 +14,7 @@ import {
   DELETE_ART,
   UPDATE_USER,
   GET_FAVORITES,
+  GET_USERS_DETAIL
 } from './actions';
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   myFavorites: [],
   detail: {},
   users: [], //almacena datos de usuarios individuales.
+  usersdetail:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -51,7 +53,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allUsers: action.payload,
       };
-
+    case GET_USERS_DETAIL://
+      return {
+        ...state,
+        detail: action.payload,
+      };
+  
     case GET_FAVORITES: //para mostrar los favorites
       return {
         ...state,
