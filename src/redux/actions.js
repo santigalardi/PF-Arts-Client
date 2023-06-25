@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 // const URL = 'https://pf-arts-api-production.up.railway.app';
 const URL = 'http://localhost:3001';
 
@@ -21,7 +20,6 @@ export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
 export const GET_FAVORITES = 'GET_FAVORITES;';
 export const SET_CART = 'SET_CART';
-
 export const getAllArts = () => {
   return async function (dispatch) {
     const response = await axios.get(`${URL}/artworks`);
@@ -31,7 +29,6 @@ export const getAllArts = () => {
     });
   };
 };
-
 export const getArtsByTitle = (title) => {
   return async function (dispatch) {
     const arts = await axios.get(`${URL}/artworks?title=${title}`);
@@ -39,7 +36,6 @@ export const getArtsByTitle = (title) => {
     dispatch({ type: GET_ARTS_BY_TITLE, payload: arts.data });
   };
 };
-
 export const getArtsByAuthor = (authorName) => {
   return async function (dispatch) {
     const arts = await axios.get(`${URL}/artworks?authorName=${authorName}`);
@@ -47,7 +43,6 @@ export const getArtsByAuthor = (authorName) => {
     dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
 };
-
 export const getAllUsers = () => {
   return async function (dispatch) {
     const response = await axios.get(`${URL}/users`);
@@ -57,22 +52,21 @@ export const getAllUsers = () => {
     });
   };
 };
-
 export const filterByArtist = (payload) => {
   return { type: FILTER_BY_ARTIST, payload };
 };
 
 export function postArts(payload) {
   return async function (dispatch) {
-    const token = localStorage.token
+    const token = localStorage.token;
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log("actions",token);
-      const response = await axios.post(`${URL}/artworks`, payload,config);
+      console.log('actions', token);
+      const response = await axios.post(`${URL}/artworks`, payload, config);
       dispatch({ type: POST_ART, payload: response.data });
       return response;
     } catch (error) {
@@ -80,7 +74,6 @@ export function postArts(payload) {
     }
   };
 }
-
 export function postUsers(payload) {
   return async function (dispatch) {
     try {
@@ -93,7 +86,7 @@ export function postUsers(payload) {
   };
 }
 export const updateUser = (updatedUser) => {
-  const token = localStorage.token
+  const token = localStorage.token;
   return async (dispatch) => {
     try {
       const config = {
@@ -113,7 +106,6 @@ export const updateUser = (updatedUser) => {
     }
   };
 };
-
 // Acción para agregar un favorito
 export function addFavorite(payload) {
   return async function (dispatch) {
@@ -126,14 +118,12 @@ export function addFavorite(payload) {
     }
   };
 }
-
 // Acción para eliminar un favorito
 export function deleteFavorite(payload) {
   return async function (dispatch) {
     try {
       const response = await axios.delete(`/favorites/delete/${payload.id}`);
       dispatch({ type: DELETE_FAVORITE, payload: response.data });
-
       return response;
     } catch (error) {
       console.error(error);
@@ -152,7 +142,6 @@ export const getFavorites = () => {
     }
   };
 };
-
 export const getDetail = (id) => {
   return async function (dispatch) {
     try {
@@ -166,11 +155,9 @@ export const getDetail = (id) => {
     }
   };
 };
-
 export function clearDetail() {
   return { type: CLEAR_DETAIL };
 }
-
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
     console.log(
@@ -178,19 +165,15 @@ export const getArtsByFilters = (century, order, created) => {
     );
     try {
       const params = {};
-
       if (century) {
         params.century = century;
       }
-
       if (order) {
         params.order = order;
       }
-
       if (created) {
         params.created = created;
       }
-
       const response = await axios.get(`${URL}/artworks/db`, { params });
       dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data.rows });
       return response;
@@ -199,7 +182,6 @@ export const getArtsByFilters = (century, order, created) => {
     }
   };
 };
-
 export function deleteArt(id) {
   return async function (dispatch) {
     try {
@@ -211,7 +193,6 @@ export function deleteArt(id) {
     }
   };
 }
-
 export const updateArtwork = (id, updatedArtwork) => {
   return async function (dispatch) {
     try {
@@ -223,7 +204,6 @@ export const updateArtwork = (id, updatedArtwork) => {
     }
   };
 };
-
 export function setCart(cartItems) {
   return { type: SET_CART, payload: cartItems };
 }

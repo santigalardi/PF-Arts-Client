@@ -17,12 +17,18 @@ export default function Form() {
     authorName: '',
     image: '',
     date: '',
+
     height: '',
+
     width: '',
+
     price: '',
+
     category: '',
   });
+
   const [submitted, setSubmitted] = useState(false);
+
   const [showAlert, setShowAlert] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
@@ -44,12 +50,15 @@ export default function Form() {
     if (!input.height) {
       errors.height = 'Need a height';
     }
+
     if (!input.price) {
       errors.price = 'Need a price';
     }
+
     if (!input.category) {
       errors.category = 'Need a category';
     }
+
     return errors;
   }
 
@@ -71,43 +80,62 @@ export default function Form() {
 
   function handleSubmit(e) {
     e.preventDefault();
-  
+
     const errors = validate(input);
+
     setErrors(errors);
+
     setSubmitted(true);
-  
+
     if (Object.keys(errors).length === 0) {
       const formData = new FormData();
+
       formData.append('title', input.title);
+
       formData.append('authorName', input.authorName);
+
       formData.append('date', input.date);
+
       formData.append('width', input.width);
+
       formData.append('height', input.height);
+
       formData.append('price', input.price);
+
       formData.append('category', input.category);
+
       formData.append('image', input.image);
-  
+
       dispatch(postArts(formData));
+
       setShowConfirmation(true);
+
       setInput({
         title: '',
         image: '',
         authorName: '',
         date: '',
+
         width: '',
+
         height: '',
+
         price: '',
+
         category: '',
       });
+
       setSubmitted(false);
+
       setErrors({});
     } else {
       setShowAlert(true);
     }
   }
-  
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+
     setInput({ ...input, image: file });
   };
 
@@ -115,7 +143,8 @@ export default function Form() {
     <div>
       <div className={styles.container}>
         <h1 className={styles.heading}>Create a new art!</h1>
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
           {showAlert && Object.keys(errors).length > 0 && (
             <p className={styles.error}>Please fill out all required fields.</p>
           )}
@@ -234,11 +263,12 @@ export default function Form() {
               <p className={styles.error}>{errors.price}</p>
             )}
           </div>
+
           <div className={styles.separator}></div>
+
           <div className={styles.formGroup}>
-            <label className={styles.label}>
-              Category:
-            </label>
+            <label className={styles.label}>Category:</label>
+
             <select
               value={input.category}
               name='category'
@@ -247,16 +277,26 @@ export default function Form() {
               placeholder='Select a category'
             >
               <option value=''>Select a category</option>
-              {['Painting', 'Illustration', '3D', 'Collage', 'Pixel Art', 'Photography'].map((category) => (
+
+              {[
+                'Painting',
+                'Illustration',
+                '3D',
+                'Collage',
+                'Pixel Art',
+                'Photography',
+              ].map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
               ))}
             </select>
+
             {submitted && errors.category && (
               <p className={styles.error}>{errors.category}</p>
             )}
           </div>
+
           <button type='submit' className={styles.button}>
             Create
           </button>
