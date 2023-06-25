@@ -61,7 +61,7 @@ const Login = () => {
 
         if (success) {
           localStorage.setItem('token', token);
-          console.log(token);
+          console.log("Login successfully", token);
           setInput({
             username: '',
             password: '',
