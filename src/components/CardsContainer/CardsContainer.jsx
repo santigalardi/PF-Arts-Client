@@ -14,6 +14,7 @@ const CardsContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const allArts = useSelector((state) => state.allArts);
+  const allUsers = useSelector((state) => state.allUsers);
   const [currentPage, setCurrentPage] = useState(1);
   const artsPerPage = 8;
   const indexOfLastArt = currentPage * artsPerPage;
@@ -29,6 +30,8 @@ const CardsContainer = () => {
     navigate(`/?${newSearch}`);
   };
 
+  console.log(allUsers);
+
   useEffect(() => {
     setIsLoading(true);
     if (allArts.length === 0) {
@@ -39,7 +42,7 @@ const CardsContainer = () => {
       setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [allUsers]);
 
   useEffect(() => {
     setCurrentArts(allArts.slice(indexOfFirstArt, indexOfLastArt));
@@ -58,9 +61,10 @@ const CardsContainer = () => {
           <Searchbar setCurrentPage={setCurrentPage} />
           <Filters setCurrentPage={setCurrentPage} />
         </div>
-        {isLoading 
-        ? (<Loader />) : currentArts.length === 0 
-        ? (<div className={styles['no-results']}>
+        {isLoading ? (
+          <Loader />
+        ) : currentArts.length === 0 ? (
+          <div className={styles['no-results']}>
             <p>No results found</p>
           </div>
         ) : (

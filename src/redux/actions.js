@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 // const URL = 'https://pf-arts-api-production.up.railway.app';
 const URL = 'http://localhost:3001';
 
@@ -65,15 +64,15 @@ export const filterByArtist = (payload) => {
 
 export function postArts(payload) {
   return async function (dispatch) {
-    const token = localStorage.token
+    const token = localStorage.token;
     try {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log("actions",token);
-      const response = await axios.post(`${URL}/artworks`, payload,config);
+      console.log('actions', token);
+      const response = await axios.post(`${URL}/artworks`, payload, config);
       dispatch({ type: POST_ART, payload: response.data });
       return response;
     } catch (error) {
@@ -94,19 +93,17 @@ export function postUsers(payload) {
   };
 }
 export const updateUser = (updatedUser) => {
-  const token = localStorage.token
+  const token = localStorage.token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
   return async (dispatch) => {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.put(
-        `${URL}/users/edit`,
-        updatedUser,
-        config
-      );
+      const response = await axios.put(`${URL}/users/edit`, updatedUser, config);
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -142,19 +139,6 @@ export function addFavorite(payload) {
   };
 }
 
-// Acción para eliminar un favorito
-export function deleteFavorite(payload) {
-  return async function (dispatch) {
-    try {
-      const response = await axios.delete(`/favorites/delete/${payload.id}`);
-      dispatch({ type: DELETE_FAVORITE, payload: response.data });
-
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
 // para mostrar los favoritos
 export const getFavorites = () => {
   return async function (dispatch) {
@@ -188,9 +172,7 @@ export function clearDetail() {
 
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(
-      `Filters received: century=${century}, order=${order}, created=${created}`
-    );
+    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
     try {
       const params = {};
 
@@ -215,6 +197,32 @@ export const getArtsByFilters = (century, order, created) => {
   };
 };
 
+export const updateArtwork = (id, updatedArtwork) => {
+  const token = localStorage.token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  console.log(token);
+
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`${URL}/artworks/edit/${id}`, updatedArtwork, config);
+      dispatch({ type: UPDATE_ARTWORK, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export function setCart(cartItems) {
+  return { type: SET_CART, payload: cartItems };
+}
+
 export function deleteArt(id) {
   return async function (dispatch) {
     try {
@@ -227,18 +235,16 @@ export function deleteArt(id) {
   };
 }
 
-export const updateArtwork = (id, updatedArtwork) => {
+// Acción para eliminar un favorito
+export function deleteFavorite(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`${URL}/artworks/${id}`, updatedArtwork);
-      dispatch({ type: UPDATE_ARTWORK, payload: response.data });
+      const response = await axios.delete(`/favorites/delete/${payload.id}`);
+      dispatch({ type: DELETE_FAVORITE, payload: response.data });
+
       return response;
     } catch (error) {
       console.error(error);
     }
   };
-};
-
-export function setCart(cartItems) {
-  return { type: SET_CART, payload: cartItems };
 }

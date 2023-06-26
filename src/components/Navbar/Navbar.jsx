@@ -5,6 +5,7 @@ import { auth } from '../../Firebase/config';
 import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
 import './Navbar.style.css';
 
 function Navbar() {
@@ -14,6 +15,9 @@ function Navbar() {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
   const [firstName, setFirstName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const allUsers = useSelector((state) => state.allUsers);
+
+  // console.log(allUsers);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,9 +45,10 @@ function Navbar() {
       if (user) {
         localStorage.setItem('email', user.email);
         setLoggedIn(true);
-        const storedProfilePhotoUrl = localStorage.getItem('profilePhotoUrl'); // Leer la URL del localStorage
+        const storedProfilePhotoUrl = user.photoURL;
         setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
-        const storedFirstName = localStorage.getItem('firstName');
+        console.log(user.displayName);
+        const storedFirstName = user.displayName;
         setFirstName(storedFirstName);
       } else {
         localStorage.removeItem('email');
