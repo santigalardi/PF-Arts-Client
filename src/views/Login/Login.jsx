@@ -22,7 +22,7 @@ const Login = () => {
   function validate(input) {
     let errors = {};
     if (!input.username) {
-      errors.username = 'Username is required|';
+      errors.username = 'Username is required';
     }
     if (!input.password) {
       errors.password = 'Password is required';

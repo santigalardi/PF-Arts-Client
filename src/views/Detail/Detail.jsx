@@ -22,6 +22,8 @@ const Detail = () => {
   const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState(true);
 
+  console.log(detail);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoader(false);
@@ -85,6 +87,8 @@ const Detail = () => {
   };
 
   const handleSave = () => {
+    console.log(detail);
+
     const updatedArtwork = {
       ...detail,
       authorName: artist,
@@ -93,11 +97,17 @@ const Detail = () => {
       height: dimensions.split(' x ')[1],
       price: price,
     };
-    dispatch(updateArtwork(detail.id, updatedArtwork))
+    dispatch(updateArtwork(detail.artworkId, updatedArtwork))
       .then((response) => {
-        console.log('Artwork updated successfully:', response.data);
-        setIsEditing(false);
-        window.location.reload();
+        console.log(response);
+        if (response.data) {
+          console.log('Artwork updated successfully:', response.data);
+          setIsEditing(false);
+          window.location.reload();
+        } else {
+          console.error('Error updating artwork: Response data is undefined');
+          window.alert('Error updating artwork. Please try again.');
+        }
       })
       .catch((error) => {
         console.error('Error updating artwork:', error);
