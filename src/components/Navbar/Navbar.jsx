@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { auth } from '../../Firebase/config';
+import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import './Navbar.style.css';
@@ -7,10 +10,15 @@ import './Navbar.style.css';
 function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0 && location.pathname !== '/detail/';
+      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
+
       setScrolled(isScrolled);
     };
 
@@ -21,24 +29,49 @@ function Navbar() {
     };
   }, [location]);
 
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      setLoggedIn(false);
+    });
+  };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        localStorage.setItem('email', user.email);
+        setLoggedIn(true);
+        const storedProfilePhotoUrl = localStorage.getItem('profilePhotoUrl'); // Leer la URL del localStorage
+        setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
+        const storedFirstName = localStorage.getItem('firstName');
+        setFirstName(storedFirstName);
+      } else {
+        localStorage.removeItem('email');
+        setLoggedIn(false);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu />
-      <div className="navbar-title">Henry Art Gallery</div>
-      <div className="navlinks-container">
-        <NavLink to="/" className="navlinks">
-          Home
-        </NavLink>
-        <NavLink to="/create" className="navlinks">
-          Create
-        </NavLink>
-      </div>
-      <div className="navlinks-container">
-        <NavLink to="/register" className="navlinks">
-          Register
-        </NavLink>
-        <NavLink to="/cart" className="navlinks">
-          <AiOutlineShoppingCart className="cartLogo" />
+      <div className='navbar-title'>Henry Art Gallery</div>
+      <div className='navlinks-container'>
+        {loggedIn ? (
+          <div className='profile-menu' onClick={handleLogout}>
+            <p className='user-welcome'>{firstName}</p>
+            <div className='profile-menu-photo-container'>
+              <img src={profilePhotoUrl} alt='' className='profile-menu-photo' />
+            </div>
+          </div>
+        ) : (
+          <NavLink to='/login' className='navlinks'>
+            Log in
+          </NavLink>
+        )}
+        <NavLink to='/cart' className='navlinks'>
+          <AiOutlineShoppingCart className='cartLogo' />
         </NavLink>
       </div>
     </nav>

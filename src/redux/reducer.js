@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   GET_ARTS,
   GET_ARTS_BY_TITLE,
@@ -11,14 +12,20 @@ import {
   GET_ARTS_BY_FILTERS,
   POST_USERS,
   DELETE_ART,
+  UPDATE_USER,
+  GET_FAVORITES,
+  SET_CART,
 } from './actions';
 
 const initialState = {
   allArts: [],
-  allUsers: [],
+  allUsers: [], //almacena todos los usuarios.
+  filteredArts: [],
   arts: [],
   myFavorites: [],
   detail: {},
+  users: [], //almacena datos de usuarios individuales.
+  cart: [], //inicializa cart como un array vacío.
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -47,6 +54,12 @@ const rootReducer = (state = initialState, action) => {
         allUsers: action.payload,
       };
 
+    case GET_FAVORITES: //para mostrar los favorites
+      return {
+        ...state,
+        myFavorites: action.payload,
+      };
+
     case POST_ART:
       return {
         ...state,
@@ -65,18 +78,33 @@ const rootReducer = (state = initialState, action) => {
         myFavorites: [...state.myFavorites, action.payload],
       };
 
+    case UPDATE_USER:
+      const updatedUser = action.payload;
+      const updatedUsers = state.allUsers.map((user) => {
+        if (user.userId === updatedUser.userId) {
+          return updatedUser;
+        }
+        return user;
+      });
+
+      return {
+        ...state,
+        allUsers: updatedUsers,
+        users: updatedUsers,
+      };
+
     case DELETE_FAVORITE:
       return {
         ...state,
         myFavorites: state.myFavorites.filter(
-          (fav) => fav.id !== action.payload.id
+          (fav) => fav.id !== action.payload
         ),
       };
 
     case DELETE_ART:
       return {
         ...state,
-        arts: state.arts.filter((art) => art.id !== action.payload.id),
+        arts: state.arts.filter((art) => art.id !== action.payload),
       };
 
     case GET_DETAIL:
@@ -95,6 +123,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allArts: action.payload,
+      };
+
+    case SET_CART:
+      return {
+        ...state,
+        cart: action.payload,
       };
 
     default:

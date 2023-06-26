@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+import {
+  FaUser,
+  FaArrowsAltH,
+  FaArrowsAltV,
+  FaDollarSign,
+} from 'react-icons/fa';
 import styles from './Form.module.css';
 
 export default function Form() {
@@ -14,7 +20,7 @@ export default function Form() {
     height: '',
     width: '',
     price: '',
-    userId: '',
+    category: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -25,9 +31,7 @@ export default function Form() {
     if (!input.title) {
       errors.title = 'Need a title';
     }
-    if (!input.image) {
-      errors.image = 'Need an image URL';
-    }
+
     if (!input.authorName) {
       errors.authorName = 'Need an author name';
     }
@@ -43,46 +47,47 @@ export default function Form() {
     if (!input.price) {
       errors.price = 'Need a price';
     }
-    if (!input.userId) {
-      errors.userId = 'Need a userId';
+    if (!input.category) {
+      errors.category = 'Need a category';
     }
     return errors;
   }
 
   function handleChange(e) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-      validate({
+    if (e.target.name === 'title') {
+      const title = e.target.value;
+      const capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+      setInput({
+        ...input,
+        title: capitalizedTitle,
+      });
+    } else {
+      setInput({
         ...input,
         [e.target.name]: e.target.value,
-      })
-    );
-    setShowAlert(false);
+      });
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+  
     const errors = validate(input);
     setErrors(errors);
     setSubmitted(true);
-
-    if (
-      Object.keys(errors).length === 0 &&
-      input.title &&
-      input.image &&
-      input.authorName &&
-      input.date &&
-      input.width &&
-      input.height &&
-      input.price
-    ) {
-      const updatedInput = {
-        ...input,
-      };
-      dispatch(postArts(updatedInput));
+  
+    if (Object.keys(errors).length === 0) {
+      const formData = new FormData();
+      formData.append('title', input.title);
+      formData.append('authorName', input.authorName);
+      formData.append('date', input.date);
+      formData.append('width', input.width);
+      formData.append('height', input.height);
+      formData.append('price', input.price);
+      formData.append('category', input.category);
+      formData.append('image', input.image);
+  
+      dispatch(postArts(formData));
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -92,7 +97,7 @@ export default function Form() {
         width: '',
         height: '',
         price: '',
-        userId: '',
+        category: '',
       });
       setSubmitted(false);
       setErrors({});
@@ -100,12 +105,17 @@ export default function Form() {
       setShowAlert(true);
     }
   }
+  
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setInput({ ...input, image: file });
+  };
 
   return (
     <div>
       <div className={styles.container}>
         <h1 className={styles.heading}>Create a new art!</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           {showAlert && Object.keys(errors).length > 0 && (
             <p className={styles.error}>Please fill out all required fields.</p>
           )}
@@ -121,20 +131,29 @@ export default function Form() {
             />
             {errors.title && <p className={styles.error}>{errors.title}</p>}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Image: </label>
+            <label className={styles.label}>Image:</label>
+            <input
+              type='file'
+              name='image'
+              accept='image/*'
+              onChange={handleImageChange}
+            />
+            {input.image && <p className={styles.fileInfo}>Selected file</p>}
+          </div>
+          <div className={styles.formGroup}>
+            <label className={styles.labelImageURL}> or image URL: </label>
             <input
               type='text'
               value={input.image}
               name='image'
               onChange={handleChange}
-              className={styles.input}
+              className={styles.inputImageURL}
               placeholder='Enter an image URL'
             />
-            {submitted && errors.image && (
-              <p className={styles.error}>{errors.image}</p>
-            )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Author: </label>
             <input
@@ -152,7 +171,7 @@ export default function Form() {
           <div className={styles.formGroup}>
             <label className={styles.label}>Year: </label>
             <input
-              type='text'
+              type='number'
               value={input.date}
               name='date'
               onChange={handleChange}
@@ -163,8 +182,12 @@ export default function Form() {
               <p className={styles.error}>{errors.date}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Width: </label>
+            <label className={styles.label}>
+              {' '}
+              <FaArrowsAltH className={`${styles.icon} icon`} /> Width:{' '}
+            </label>
             <input
               type='number'
               value={input.width}
@@ -178,7 +201,9 @@ export default function Form() {
             )}
           </div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Height: </label>
+            <label className={styles.label}>
+              <FaArrowsAltV className={`${styles.icon} icon`} /> Height:{' '}
+            </label>
             <input
               type='number'
               value={input.height}
@@ -191,32 +216,45 @@ export default function Form() {
               <p className={styles.error}>{errors.height}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Price: </label>
+            <label className={styles.label}>
+              {' '}
+              <FaDollarSign className={`${styles.icon} icon`} /> Price:{' '}
+            </label>
             <input
               type='number'
               value={input.price}
               name='price'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter a price...'
+              placeholder='Enter a price'
             />
             {submitted && errors.price && (
               <p className={styles.error}>{errors.price}</p>
             )}
           </div>
+          <div className={styles.separator}></div>
           <div className={styles.formGroup}>
-            <label className={styles.label}>userId: </label>
-            <input
-              type='text'
-              value={input.userId}
-              name='userId'
+            <label className={styles.label}>
+              Category:
+            </label>
+            <select
+              value={input.category}
+              name='category'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter a userId...'
-            />
-            {submitted && errors.userId && (
-              <p className={styles.error}>{errors.userId}</p>
+              placeholder='Select a category'
+            >
+              <option value=''>Select a category</option>
+              {['Painting', 'Illustration', '3D', 'Collage', 'Pixel Art', 'Photography'].map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {submitted && errors.category && (
+              <p className={styles.error}>{errors.category}</p>
             )}
           </div>
           <button type='submit' className={styles.button}>

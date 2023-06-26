@@ -1,12 +1,14 @@
 import './NavMenu.css';
 import { useState, useEffect } from 'react';
-import { BsFillHouseFill, BsPersonFill, BsTools } from 'react-icons/bs';
+import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-//    por favor no usar pretier aqui en navmenu
+import { AiFillHeart } from 'react-icons/ai'
+
 const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleMenu = (event) => {
     event.stopPropagation();
     setMenuOpen(!menuOpen);
@@ -25,32 +27,19 @@ const NavMenu = () => {
       document.removeEventListener('click', handleOutsideClick);
     };
   }, []);
+
   return (
     <nav>
-      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+      <div
+        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
       </div>
       <div className={`menu-options ${menuOpen ? 'active' : ''}`}>
-        {/* por favor no usar pretier aqui */}
         <ul>
-          <li>
-            <BsPersonFill />
-            <NavLink to='/users' onClick={toggleMenu}>
-              {' '}
-              Artists
-            </NavLink>
-          </li>
-          <hr />
-          <li>
-            <BsTools />
-            <NavLink to='/tecnicas' onClick={toggleMenu}>
-              {' '}
-              Techniques
-            </NavLink>
-          </li>
-          <hr />
           <li>
             <BsFillHouseFill />
             <NavLink to='/' onClick={toggleMenu}>
@@ -60,6 +49,22 @@ const NavMenu = () => {
           </li>
           <hr />
           <li>
+            <BsPersonFill />
+            <NavLink to='/users' onClick={toggleMenu}>
+              {' '}
+              Artists
+            </NavLink>
+          </li>
+          <hr />
+          <li>
+            <NavLink to='/favorites' onClick={toggleMenu}>
+            <AiFillHeart />
+              {' '}
+             Favorites
+            </NavLink>
+          </li> 
+          <hr />
+          <li>
             <GiPencilBrush />
             <NavLink to='/create' onClick={toggleMenu}>
               {' '}
@@ -67,14 +72,13 @@ const NavMenu = () => {
             </NavLink>
           </li>
           <hr />
-          <li>
+          {/* <li>
             <GiPencilBrush />
-            <NavLink to='/MyCreations' onClick={toggleMenu}>
-              {' '}
+            <NavLink to="/MyCreations" onClick={toggleMenu}>
               My creations
             </NavLink>
           </li>
-          <hr />
+          <hr /> */}
           <li>
             <FaPowerOff />
             <NavLink to='/login' onClick={toggleMenu}>
@@ -87,4 +91,5 @@ const NavMenu = () => {
     </nav>
   );
 };
+
 export default NavMenu;

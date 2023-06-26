@@ -1,0 +1,14 @@
+.usersPage {
+  display: flex;
+  height: 100vh;
+}
+.userCards {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 6rem;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  margin-top: 3rem;
+
+}
