@@ -106,9 +106,9 @@ const Detail = () => {
     const updatedArtwork = {
       ...detail,
       authorName: artist,
-      date: year,
-      width: dimensions.split(' x ')[0],
       height: dimensions.split(' x ')[1],
+      width: dimensions.split(' x ')[0],
+      date: year,
       price: price,
     };
     dispatch(updateArtwork(detail.artworkId, updatedArtwork))
@@ -215,7 +215,7 @@ const Detail = () => {
               />
             ) : (
               <span>
-                {detail.width} x {detail.height}
+                {detail.height} x {detail.width}
               </span>
             )}
           </p>
@@ -228,7 +228,7 @@ const Detail = () => {
                 onChange={(e) => setPrice(e.target.value)}
               />
             ) : (
-              <span>{detail.price} M</span>
+              <span>{detail.price} USD</span>
             )}
           </p>
           {isCreatedByUser && (
