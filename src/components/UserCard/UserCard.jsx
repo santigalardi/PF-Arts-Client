@@ -1,11 +1,11 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 import styles from './UserCard.module.css';
+import { NavLink } from 'react-router-dom';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -60,6 +60,8 @@ const UserCard = ({ user }) => {
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
+    // Acá va la lógica para subir la imagen a Cloudinary
+    // Crea una instancia de FormData
     const formData = new FormData();
     formData.append('image', file);
 
@@ -93,16 +95,20 @@ const UserCard = ({ user }) => {
 
   const validate = (input) => {
     let errors = {};
+
     if (!input.userName) {
       errors.userName = 'Need a user name';
     }
+
     return errors;
   };
 
   return (
     <div className={styles['userCard']}>
-      <img src={profilePhotoUrl} className={styles['imageU']} />
+      <img src={image} className={styles['imageU']} />
+
       <h3>{user.userName}</h3>
+
       {isEditing ? (
         <div>
           <p>
@@ -173,7 +179,11 @@ const UserCard = ({ user }) => {
         </div>
       ) : (
         <div>
-          <p>{user.email}</p>
+          {/* <p>Email: {user.email}</p>
+          <p>UserId: {user.userId}</p> */}
+          {/* <p>Description: {user.description}</p> */}
+          {/* <p>Phone Number: {user.phoneNumber}</p>
+          <p>Country: {user.location}</p> */}
           <NavLink
             className={styles['detailButton']}
             to={`/users/detail/${user.id}`}
@@ -193,14 +203,3 @@ const UserCard = ({ user }) => {
 };
 
 export default UserCard;
-
-{
-  /* <p>UserId: {user.userId}</p> */
-}
-{
-  /* <p>Description: {user.description}</p> */
-}
-{
-  /* <p>Phone Number: {user.phoneNumber}</p>
-          <p>Country: {user.location}</p> */
-}
