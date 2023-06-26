@@ -17,14 +17,10 @@ export default function Form() {
     title: '',
     authorName: '',
     image: '',
-    date: '',
-
     height: '',
-
     width: '',
-
+    date: '',
     price: '',
-
     category: '',
   });
 
@@ -95,17 +91,17 @@ export default function Form() {
 
       formData.append('authorName', input.authorName);
 
-      formData.append('date', input.date);
+      formData.append('image', input.image);
+
+      formData.append('height', input.height);
 
       formData.append('width', input.width);
 
-      formData.append('height', input.height);
+      formData.append('date', input.date);
 
       formData.append('price', input.price);
 
       formData.append('category', input.category);
-
-      formData.append('image', input.image);
 
       dispatch(postArts(formData));
 
@@ -113,16 +109,12 @@ export default function Form() {
 
       setInput({
         title: '',
-        image: '',
         authorName: '',
-        date: '',
-
-        width: '',
-
+        image: '',
         height: '',
-
+        width: '',
+        date: '',
         price: '',
-
         category: '',
       });
 
