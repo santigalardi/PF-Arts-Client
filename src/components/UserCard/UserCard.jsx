@@ -64,8 +64,8 @@ const UserCard = ({ user }) => {
 
     try {
       // Envía la imagen al backend para subirla a Cloudinary
-      const response = await axios.post('/', formData);
-      const imageUrl = response.data.url;
+      // const response = await axios.post('/', formData);
+      // const imageUrl = response.data.url;
       const response = await axios.post('/api/upload', formData);
       const image = response.data.url;
 
@@ -184,8 +184,10 @@ const UserCard = ({ user }) => {
           <p>Country: {user.location}</p> */}
           <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`} >
             Detail
-            {/* <i className={`fas fa-pencil-alt ${styles.editIcon}`} /> */}
           </NavLink>
+          <div>
+          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
+          </div>
         </div>
       )}
     </div>
