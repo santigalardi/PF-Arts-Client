@@ -213,3 +213,7 @@ export function setCart(cartItems) {
 export function setCart(cartItems) {
   return { type: SET_CART, payload: cartItems };
 }
+
+export function setCart(cartItems) {
+  return { type: SET_CART, payload: cartItems };
+}
