@@ -1,37 +1,42 @@
-import style from './indexDetail.module.css'
-import { getUserDetail } from '../../redux/actions'
+import PropTypes from 'prop-types';
+import style from './indexDetail.module.css';
+import { getUserDetail } from '../../redux/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-const UserDetail = (userCardId) => {
-    // const dispatch = useDispatch();
-    // const userDetail = useSelector(state => state.userDetail);
-  
-    // useEffect(() => {
-    //   dispatch(getUserDetail(userCardId));
-    // }, [dispatch, userCardId]);
-  
-    // const { name ,email,userId,description, phoneNumber,location } = userDetail;
-    return (
-        <div className={style['containerUserDetail']}>
-            <div className={style['userDetail']}>
-                <img className={style['imgU']} />
-                <ul className={style['details']}>
-                    <li>Name:</li>
-                    <li>Email:</li>
-                    <li>UserId:</li>
-                    <li>Description:</li>
-                    <li>Phone Number:</li>
-                    <li>Country:</li>
-                </ul>
-            </div>
-            <h1>
-                Arts
-            </h1>
-        </div>
-    )
+const UserDetail = ({ userCardId }) => {
+    
+  const dispatch = useDispatch();
+  const userDetail = useSelector(state => state.userDetail);
+
+  useEffect(() => {
+    dispatch(getUserDetail(userCardId));
+  }, [dispatch, userCardId]);
+
+  const { name, email, userId, description, phoneNumber, location } = userDetail;
+
+  return (
+    <div className={style['containerUserDetail']}>
+      <div className={style['userDetail']}>
+        <img className={style['imgU']} src={userDetail.profilePicture} alt="User" />
+        <ul className={style['details']}>
+          <li>Name: {name? name:'N/A'}</li>
+          <li>Email: {email? email:'N/A'}</li>
+          <li>UserId: {userId?userId:'N/A'}</li>
+          <li>Description: {description?description:'N/A'}</li>
+          <li>Phone Number: {phoneNumber?phoneNumber:'N/A'}</li>
+          <li>Country: {location?location:'N/A'}</li>
+        </ul>
+      </div>
+      <h1>Arts</h1>
+    </div>
+  );
+};
+UserDetail.propTypes = {
+    userCardId: PropTypes.string.isRequired,
 }
-export default UserDetail
+
+export default UserDetail;
 //nF
 {/* <li>Name:{name}</li>
 <li>Email:{email}</li>

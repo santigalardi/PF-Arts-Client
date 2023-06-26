@@ -6,8 +6,11 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import styles from './UserCard.module.css';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user}) => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [userName, setUserName] = useState(user.userName);
@@ -79,6 +82,7 @@ const UserCard = ({ user }) => {
 
   const handleDelete = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
+      // eslint-disable-next-line no-undef
       dispatch(deleteUser(userId))
         .then(() => {
           // Acá se puede manejar cualquier acción adicional después de la eliminación
@@ -182,7 +186,7 @@ const UserCard = ({ user }) => {
           {/* <p>Description: {user.description}</p> */}
           {/* <p>Phone Number: {user.phoneNumber}</p>
           <p>Country: {user.location}</p> */}
-          <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`} >
+          <NavLink className={styles['detailButton']} to={`/users/detail/${id}`} >
             Detail
           </NavLink>
           <div>
@@ -193,5 +197,9 @@ const UserCard = ({ user }) => {
     </div>
   );
 };
+UserCard.propTypes={
+  // id: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
+}
 
 export default UserCard;
