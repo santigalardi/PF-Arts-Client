@@ -17,11 +17,13 @@ const UserCard = ({ user }) => {
   const [image, setImage] = useState(user.image);
   const [errors, setErrors] = useState({});
 
-  const handleEdit = () => {///
+  const handleEdit = () => {
+    ///
     setIsEditing(true);
   };
 
-  const handleSave = () => {///
+  const handleSave = () => {
+    ///
     const validationErrors = validate({ userName });
     setErrors(validationErrors);
 
@@ -46,7 +48,8 @@ const UserCard = ({ user }) => {
     }
   };
 
-  const handleCancel = () => {////
+  const handleCancel = () => {
+    ////
     setUserName(user.userName);
     setDescription(user.description);
     setPhoneNumber(user.phoneNumber);
@@ -102,7 +105,6 @@ const UserCard = ({ user }) => {
 
   return (
     <div className={styles['userCard']}>
-
       <img src={image} className={styles['imageU']} />
 
       <h3>{user.userName}</h3>
@@ -182,11 +184,17 @@ const UserCard = ({ user }) => {
           {/* <p>Description: {user.description}</p> */}
           {/* <p>Phone Number: {user.phoneNumber}</p>
           <p>Country: {user.location}</p> */}
-          <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`} >
+          <NavLink
+            className={styles['detailButton']}
+            to={`/users/detail/${user.id}`}
+          >
             Detail
           </NavLink>
           <div>
-          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
+            <i
+              onClick={handleEdit}
+              className={`fas fa-pencil-alt ${styles.editIcon}`}
+            />
           </div>
         </div>
       )}

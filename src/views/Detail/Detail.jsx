@@ -205,6 +205,7 @@ const Detail = () => {
               <span>{detail.date}</span>
             )}
           </p>
+
           <p>
             <span className={styles.prop}>Dimensions:</span>{' '}
             {isEditing ? (
