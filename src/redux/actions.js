@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 // const URL = 'https://pf-arts-api-production.up.railway.app';
 const URL = 'http://localhost:3001';
 
@@ -20,6 +21,7 @@ export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
 export const GET_FAVORITES = 'GET_FAVORITES;';
 export const GET_USERS_DETAIL = 'GET_USERS_DETAIL';
+export const SET_CART = 'SET_CART';
 
 export const getAllArts = () => {
   return async function (dispatch) {
@@ -63,8 +65,15 @@ export const filterByArtist = (payload) => {
 
 export function postArts(payload) {
   return async function (dispatch) {
+    const token = localStorage.token
     try {
-      const response = await axios.post(`${URL}/artworks`, payload);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log("actions",token);
+      const response = await axios.post(`${URL}/artworks`, payload,config);
       dispatch({ type: POST_ART, payload: response.data });
       return response;
     } catch (error) {
@@ -84,16 +93,15 @@ export function postUsers(payload) {
     }
   };
 }
-export function updateUser(updatedUser) {
-  return async function (dispatch) {
+export const updateUser = (updatedUser) => {
+  const token = localStorage.token
+  return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token');
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       };
-      console.log(token);
       const response = await axios.put(
         `${URL}/users/edit`,
         updatedUser,
@@ -105,7 +113,7 @@ export function updateUser(updatedUser) {
       console.error(error);
     }
   };
-}
+};
 
 export const getUserDetail = (id) => {
   return async function (dispatch) {
@@ -230,3 +238,7 @@ export const updateArtwork = (id, updatedArtwork) => {
     }
   };
 };
+
+export function setCart(cartItems) {
+  return { type: SET_CART, payload: cartItems };
+}

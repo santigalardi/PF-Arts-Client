@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import {
@@ -20,7 +20,7 @@ export default function Form() {
     height: '',
     width: '',
     price: '',
-    userId: '',
+    category: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -47,42 +47,47 @@ export default function Form() {
     if (!input.price) {
       errors.price = 'Need a price';
     }
-    if (!input.userId) {
-      errors.userId = 'Need a userId';
+    if (!input.category) {
+      errors.category = 'Need a category';
     }
     return errors;
   }
 
   function handleChange(e) {
-    console.log('handleChange called');
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.name === 'title') {
+      const title = e.target.value;
+      const capitalizedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+      setInput({
+        ...input,
+        title: capitalizedTitle,
+      });
+    } else {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log('handleSubmit called');
-
+  
     const errors = validate(input);
     setErrors(errors);
     setSubmitted(true);
-
-    if (
-      Object.keys(errors).length === 0 &&
-      input.title &&
-      input.authorName &&
-      input.date &&
-      input.width &&
-      input.height &&
-      input.price
-    ) {
-      const updatedInput = {
-        ...input,
-      };
-      dispatch(postArts(updatedInput));
-      console.log('dispatch called');
+  
+    if (Object.keys(errors).length === 0) {
+      const formData = new FormData();
+      formData.append('title', input.title);
+      formData.append('authorName', input.authorName);
+      formData.append('date', input.date);
+      formData.append('width', input.width);
+      formData.append('height', input.height);
+      formData.append('price', input.price);
+      formData.append('category', input.category);
+      formData.append('image', input.image);
+  
+      dispatch(postArts(formData));
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -92,7 +97,7 @@ export default function Form() {
         width: '',
         height: '',
         price: '',
-        userId: '',
+        category: '',
       });
       setSubmitted(false);
       setErrors({});
@@ -100,18 +105,17 @@ export default function Form() {
       setShowAlert(true);
     }
   }
-
+  
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    // lógica para procesar el archivo seleccionado
-    console.log('Imagen seleccionada:', file);
+    setInput({ ...input, image: file });
   };
 
   return (
     <div>
       <div className={styles.container}>
         <h1 className={styles.heading}>Create a new art!</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
           {showAlert && Object.keys(errors).length > 0 && (
             <p className={styles.error}>Please fill out all required fields.</p>
           )}
@@ -130,21 +134,13 @@ export default function Form() {
           <div className={styles.separator}></div>
           <div className={styles.formGroup}>
             <label className={styles.label}>Image:</label>
-            <label className={styles.uploadButton}>
-              <input
-                type='file'
-                value={input.image}
-                name='image'
-                accept='image/*'
-                onChange={handleImageChange}
-              />
-              Upload Image
-            </label>
-            {input.image && (
-              <p className={styles.fileInfo}>
-                Selected file {input.image.name}
-              </p>
-            )}
+            <input
+              type='file'
+              name='image'
+              accept='image/*'
+              onChange={handleImageChange}
+            />
+            {input.image && <p className={styles.fileInfo}>Selected file</p>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.labelImageURL}> or image URL: </label>
@@ -241,18 +237,24 @@ export default function Form() {
           <div className={styles.separator}></div>
           <div className={styles.formGroup}>
             <label className={styles.label}>
-              <FaUser className={`${styles.icon} icon`} /> userId:{' '}
+              Category:
             </label>
-            <input
-              type='text'
-              value={input.userId}
-              name='userId'
+            <select
+              value={input.category}
+              name='category'
               onChange={handleChange}
               className={styles.input}
-              placeholder='Enter a userId'
-            />
-            {submitted && errors.userId && (
-              <p className={styles.error}>{errors.userId}</p>
+              placeholder='Select a category'
+            >
+              <option value=''>Select a category</option>
+              {['Painting', 'Illustration', '3D', 'Collage', 'Pixel Art', 'Photography'].map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            {submitted && errors.category && (
+              <p className={styles.error}>{errors.category}</p>
             )}
           </div>
           <button type='submit' className={styles.button}>

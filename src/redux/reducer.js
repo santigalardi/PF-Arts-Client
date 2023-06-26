@@ -14,7 +14,8 @@ import {
   DELETE_ART,
   UPDATE_USER,
   GET_FAVORITES,
-  GET_USERS_DETAIL
+  GET_USERS_DETAIL,
+  SET_CART,
 } from './actions';
 
 const initialState = {
@@ -26,6 +27,7 @@ const initialState = {
   detail: {},
   users: [], //almacena datos de usuarios individuales.
   usersdetail:[],
+  cart: [], //inicializa cart como un array vacío.
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -101,7 +103,9 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload),
+        myFavorites: state.myFavorites.filter(
+          (fav) => fav.id !== action.payload
+        ),
       };
 
     case DELETE_ART:
@@ -126,6 +130,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allArts: action.payload,
+      };
+
+    case SET_CART:
+      return {
+        ...state,
+        cart: action.payload,
       };
 
     default:

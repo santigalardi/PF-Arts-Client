@@ -64,6 +64,8 @@ const UserCard = ({ user }) => {
 
     try {
       // Envía la imagen al backend para subirla a Cloudinary
+      const response = await axios.post('/', formData);
+      const imageUrl = response.data.url;
       const response = await axios.post('/api/upload', formData);
       const image = response.data.url;
 
@@ -120,15 +122,15 @@ const UserCard = ({ user }) => {
               <span className={styles.error}>{errors.userName}</span>
             )}
           </p>
-          {/* <p>
+          <p>
             Description:{' '}
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className={styles.inputDescription}
+              className={styles.input}
               placeholder='Enter a description'
             />
-          </p> */}
+          </p>
           <p>
             Phone Number:{' '}
             <input
