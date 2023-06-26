@@ -1,9 +1,9 @@
 .usersPage {
    display: flex;
    /* los tres primeros es para que el footer no moleste y se mande abajo */
-   width: 100%;
+   /* width: 100%;
    height: 100vh;
-   overflow: hidden;
+   overflow: hidden; */
 }
 .userCards {
    display: flex;
