@@ -11,6 +11,7 @@ import styles from './Form.module.css';
 
 export default function Form() {
   const dispatch = useDispatch();
+  const [imageSelected, setImageSelected] = useState(false);
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     title: '',

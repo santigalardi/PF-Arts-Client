@@ -20,6 +20,7 @@ export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
 export const GET_FAVORITES = 'GET_FAVORITES;';
 export const SET_CART = 'SET_CART';
+
 export const getAllArts = () => {
   return async function (dispatch) {
     const response = await axios.get(`${URL}/artworks`);
@@ -86,7 +87,6 @@ export function postUsers(payload) {
   };
 }
 export const updateUser = (updatedUser) => {
-  const token = localStorage.token;
   return async (dispatch) => {
     try {
       const config = {
@@ -94,18 +94,16 @@ export const updateUser = (updatedUser) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.put(
-        `${URL}/users/edit`,
-        updatedUser,
-        config
-      );
-      dispatch({ type: UPDATE_USER, payload: response.data });
-      return response;
+
+      const response = await axios.put('/users/edit', updatedUser, config);
+
+      dispatch({ type: 'UPDATE_USER', payload: response.data });
     } catch (error) {
       console.error(error);
     }
   };
 };
+
 // Acción para agregar un favorito
 export function addFavorite(payload) {
   return async function (dispatch) {
@@ -204,6 +202,14 @@ export const updateArtwork = (id, updatedArtwork) => {
     }
   };
 };
+export function setCart(cartItems) {
+  return { type: SET_CART, payload: cartItems };
+}
+
+export function setCart(cartItems) {
+  return { type: SET_CART, payload: cartItems };
+}
+
 export function setCart(cartItems) {
   return { type: SET_CART, payload: cartItems };
 }
