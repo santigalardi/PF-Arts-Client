@@ -5,6 +5,7 @@ import { auth } from '../../Firebase/config';
 import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
 import './Navbar.style.css';
 
 function Navbar() {
@@ -14,10 +15,14 @@ function Navbar() {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
   const [firstName, setFirstName] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const allUsers = useSelector((state) => state.allUsers);
+
+  // console.log(allUsers);
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
+      const isScrolled =
+        window.scrollY > 0 && !location.pathname.includes('/detail');
 
       setScrolled(isScrolled);
     };
@@ -41,9 +46,10 @@ function Navbar() {
       if (user) {
         localStorage.setItem('email', user.email);
         setLoggedIn(true);
-        const storedProfilePhotoUrl = localStorage.getItem('profilePhotoUrl'); // Leer la URL del localStorage
+        const storedProfilePhotoUrl = user.photoURL;
         setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
-        const storedFirstName = localStorage.getItem('firstName');
+        console.log(user.displayName);
+        const storedFirstName = user.displayName;
         setFirstName(storedFirstName);
       } else {
         localStorage.removeItem('email');
@@ -62,7 +68,11 @@ function Navbar() {
           <div className='profile-menu' onClick={handleLogout}>
             <p className='user-welcome'>{firstName}</p>
             <div className='profile-menu-photo-container'>
-              <img src={profilePhotoUrl} alt='' className='profile-menu-photo' />
+              <img
+                src={profilePhotoUrl}
+                alt=''
+                className='profile-menu-photo'
+              />
             </div>
           </div>
         ) : (
