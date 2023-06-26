@@ -21,7 +21,8 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
+      const isScrolled =
+        window.scrollY > 0 && !location.pathname.includes('/detail');
 
       setScrolled(isScrolled);
     };
@@ -67,7 +68,11 @@ function Navbar() {
           <div className='profile-menu' onClick={handleLogout}>
             <p className='user-welcome'>{firstName}</p>
             <div className='profile-menu-photo-container'>
-              <img src={profilePhotoUrl} alt='' className='profile-menu-photo' />
+              <img
+                src={profilePhotoUrl}
+                alt=''
+                className='profile-menu-photo'
+              />
             </div>
           </div>
         ) : (
