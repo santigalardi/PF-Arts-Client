@@ -1,11 +1,11 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-import styles from './UserCard.module.css';
 import { NavLink } from 'react-router-dom';
+import styles from './UserCard.module.css';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -17,11 +17,13 @@ const UserCard = ({ user }) => {
   const [image, setImage] = useState(user.image);
   const [errors, setErrors] = useState({});
 
-  const handleEdit = () => {///
+  const handleEdit = () => {
+    ///
     setIsEditing(true);
   };
 
-  const handleSave = () => {///
+  const handleSave = () => {
+    ///
     const validationErrors = validate({ userName });
     setErrors(validationErrors);
 
@@ -46,7 +48,8 @@ const UserCard = ({ user }) => {
     }
   };
 
-  const handleCancel = () => {////
+  const handleCancel = () => {
+    ////
     setUserName(user.userName);
     setDescription(user.description);
     setPhoneNumber(user.phoneNumber);
@@ -57,8 +60,6 @@ const UserCard = ({ user }) => {
 
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
-    // Acá va la lógica para subir la imagen a Cloudinary
-    // Crea una instancia de FormData
     const formData = new FormData();
     formData.append('image', file);
 
@@ -92,21 +93,16 @@ const UserCard = ({ user }) => {
 
   const validate = (input) => {
     let errors = {};
-
     if (!input.userName) {
       errors.userName = 'Need a user name';
     }
-
     return errors;
   };
 
   return (
     <div className={styles['userCard']}>
-
-      <img src={image} className={styles['imageU']} />
-
+      <img src={profilePhotoUrl} className={styles['imageU']} />
       <h3>{user.userName}</h3>
-
       {isEditing ? (
         <div>
           <p>
@@ -177,16 +173,18 @@ const UserCard = ({ user }) => {
         </div>
       ) : (
         <div>
-          {/* <p>Email: {user.email}</p>
-          <p>UserId: {user.userId}</p> */}
-          {/* <p>Description: {user.description}</p> */}
-          {/* <p>Phone Number: {user.phoneNumber}</p>
-          <p>Country: {user.location}</p> */}
-          <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`} >
+          <p>{user.email}</p>
+          <NavLink
+            className={styles['detailButton']}
+            to={`/users/detail/${user.id}`}
+          >
             Detail
           </NavLink>
           <div>
-          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
+            <i
+              onClick={handleEdit}
+              className={`fas fa-pencil-alt ${styles.editIcon}`}
+            />
           </div>
         </div>
       )}
@@ -195,3 +193,14 @@ const UserCard = ({ user }) => {
 };
 
 export default UserCard;
+
+{
+  /* <p>UserId: {user.userId}</p> */
+}
+{
+  /* <p>Description: {user.description}</p> */
+}
+{
+  /* <p>Phone Number: {user.phoneNumber}</p>
+          <p>Country: {user.location}</p> */
+}
