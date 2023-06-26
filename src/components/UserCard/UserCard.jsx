@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import styles from './UserCard.module.css';
+import { NavLink } from 'react-router-dom';
 
 const UserCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -16,11 +17,11 @@ const UserCard = ({ user }) => {
   const [image, setImage] = useState(user.image);
   const [errors, setErrors] = useState({});
 
-  const handleEdit = () => {
+  const handleEdit = () => {///
     setIsEditing(true);
   };
 
-  const handleSave = () => {
+  const handleSave = () => {///
     const validationErrors = validate({ userName });
     setErrors(validationErrors);
 
@@ -45,7 +46,7 @@ const UserCard = ({ user }) => {
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = () => {////
     setUserName(user.userName);
     setDescription(user.description);
     setPhoneNumber(user.phoneNumber);
@@ -63,11 +64,13 @@ const UserCard = ({ user }) => {
 
     try {
       // Envía la imagen al backend para subirla a Cloudinary
-      const response = await axios.post('/', formData);
-      const imageUrl = response.data.url;
+      // const response = await axios.post('/', formData);
+      // const imageUrl = response.data.url;
+      const response = await axios.post('/api/upload', formData);
+      const image = response.data.url;
 
       // Actualiza el estado de la imagen con la URL de Cloudinary
-      setImage(imageUrl);
+      setImage(image);
     } catch (error) {
       console.error('Error uploading image:', error);
       window.alert('Error uploading image. Please try again.');
@@ -98,11 +101,14 @@ const UserCard = ({ user }) => {
   };
 
   return (
-    <div className={styles.userCard}>
-      <img src={image} className={styles.image} />
+    <div className={styles['userCard']}>
+
+      <img src={image} className={styles['imageU']} />
+
       <h3>{user.userName}</h3>
+
       {isEditing ? (
-        <>
+        <div>
           <p>
             Username:{' '}
             <input
@@ -168,18 +174,21 @@ const UserCard = ({ user }) => {
           >
             <FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
           </button>
-        </>
+        </div>
       ) : (
-        <>
-          <p>Email: {user.email}</p>
-          <p>UserId: {user.userId}</p>
-          <p>Description: {user.description}</p>
-          <p>Phone Number: {user.phoneNumber}</p>
-          <p>Location: {user.location}</p>
-          <button className={styles.editButton} onClick={handleEdit}>
-            <i className={`fas fa-pencil-alt ${styles.editIcon}`} />
-          </button>
-        </>
+        <div>
+          {/* <p>Email: {user.email}</p>
+          <p>UserId: {user.userId}</p> */}
+          {/* <p>Description: {user.description}</p> */}
+          {/* <p>Phone Number: {user.phoneNumber}</p>
+          <p>Country: {user.location}</p> */}
+          <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`} >
+            Detail
+          </NavLink>
+          <div>
+          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
+          </div>
+        </div>
       )}
     </div>
   );

@@ -4,8 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { getFavorites } from '../../redux/actions';
-import Searchbar from "../../components/SearchBar/Searchbar";
-import Filters from "../../components/Filters/Filters";
 import Loader from "../../components/Loader/Loader";
 import CustomPagination from "../../components/Pagination/Pagination";
 
@@ -15,13 +13,9 @@ const Favorites = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
   const [currentPage, setCurrentPage] = useState(1);
   const artsPerPage = 8;
-  const indexOfLastArt = currentPage * artsPerPage;
-  const indexOfFirstArt = indexOfLastArt - artsPerPage;
-  const [currentArts, setCurrentArts] = useState(myFavorites.slice(indexOfFirstArt, indexOfLastArt));
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
     const searchParams = new URLSearchParams(location.search);
@@ -52,23 +46,13 @@ const Favorites = () => {
   
   return (
     <div>
-      <div className={styles['searchContainer']}>
-        <Searchbar setCurrentPage={setCurrentPage} />
-        <Filters setCurrentPage={setCurrentPage} />
-      </div>
-        {isLoading ? (<Loader />) 
-        : currentArts.length === 0 
-        ? (<div className={styles['no-results']}>
-            <p>No results found</p>
-          </div>)
-        : (<div>
+        <div>
             {myFavorites.map((art) => (
               <div className={styles['boxFav']}key={art.id}>
                 <Card art={art} />
            </div>
              ))}
           </div>
-        )}
         <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
     </div>
   );

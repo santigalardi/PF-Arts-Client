@@ -19,6 +19,7 @@ export const GET_ARTS_BY_AUTHOR_NAME = 'GET_ARTS_BY_AUTHOR_NAME;';
 export const GET_ARTS_BY_FILTERS = 'GET_ARTS_BY_FILTERS';
 export const UPDATE_ARTWORK = 'UPDATE_ARTWORK';
 export const GET_FAVORITES = 'GET_FAVORITES;';
+export const GET_USERS_DETAIL = 'GET_USERS_DETAIL';
 export const SET_CART = 'SET_CART';
 
 export const getAllArts = () => {
@@ -104,11 +105,25 @@ export const updateUser = (updatedUser) => {
   };
 };
 
+export const getUserDetail = (id) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`${URL}/users/detail/${id}`);
+      return dispatch({
+        type: GET_USERS_DETAIL,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 // Acción para agregar un favorito
 export function addFavorite(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post('/favorites/add', payload);
+      const response = await axios.post(`${URL}/favorites/add`, payload);
       dispatch({ type: ADD_FAVORITE, payload: response.data });
       return response;
     } catch (error) {
@@ -128,11 +143,11 @@ export function deleteFavorite(payload) {
     }
   };
 }
-//Ojo para mostrar los favoritos
+// para mostrar los favoritos
 export const getFavorites = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get('/favorites');
+      const response = await axios.get(`${URL}/favorites`);
       dispatch({ type: GET_FAVORITES, payload: response.data });
       return response;
     } catch (error) {
