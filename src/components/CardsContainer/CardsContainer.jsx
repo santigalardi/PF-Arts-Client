@@ -58,10 +58,9 @@ const CardsContainer = () => {
           <Searchbar setCurrentPage={setCurrentPage} />
           <Filters setCurrentPage={setCurrentPage} />
         </div>
-        {isLoading ? (
-          <Loader />
-        ) : currentArts.length === 0 ? (
-          <div className={styles['no-results']}>
+        {isLoading 
+        ? (<Loader />) : currentArts.length === 0 
+        ? (<div className={styles['no-results']}>
             <p>No results found</p>
           </div>
         ) : (
