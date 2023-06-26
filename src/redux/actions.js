@@ -126,10 +126,13 @@ export const getUserDetail = (id) => {
 };
 
 // Acción para agregar un favorito
-export function addFavorite(payload) {
+export function addFavorite(userId, artworkId, payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`${URL}/favorites/add`, payload);
+      const response = await axios.post(
+        `${URL}/favorites/${userId}/${artworkId}`,
+        payload
+      );
       dispatch({ type: ADD_FAVORITE, payload: response.data });
       return response;
     } catch (error) {
@@ -139,10 +142,10 @@ export function addFavorite(payload) {
 }
 
 // para mostrar los favoritos
-export const getFavorites = () => {
+export const getFavorites = (userId) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/favorites`);
+      const response = await axios.get(`${URL}/favorites/${userId}`);
       dispatch({ type: GET_FAVORITES, payload: response.data });
       return response;
     } catch (error) {
@@ -150,6 +153,21 @@ export const getFavorites = () => {
     }
   };
 };
+export function deleteFavorite(userId, artworkId, payload) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(
+        `${URL}/favorites/delete/${userId}/${artworkId}`,
+        payload
+      );
+      dispatch({ type: DELETE_FAVORITE, payload: response.data });
+
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 export const getDetail = (id) => {
   return async function (dispatch) {
     try {
@@ -244,15 +262,3 @@ export function deleteArt(id) {
 }
 
 // Acción para eliminar un favorito
-export function deleteFavorite(payload) {
-  return async function (dispatch) {
-    try {
-      const response = await axios.delete(`/favorites/delete/${payload.id}`);
-      dispatch({ type: DELETE_FAVORITE, payload: response.data });
-
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-}
