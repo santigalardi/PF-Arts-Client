@@ -1,27 +1,122 @@
-.containerUserDetail{
-        /* los tres primeros es para que el footer no moleste y se mande abajo */
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
+.containerUserDetail {
+  /* los tres primeros es para que el footer no moleste y se mande abajo */
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
-.userDetail{
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 5rem;
+
+.userDetail {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 8rem;
 }
-.imgU{
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 2px solid rgb(96, 86, 86);
-    /* background-color: #999999; */
+
+.details {
+  background-color: #f6f6f6;
+  padding-top: 10px;
+  padding-right: 66.8vw;
+  list-style: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-.details{
-    background-color: rgb(215, 229, 222);
-    border-radius: 20px 0px 20px 0px;
-    padding-top: 19px;
-    padding-right: 65vw;
-    margin-left: 2rem;
-    list-style: none;
+
+.gallery-wrapper {
+  background-color: #dbdbdb;
+  box-sizing: border-box;
+  height: 195px;
+  overflow: hidden;
+}
+
+.gallery-scroll {
+  box-sizing: border-box;
+  height: 195px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.gallery {
+  background-color: #dbdbdb;
+  display: flex;
+  box-sizing: border-box;
+  width: max-content;
+  height: 180px;
+  padding: 0px 80px;
+}
+
+.item {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 16px 8px;
+}
+
+.item img {
+  display: block;
+  height: 100%;
+}
+.starIcon {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  color: gold;
+  margin-top: 20px;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.shareIcon {
+  margin-left: 197px;
+}
+
+.categoryTitle {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.floatbox {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.item {
+  float: left;
+  box-sizing: border-box;
+  width: 25%;
+  margin-bottom: 0px;
+  padding: 0px 6.5px;
+}
+
+.item:nth-child(4n + 1) {
+  clear: both;
+}
+
+.content {
+  background-color: #f2f2f2;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  text-align: center;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 8px 16px;
+}
+
+.content:hover {
+  background-color: #ddd;
+}
+
+.content:active {
+  background-color: #ccc;
 }

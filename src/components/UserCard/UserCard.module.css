@@ -1,20 +1,20 @@
 .userCard {
-   background: #f5f5f5;
-   padding: 80px;
-   margin-bottom: 20px;
-   border-radius: 4px;
-   display: flex;
-   flex-direction: column;
-   box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
-   -webkit-box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
-   -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
-   align-items: center;
+  background: #f5f5f5;
+  padding: 50px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
+  align-items: center;
 }
 
 .userCard:hover {
-   box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
-   -webkit-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
-   -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
 }
 
 .imageU {
@@ -28,157 +28,156 @@
 }
 
 .userCard h3 {
-   font-size: 18px;
-   font-weight: bold;
-   font-family:Georgia;
-   margin-top: 25px;
-   margin-bottom: 5px;
-   grid-column: 1 / -1;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Georgia;
+  margin-top: 25px;
+  margin-bottom: 5px;
+  grid-column: 1 / -1;
 }
 
 .userCard p {
-   margin-bottom: 5px;
-   grid-column: 1 / -1;
+  margin-bottom: 5px;
+  grid-column: 1 / -1;
 }
 
 .userCard p:last-child {
-   margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .editIcon {
-   color: #999999;
-   margin-left: 5px;
-   cursor: pointer;
+  color: #999999;
+  margin-left: 90px;
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .editIcon:hover {
-   background-color: transparent;
-   color: #4c30ae;
+  background-color: transparent;
+  color: #c7c7c7;
 }
 
 .detailButton {
-   margin-top: 30px;
-   box-shadow: 4px 5px 2px 1px #276873;
-	background-color:#599bb3;
-	border-radius:10px;
-	border:1px solid #78accf;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:17px;
-	padding:16px 76px;
-	text-decoration:none;
-	text-shadow:1px 2px 0px #3d768a;
+  margin-top: 30px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-family: Arial;
+  font-size: 17px;
+  padding: 16px 76px;
+  text-decoration: none;
+  transition: background-color 0.3s;
 }
 .detailButton:hover {
-	background-color:#20c96f;
-   padding: 15px 76px;
+  background-color: #eaeaea;
 }
+
 .detailButton:active {
-   position:relative;
-	top:1px;
+  position: relative;
+  top: 1px;
 }
 
 .saveButton,
 .cancelButton {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   font-size: 12px;
-   border: none;
-   cursor: pointer;
-   padding: 0;
-   margin-bottom: 10px;
-   margin-right: 2px;
-   color: #ffffff;
-   border-radius: 5px;
-   padding: 4px 5px;
-   transition: background-color 0.3s, color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .saveButton:focus,
 .cancelButton:focus {
-   outline: none;
+  outline: none;
 }
 
 .saveButton:hover,
 .cancelButton:hover {
-   color: #ffffff;
+  color: #ffffff;
 }
 
 .saveButton {
-   background-color: rgb(106, 242, 106);
+  background-color: rgb(106, 242, 106);
 }
 
 .saveButton:hover {
-   background-color: rgb(5, 155, 15);
+  background-color: rgb(5, 155, 15);
 }
 
 .cancelButton {
-   background-color: rgb(77, 147, 188);
+  background-color: rgb(77, 147, 188);
 }
 
 .cancelButton:hover {
-   background-color: #0d36dc;
+  background-color: #0d36dc;
 }
 
 .error {
-   color: red;
+  color: red;
 }
 
 .deleteButton {
-   font-size: 15px;
-   border: none;
-   cursor: pointer;
-   color: #999999;
-   background-color: transparent;
-   padding: 0;
-   margin: 10px 0 0 0;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  color: #999999;
+  background-color: transparent;
+  padding: 0;
+  margin: 10px 0 0 0;
 }
 
 .deleteIcon {
-   color: #999999;
-   margin-left: 5px;
-   cursor: pointer;
+  color: #999999;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .deleteIcon:hover {
-   background-color: transparent;
-   color: #f92424;
+  background-color: transparent;
+  color: #f92424;
 }
 
 .uploadButton {
-   display: inline-block;
-   padding: 8px 16px;
-   background-color: #f2f2f2;
-   color: #333;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   cursor: pointer;
-   transition: background-color 0.3s ease;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f2f2f2;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .uploadButton:hover {
-   background-color: #51f25e;
-   border-radius: 50px;
+  background-color: #ddd;
 }
 
 .uploadButton:active {
-   background-color: #ccc;
+  background-color: #ccc;
 }
 
 .uploadButton input[type='file'] {
-   display: none;
+  display: none;
 }
 .input {
-   border-color: #cccccc;
-   padding: 6px;
-   font-size: 15px;
-   border-width: 3px;
-   border-radius: 50px;
-   border-style: outset;
+  border-color: #cccccc;
+  padding: 6px;
+  font-size: 14px;
+  border-width: 3px;
+  border-radius: 50px;
+  border-style: outset;
 }
 .input:focus {
-   outline: none;
+  outline: none;
 }
