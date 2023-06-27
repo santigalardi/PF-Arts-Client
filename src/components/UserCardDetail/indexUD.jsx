@@ -1,9 +1,22 @@
+import PropTypes from 'prop-types'; 
 import style from './indexDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
 
-const UserDetail = (user) => {
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserDetail } from '../../redux/actions';
+
+const UserDetail = ({ userCardId }) => {
+  const dispatch = useDispatch();
+  const userdetail = useSelector(state => state.usersdetail);
+
+  useEffect(() => {
+    dispatch(getUserDetail(userCardId));
+  }, [dispatch, userCardId]);
+
+  const { name, email, userId, description, phoneNumber, location } = userdetail;
   return (
     <div className={style.containerUserDetail}>
       <div className={style.userDetail}>
@@ -28,11 +41,12 @@ const UserDetail = (user) => {
         </div>
 
         <ul className={style.details}>
-          <li>Name:</li>
-          <li>Email:</li>
-          <li>Phone Number:</li>
-          <li>Country:</li>
-          <li>Description:</li>
+          <li>Name:{name}</li>
+          <li>Email:{email}</li>
+          <li>UserId:{userId}</li>
+          <li>Description:{description}</li>
+          <li>Phone Number:{phoneNumber}</li>
+          <li>Country:{location}</li>
         </ul>
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
@@ -54,15 +68,16 @@ const UserDetail = (user) => {
     </div>
   );
 };
+UserDetail.propTypes = {
+  userCardId: PropTypes.string.isRequired,
+};
+
 export default UserDetail;
+
 
 // ------------------- ESTO DE ACÁ ABAJO ES DE ALEX --------------- //
 // import PropTypes from 'prop-types';
 // import style from './indexDetail.module.css';
-// import { getUserDetail } from '../../redux/actions';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { useEffect } from 'react';
-
 // import { getUserDetail } from '../../redux/actions';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { useEffect } from 'react';
@@ -74,21 +89,22 @@ export default UserDetail;
 // }, [dispatch, userCardId]);
 
 // const { name ,email,userId,description, phoneNumber,location } = userDetail;
-//nF
-{
-  /* <li>Name:{name}</li>
-<li>Email:{email}</li>
-<li>UserId:{userId}</li>
-<li>Description:{description}</li>
-<li>Phone Number:{phoneNumber}</li>
-<li>Country:{location}</li> */
-}
+
+//  <li>Name:{name}</li>
+//  <li>Email:{email}</li>
+//  <li>UserId:{userId}</li>
+//  <li>Description:{description}</li>
+//  <li>Phone Number:{phoneNumber}</li>
+//  <li>Country:{location}</li> 
+//   )}
+
+
 //FCC
-{
+
   /* <li>Name:</li>
 <li>Email:</li>
 <li>UserId:</li>
 <li>Description:</li>
 <li>Phone Number:</li>
 <li>Country:</li> */
-}
+

@@ -15,7 +15,7 @@ import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 import Users from './views/Users/Users';
 import Cart from './views/Cart/Cart';
-import UserDetail from './components/UserCardDetail/indexUD';
+import UDetail from './views/UsersDetail/UDetail';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -46,7 +46,7 @@ function App() {
         <Route path='/FAQ' element={<Buyer />} />
         <Route path='/favorites/:userId' element={<Favorites />} />
         <Route path='/users' element={<Users />} />
-        <Route path='/users/detail/:id' element={<UserDetail userCardId='userCardId'/>} />
+        <Route path='/users/detail/:id' element={<UDetail />} />
         <Route path='/cart' element={<Cart />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (
