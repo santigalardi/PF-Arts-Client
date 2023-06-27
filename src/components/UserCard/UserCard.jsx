@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
 const UserCard = ({ user}) => {
-  const { id } = useParams();
+  const { userId } = useParams();
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
   const [userName, setUserName] = useState(user.userName);
@@ -112,7 +112,7 @@ const UserCard = ({ user}) => {
       <img src='https://previews.123rf.com/images/drvector/drvector1510/drvector151000001/45754312-icono-dise%C3%B1ador-artista.jpg' className={styles['imageU']} />
 
       <h3>{user.userName}</h3>
-      <h3>{user.email}</h3>
+      {/* <h3>{user.email}</h3> */}
 
       {isEditing ? (
         <div>
@@ -153,7 +153,7 @@ const UserCard = ({ user}) => {
           {/* <p>Description: {user.description}</p> */}
           {/* <p>Phone Number: {user.phoneNumber}</p>
           <p>Country: {user.location}</p> */}
-          <NavLink className={styles['detailButton']} to={`/users/detail/${id}`} >
+          <NavLink className={styles['detailButton']} to={`/users/detail/${userId}`} >
             Detail
           </NavLink>
           <div>

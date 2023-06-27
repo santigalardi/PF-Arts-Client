@@ -4,23 +4,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetail } from '../../redux/actions';
+import { getAllUsers } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const UserDetail = () => {
-  const { id } = useParams();
+  const { userId } = useParams();
   const dispatch = useDispatch();
+  const [userCardDetail, setUserCardDetail]=useState(false)
   const userdetail = useSelector(state => state.usersdetail);
-
+  const allUsers = useSelector(state => state.allUsers);
 
   useEffect(() => {
-    dispatch(getUserDetail(id));
-  }, [dispatch, id]);
+    const currentUser = allUsers.find(user => user.userId === userId);
+    setUserCardDetail(currentUser);
+  }, [userId, allUsers])
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch, userId]);
+
+  // console.log(getUserDetail)
 
   return (
     <div className={style.containerUserDetail}>
+        <NavLink className={style['BttBack']} to='/users'>
+        {' '}
+        ← BACK{' '}
+      </NavLink>
       <div className={style.userDetail}>
         <div className={style.galleryWrapper}>
           <div className={style.galleryScroll}>
@@ -44,12 +57,12 @@ const UserDetail = () => {
 
         <ul className={style['details']}>
 
-          <li>Name:{userdetail.userName}</li>
-          <li>Email:{userdetail.email}</li>
-          <li>UserId:{userdetail.userId}</li>
-          <li>Description:{userdetail.description}</li>
-          <li>Phone Number:{userdetail.phoneNumber}</li>
-          <li>Country:{userdetail.location}</li>
+          <li>Name:{userCardDetail?.userName||'N/A'}</li>
+          <li>Email:{userdetail?.email||'N/A'}</li>
+          <li>UserId:{userdetail?.userId||'N/A'}</li>
+          <li>Description:{userdetail?.description||'N/A'}</li>
+          <li>PhoneNumber:{userdetail?.phoneNumber||'N/A'}</li>
+          <li>Country:{userdetail?.location||'N/A'}</li>
         </ul>
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
@@ -71,9 +84,6 @@ const UserDetail = () => {
     </div>
   );
 };
-// UserDetail.propTypes = {
-//   userCardId: PropTypes.string.isRequired,
-// };
 
 export default UserDetail;
 
