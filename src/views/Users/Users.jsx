@@ -10,12 +10,12 @@ const UsersPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const locationUsers = useLocation();
-  const users = useSelector((state) => state.allUsers);
+  const allUsers = useSelector((state) => state.allUsers);
   const [currentUsersPage, setCurrentUsersPage] = useState(1);
-  const usersPerPage = 6;
+  const usersPerPage = 1;
   const indexOfLastUser = currentUsersPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = allUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -29,10 +29,10 @@ const UsersPage = () => {
 
   const handlePageChange = (pageNumber) => {
     setCurrentUsersPage(pageNumber);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('pageUser', pageNumber);
-    const newSearchUser = searchParams.toString();
-    navigate(`/?${newSearchUser}`);
+    const searchParamsUser = new URLSearchParams(location.search);
+    searchParamsUser.set('pageUser', pageNumber);
+    const newSearchUser = searchParamsUser.toString();
+    navigate({ search: `?${newSearchUser}` });
   };
 
   const handleEditUser = (userId) => {
@@ -45,14 +45,17 @@ const UsersPage = () => {
       <div className={styles.usersPage}>
         <div className={styles.userCards}>
           {currentUsers.map((user) => (
-            <UserCard key={user.userId} user={user} value={handleEditUser} />
+            <UserCard 
+            key={user.userId} 
+            user={user} 
+            value={handleEditUser} />
           ))}
         </div>
       </div>
       <div className={styles['pagination']}>
       <UserPagination
         usersPerPage={usersPerPage}
-        totalUsers={users.length}
+        totalUsers={allUsers.length}
         currentUsersPage={currentUsersPage}
         handlePageChange={handlePageChange}
       />
