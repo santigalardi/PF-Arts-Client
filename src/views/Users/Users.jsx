@@ -5,6 +5,7 @@ import { getAllUsers } from '../../redux/actions';
 import UserCard from '../../components/UserCard/UserCard';
 import styles from './UsersPage.module.css';
 import UserPagination from '../../components/PgUser/PgUser';
+import { NavLink } from 'react-router-dom';
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const UsersPage = () => {
   const locationUsers = useLocation();
   const allUsers = useSelector((state) => state.allUsers);
   const [currentUsersPage, setCurrentUsersPage] = useState(1);
-  const usersPerPage = 1;
+  const usersPerPage = 3;
   const indexOfLastUser = currentUsersPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = allUsers.slice(indexOfFirstUser, indexOfLastUser);
@@ -42,6 +43,10 @@ const UsersPage = () => {
 
   return (
     <div>
+        <NavLink className={styles['BttBack']} to='/'>
+        {' '}
+        ← BACK{' '}
+      </NavLink>
       <div className={styles.usersPage}>
         <div className={styles.userCards}>
           {currentUsers.map((user) => (

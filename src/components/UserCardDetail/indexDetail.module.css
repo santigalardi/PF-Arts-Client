@@ -120,3 +120,17 @@
 .content:active {
   background-color: #ccc;
 }
+.BttBack {
+  text-decoration: none;
+  background-color: white;
+  color: rgb(53, 53, 53);
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 5px;
+  margin-top: 20px;
+}
+
+.BttBack:hover {
+  background-color: rgb(53, 53, 53);
+  color: white;
+}

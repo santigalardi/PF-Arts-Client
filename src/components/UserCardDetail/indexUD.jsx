@@ -1,11 +1,39 @@
+// import PropTypes from 'prop-types'; 
 import style from './indexDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
 
-const UserDetail = (user) => {
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../../redux/actions';
+import { useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+const UserDetail = () => {
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+  const [userCardDetail, setUserCardDetail]=useState(false)
+  const userdetail = useSelector(state => state.usersdetail);
+  const allUsers = useSelector(state => state.allUsers);
+
+  useEffect(() => {
+    const currentUser = allUsers.find(user => user.userId === userId);
+    setUserCardDetail(currentUser);
+  }, [userId, allUsers])
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch, userId]);
+
+  // console.log(getUserDetail)
+
   return (
     <div className={style.containerUserDetail}>
+        <NavLink className={style['BttBack']} to='/users'>
+        {' '}
+        ← BACK{' '}
+      </NavLink>
       <div className={style.userDetail}>
         <div className={style.galleryWrapper}>
           <div className={style.galleryScroll}>
@@ -27,12 +55,14 @@ const UserDetail = (user) => {
           </div>
         </div>
 
-        <ul className={style.details}>
-          <li>Name:</li>
-          <li>Email:</li>
-          <li>Phone Number:</li>
-          <li>Country:</li>
-          <li>Description:</li>
+        <ul className={style['details']}>
+
+          <li>Name:{userCardDetail?.userName||'N/A'}</li>
+          <li>Email:{userdetail?.email||'N/A'}</li>
+          <li>UserId:{userdetail?.userId||'N/A'}</li>
+          <li>Description:{userdetail?.description||'N/A'}</li>
+          <li>PhoneNumber:{userdetail?.phoneNumber||'N/A'}</li>
+          <li>Country:{userdetail?.location||'N/A'}</li>
         </ul>
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
@@ -54,15 +84,13 @@ const UserDetail = (user) => {
     </div>
   );
 };
+
 export default UserDetail;
+
 
 // ------------------- ESTO DE ACÁ ABAJO ES DE ALEX --------------- //
 // import PropTypes from 'prop-types';
 // import style from './indexDetail.module.css';
-// import { getUserDetail } from '../../redux/actions';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { useEffect } from 'react';
-
 // import { getUserDetail } from '../../redux/actions';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { useEffect } from 'react';
@@ -74,21 +102,22 @@ export default UserDetail;
 // }, [dispatch, userCardId]);
 
 // const { name ,email,userId,description, phoneNumber,location } = userDetail;
-//nF
-{
-  /* <li>Name:{name}</li>
-<li>Email:{email}</li>
-<li>UserId:{userId}</li>
-<li>Description:{description}</li>
-<li>Phone Number:{phoneNumber}</li>
-<li>Country:{location}</li> */
-}
+
+//  <li>Name:{name}</li>
+//  <li>Email:{email}</li>
+//  <li>UserId:{userId}</li>
+//  <li>Description:{description}</li>
+//  <li>Phone Number:{phoneNumber}</li>
+//  <li>Country:{location}</li> 
+//   )}
+
+
 //FCC
-{
+
   /* <li>Name:</li>
 <li>Email:</li>
 <li>UserId:</li>
 <li>Description:</li>
 <li>Phone Number:</li>
 <li>Country:</li> */
-}
+

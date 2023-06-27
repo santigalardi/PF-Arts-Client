@@ -44,7 +44,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         usersdetail: action.payload,
-        userDetail: action.payload,
       };
 
     case ADD_FAVORITE:
