@@ -40,7 +40,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allUsers: action.payload,
       };
-    case GET_USERS_DETAIL: //
+    case GET_USERS_DETAIL:
       return {
         ...state,
         usersdetail: action.payload,
@@ -52,7 +52,7 @@ const rootReducer = (state = initialState, action) => {
         myFavorites: [...state.myFavorites, action.payload],
       };
 
-    case GET_FAVORITES: //para mostrar los favorites
+    case GET_FAVORITES:
       return {
         ...state,
         myFavorites: action.payload,

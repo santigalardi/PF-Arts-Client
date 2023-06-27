@@ -54,14 +54,6 @@ const Favorites = () => {
         ))}
       </div>
       <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
-      <div>
-        {myFavorites.map((art) => (
-          <div className={styles['boxFav']} key={art.artworkId}>
-            <Card art={art} />
-          </div>
-        ))}
-      </div>
-      <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
     </div>
   );
 };
