@@ -1,13 +1,17 @@
 import './NavMenu.css';
 import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 
-const NavMenu = ({ userId }) => {
+const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const loggedUser = useSelector((state) => state.loggedUser);
+
+  const { userId } = loggedUser;
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -30,10 +34,7 @@ const NavMenu = ({ userId }) => {
 
   return (
     <nav>
-      <div
-        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
-        onClick={toggleMenu}
-      >
+      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>

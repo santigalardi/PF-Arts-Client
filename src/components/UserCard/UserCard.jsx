@@ -108,59 +108,27 @@ const UserCard = ({ user }) => {
       <img src={image} className={styles['imageU']} />
 
       <h3>{user.userName}</h3>
+      <h3>{user.email}</h3>
 
       {isEditing ? (
         <div>
           <p>
-            Username:{' '}
-            <input
-              type='text'
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className={styles.input}
-              placeholder='Enter a user name'
-            />
-            {errors.userName && (
-              <span className={styles.error}>{errors.userName}</span>
-            )}
+            Username: <input type='text' value={userName} onChange={(e) => setUserName(e.target.value)} className={styles.input} placeholder='Enter a user name' />
+            {errors.userName && <span className={styles.error}>{errors.userName}</span>}
           </p>
           <p>
-            Description:{' '}
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={styles.input}
-              placeholder='Enter a description'
-            />
+            Description: <textarea value={description} onChange={(e) => setDescription(e.target.value)} className={styles.input} placeholder='Enter a description' />
           </p>
           <p>
-            Phone Number:{' '}
-            <input
-              type='number'
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className={styles.input}
-              placeholder='Enter a number'
-            />
+            Phone Number: <input type='number' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className={styles.input} placeholder='Enter a number' />
           </p>
           <p>
-            Location:{' '}
-            <input
-              type='text'
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className={styles.input}
-              placeholder='Enter a location'
-            />
+            Location: <input type='text' value={location} onChange={(e) => setLocation(e.target.value)} className={styles.input} placeholder='Enter a location' />
           </p>
           <p>
             Profile picture:{' '}
             <label className={styles.uploadButton}>
-              <input
-                type='file'
-                accept='image/*'
-                onChange={handleImageChange}
-              />
+              <input type='file' accept='image/*' onChange={handleImageChange} />
               Upload Image
             </label>
           </p>
@@ -170,10 +138,7 @@ const UserCard = ({ user }) => {
           <button className={styles.cancelButton} onClick={handleCancel}>
             Cancel
           </button>
-          <button
-            className={styles.deleteButton}
-            onClick={() => handleDelete(user.userId)}
-          >
+          <button className={styles.deleteButton} onClick={() => handleDelete(user.userId)}>
             <FontAwesomeIcon icon={faTrash} className={styles.deleteIcon} />
           </button>
         </div>
@@ -184,17 +149,11 @@ const UserCard = ({ user }) => {
           {/* <p>Description: {user.description}</p> */}
           {/* <p>Phone Number: {user.phoneNumber}</p>
           <p>Country: {user.location}</p> */}
-          <NavLink
-            className={styles['detailButton']}
-            to={`/users/detail/${user.id}`}
-          >
+          <NavLink className={styles['detailButton']} to={`/users/detail/${user.id}`}>
             Detail
           </NavLink>
           <div>
-            <i
-              onClick={handleEdit}
-              className={`fas fa-pencil-alt ${styles.editIcon}`}
-            />
+            <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
           </div>
         </div>
       )}

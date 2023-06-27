@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoggedUser } from '../../redux/actions';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import axios from 'axios';
@@ -9,6 +11,9 @@ import styles from './Login.module.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const allUsers = useSelector((state) => state.allUsers);
+
   const [input, setInput] = useState({
     username: '',
     password: '',
@@ -60,8 +65,10 @@ const Login = () => {
         const { token, success } = response.data;
 
         if (success) {
+          const loginUser = allUsers.find((user) => user.userName === input.username);
+          dispatch(setLoggedUser(loginUser));
           localStorage.setItem('token', token);
-          console.log("Login successfully", token);
+          console.log('Login successfully', token);
           setInput({
             username: '',
             password: '',
@@ -78,13 +85,6 @@ const Login = () => {
       setLoginError(true); // Mostrar mensaje de error
     }
   }
-
-  useEffect(() => {
-    setInput({
-      ...input,
-      username: localStorage.getItem('email') || '',
-    });
-  }, []);
 
   return (
     <div className={styles['login-container']}>
