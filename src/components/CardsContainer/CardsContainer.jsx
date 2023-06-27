@@ -30,8 +30,6 @@ const CardsContainer = () => {
     navigate(`/?${newSearch}`);
   };
 
-  console.log(allUsers);
-
   useEffect(() => {
     setIsLoading(true);
     if (allArts.length === 0) {

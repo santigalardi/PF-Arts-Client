@@ -6,6 +6,7 @@
   align-items: flex-start;
   box-sizing: border-box;
   margin: 0px -18px;
+  height: 80vh;
 }
 
 .leftColumn {
