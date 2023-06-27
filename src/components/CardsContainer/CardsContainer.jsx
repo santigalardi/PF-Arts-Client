@@ -12,7 +12,7 @@ import styles from './CardsContainer.module.css';
 const CardsContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  const locationCard = useLocation();
   const allArts = useSelector((state) => state.allArts);
   const allUsers = useSelector((state) => state.allUsers);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,8 +24,8 @@ const CardsContainer = () => {
 
   const pagination = (pageNumber) => {
     setCurrentPage(pageNumber);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('page', pageNumber);
+    const searchParams = new URLSearchParams(locationCard.search);
+    searchParams.set('pageCard', pageNumber);
     const newSearch = searchParams.toString();
     navigate(`/?${newSearch}`);
   };
@@ -50,9 +50,9 @@ const CardsContainer = () => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const page = Number(searchParams.get('page')) || 1;
-    setCurrentPage(page);
-  }, [location.search]);
+    const pageCard = Number(searchParams.get('pageCard')) || 1;
+    setCurrentPage(pageCard);
+  }, [locationCard.search]);
 
   return (
     <div>
@@ -76,7 +76,11 @@ const CardsContainer = () => {
             ))}
           </div>
         )}
-        <CustomPagination artsPerPage={artsPerPage} allArts={allArts.length} currentPage={currentPage} pagination={pagination} />
+        <CustomPagination
+        artsPerPage={artsPerPage} 
+        allArts={allArts.length} 
+        currentPage={currentPage}
+        pagination={pagination} />
       </div>
     </div>
   );

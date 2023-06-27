@@ -19,12 +19,18 @@
 
 .imageU {
    margin: 0;
-   border: 2px solid red;
-   /* background-color: #999999; */
+   box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
+   -webkit-box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
+   -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
    width: 120px;
    height: 120px;
    border-radius: 50%;
    object-fit: cover;
+}
+.imageU:hover{
+  box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 31px -1px rgba(0, 0, 0, 0.75);
 }
 
 .userCard h3 {
@@ -72,7 +78,9 @@
   transition: background-color 0.3s;
 }
 .detailButton:hover {
-  background-color: #eaeaea;
+  background-color: black;
+  color:white;
+  padding: 14px 76px;
 }
 
 .detailButton:active {

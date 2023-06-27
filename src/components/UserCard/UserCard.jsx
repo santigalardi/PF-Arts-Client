@@ -20,9 +20,9 @@ const UserCard = ({ user}) => {
   const [image, setImage] = useState(user.image);
   const [errors, setErrors] = useState({});
 
-  const handleEdit = () => {///
-    setIsEditing(true);
-  };
+  // const handleEdit = () => {///
+  //   setIsEditing(true);
+  // };
 
   const handleSave = () => {///
     const validationErrors = validate({ userName });
@@ -107,7 +107,7 @@ const UserCard = ({ user}) => {
   return (
     <div className={styles['userCard']}>
 
-      <img src={image} className={styles['imageU']} />
+      <img src='https://previews.123rf.com/images/drvector/drvector1510/drvector151000001/45754312-icono-dise%C3%B1ador-artista.jpg' className={styles['imageU']} />
 
       <h3>{user.userName}</h3>
 
@@ -190,7 +190,10 @@ const UserCard = ({ user}) => {
             Detail
           </NavLink>
           <div>
-          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} />
+            {/* <button className={styles['deleteButton']} onClick={handleDelete}>
+            <FontAwesomeIcon icon={faTrash} className={styles['deleteIcon']} />
+          </button>
+          <i onClick={handleEdit} className={`fas fa-pencil-alt ${styles.editIcon}`} /> */}
           </div>
         </div>
       )}
@@ -199,7 +202,7 @@ const UserCard = ({ user}) => {
 };
 UserCard.propTypes={
   // id: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
 }
 
 export default UserCard;

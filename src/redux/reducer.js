@@ -41,7 +41,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_USERS_DETAIL: //
       return {
         ...state,
-        detail: action.payload,
+        usersdetail: action.payload,
       };
 
     case GET_FAVORITES: //para mostrar los favorites
