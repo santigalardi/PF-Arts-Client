@@ -143,6 +143,7 @@ export function addFavorite(userId, artworkId, payload) {
 
 // para mostrar los favoritos
 export const getFavorites = (userId) => {
+  console.log('id', userId);
   return async function (dispatch) {
     try {
       const response = await axios.get(`${URL}/favorites/${userId}`);

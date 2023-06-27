@@ -25,6 +25,7 @@ const initialState = {
   filteredArts: [],
   arts: [],
   myFavorites: [],
+  favs: [],
   detail: {},
   users: [], //almacena datos de usuarios individuales.
   usersdetail: [],
