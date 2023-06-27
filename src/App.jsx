@@ -46,7 +46,7 @@ function App() {
         <Route path='/FAQ' element={<Buyer />} />
         <Route path='/favorites/:userId' element={<Favorites />} />
         <Route path='/users' element={<Users />} />
-        <Route path='/users/detail/:id' element={<UserDetail />} />
+        <Route path='/users/detail/:id' element={<UserDetail userCardId='userCardId'/>} />
         <Route path='/cart' element={<Cart />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (

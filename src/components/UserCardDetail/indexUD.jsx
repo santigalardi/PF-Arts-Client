@@ -57,6 +57,11 @@ const UserDetail = (user) => {
 export default UserDetail;
 
 // ------------------- ESTO DE ACÁ ABAJO ES DE ALEX --------------- //
+// import PropTypes from 'prop-types';
+// import style from './indexDetail.module.css';
+// import { getUserDetail } from '../../redux/actions';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { useEffect } from 'react';
 
 // import { getUserDetail } from '../../redux/actions';
 // import { useSelector, useDispatch } from 'react-redux';
