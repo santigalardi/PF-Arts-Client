@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
-import { AiFillHeart } from 'react-icons/ai'
+import { NavLink, useParams } from 'react-router-dom';
+import { AiFillHeart } from 'react-icons/ai';
 
-const NavMenu = () => {
+const NavMenu = ({ userId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = (event) => {
@@ -57,12 +57,10 @@ const NavMenu = () => {
           </li>
           <hr />
           <li>
-            <NavLink to='/favorites' onClick={toggleMenu}>
-            <AiFillHeart />
-              {' '}
-             Favorites
+            <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
+              <AiFillHeart /> Favorites
             </NavLink>
-          </li> 
+          </li>
           <hr />
           <li>
             <GiPencilBrush />
