@@ -68,6 +68,7 @@ const Login = () => {
           const loginUser = allUsers.find((user) => user.userName === input.username);
           dispatch(setLoggedUser(loginUser));
           localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(loginUser));
           console.log('Login successfully', token);
           setInput({
             username: '',

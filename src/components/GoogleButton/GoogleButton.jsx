@@ -38,6 +38,7 @@ const GoogleButton = () => {
             const loginUser = allUsers.find((user) => user.email === email);
             dispatch(setLoggedUser(loginUser));
             localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(loginUser));
             navigate('/');
           } else {
             setLoginError(true); // Mostrar mensaje de error
@@ -55,6 +56,7 @@ const GoogleButton = () => {
           };
           console.log(updatedUser);
           dispatch(updateUser(updatedUser));
+          localStorage.setItem('user', JSON.stringify(updatedUser));
         }
       } else {
         const newPassword = data._tokenResponse.idToken.slice(0, 12);
@@ -77,6 +79,7 @@ const GoogleButton = () => {
 
             if (success) {
               localStorage.setItem('token', token);
+              localStorage.setItem('user', JSON.stringify(newUser));
               navigate('/');
             } else {
               setLoginError(true); // Mostrar mensaje de error

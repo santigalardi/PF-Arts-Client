@@ -6,7 +6,7 @@ import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { setLoggedUser } from '../../redux/actions';
 import './Navbar.style.css';
 
 function Navbar() {
@@ -17,6 +17,24 @@ function Navbar() {
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userName, profilePicture, userId } = loggedUser;
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      setLoggedIn(false);
+    });
+  };
+
+  const storedUser = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (storedUser) {
+      setLoggedIn(true);
+      // Recuperar los datos del usuario almacenados en localStorage
+      const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(setLoggedUser(user));
+    }
+  }, [dispatch, storedUser]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,18 +50,9 @@ function Navbar() {
     };
   }, [location]);
 
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      localStorage.clear();
-      setLoggedIn(false);
-    });
-  };
+  console.log(storedUser);
 
-  useEffect(() => {
-    if (loggedUser) {
-      setLoggedIn(true);
-    }
-  }, [loggedUser]);
+  console.log(loggedIn);
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
