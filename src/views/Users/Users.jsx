@@ -5,6 +5,7 @@ import { getAllUsers } from '../../redux/actions';
 import UserCard from '../../components/UserCard/UserCard';
 import styles from './UsersPage.module.css';
 import UserPagination from '../../components/PgUser/PgUser';
+import { NavLink } from 'react-router-dom';
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,10 @@ const UsersPage = () => {
 
   return (
     <div>
+        <NavLink className={styles['BttBack']} to='/'>
+        {' '}
+        ← BACK{' '}
+      </NavLink>
       <div className={styles.usersPage}>
         <div className={styles.userCards}>
           {currentUsers.map((user) => (

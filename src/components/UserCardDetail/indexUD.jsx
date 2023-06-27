@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'; 
+// import PropTypes from 'prop-types'; 
 import style from './indexDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -7,16 +7,18 @@ import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'reac
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetail } from '../../redux/actions';
+import { useParams } from 'react-router-dom';
 
-const UserDetail = ({ userCardId }) => {
+const UserDetail = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const userdetail = useSelector(state => state.usersdetail);
 
-  useEffect(() => {
-    dispatch(getUserDetail(userCardId));
-  }, [dispatch, userCardId]);
 
-  const { name, email, userId, description, phoneNumber, location } = userdetail;
+  useEffect(() => {
+    dispatch(getUserDetail(id));
+  }, [dispatch, id]);
+
   return (
     <div className={style.containerUserDetail}>
       <div className={style.userDetail}>
@@ -40,13 +42,14 @@ const UserDetail = ({ userCardId }) => {
           </div>
         </div>
 
-        <ul className={style.details}>
-          <li>Name:{name}</li>
-          <li>Email:{email}</li>
-          <li>UserId:{userId}</li>
-          <li>Description:{description}</li>
-          <li>Phone Number:{phoneNumber}</li>
-          <li>Country:{location}</li>
+        <ul className={style['details']}>
+
+          <li>Name:{userdetail.userName}</li>
+          <li>Email:{userdetail.email}</li>
+          <li>UserId:{userdetail.userId}</li>
+          <li>Description:{userdetail.description}</li>
+          <li>Phone Number:{userdetail.phoneNumber}</li>
+          <li>Country:{userdetail.location}</li>
         </ul>
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
@@ -68,9 +71,9 @@ const UserDetail = ({ userCardId }) => {
     </div>
   );
 };
-UserDetail.propTypes = {
-  userCardId: PropTypes.string.isRequired,
-};
+// UserDetail.propTypes = {
+//   userCardId: PropTypes.string.isRequired,
+// };
 
 export default UserDetail;
 

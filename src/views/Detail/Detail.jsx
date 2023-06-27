@@ -10,13 +10,13 @@ import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 
 const Detail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
+  const detail = useSelector((state) => state.detail);
   const [isFav, setIsFav] = useState(false);
   const [rating, setRating] = useState(0);
   const [artist, setArtist] = useState('');
   const [year, setYear] = useState('');
   const [dimensions, setDimensions] = useState('');
   const [price, setPrice] = useState('');
-  const detail = useSelector((state) => state.detail);
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
   const navigate = useNavigate();
