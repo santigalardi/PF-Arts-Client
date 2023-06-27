@@ -1,5 +1,23 @@
 /* eslint-disable no-case-declarations */
-import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART } from './actions';
+import {
+  GET_ARTS,
+  GET_ARTS_BY_TITLE,
+  GET_ARTS_BY_AUTHOR_NAME,
+  GET_USERS,
+  POST_ART,
+  ADD_FAVORITE,
+  DELETE_FAVORITE,
+  GET_DETAIL,
+  CLEAR_DETAIL,
+  GET_ARTS_BY_FILTERS,
+  POST_USERS,
+  DELETE_ART,
+  UPDATE_USER,
+  UPDATE_ARTWORK,
+  GET_FAVORITES,
+  GET_USERS_DETAIL,
+  SET_CART,
+} from './actions';
 
 const initialState = {
   allArts: [],
@@ -44,10 +62,24 @@ const rootReducer = (state = initialState, action) => {
         detail: action.payload,
       };
 
+    case ADD_FAVORITE:
+      return {
+        ...state,
+        myFavorites: [...state.myFavorites, action.payload],
+      };
+
     case GET_FAVORITES: //para mostrar los favorites
       return {
         ...state,
         myFavorites: action.payload,
+      };
+
+    case DELETE_FAVORITE:
+      return {
+        ...state,
+        myFavorites: state.myFavorites.filter(
+          (fav) => fav.id !== action.payload
+        ),
       };
 
     case POST_ART:
@@ -60,12 +92,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allUsers: [...state.allUsers, action.payload],
-      };
-
-    case ADD_FAVORITE:
-      return {
-        ...state,
-        myFavorites: [...state.myFavorites, action.payload],
       };
 
     case UPDATE_USER:
@@ -97,12 +123,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         arts: updatedArts,
-      };
-
-    case DELETE_FAVORITE:
-      return {
-        ...state,
-        myFavorites: state.myFavorites.filter((fav) => fav.id !== action.payload),
       };
 
     case DELETE_ART:
