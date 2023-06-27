@@ -6,23 +6,21 @@ import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
+
 import './Navbar.style.css';
 
 function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  // const allUsers = useSelector((state) => state.allUsers);
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state) => state.loggedUser);
 
-  // console.log(allUsers);
+  const { userName, profilePicture, userId } = loggedUser;
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled =
-        window.scrollY > 0 && !location.pathname.includes('/detail');
+      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
 
       setScrolled(isScrolled);
     };
@@ -42,37 +40,21 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        localStorage.setItem('email', user.email);
-        setLoggedIn(true);
-        const storedProfilePhotoUrl = user.photoURL;
-        setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
-        console.log(user.displayName);
-        const storedFirstName = user.displayName;
-        setFirstName(storedFirstName);
-      } else {
-        localStorage.removeItem('email');
-        setLoggedIn(false);
-      }
-    });
-    return unsubscribe;
-  }, []);
+    if (loggedUser) {
+      setLoggedIn(true);
+    }
+  }, [loggedUser]);
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <NavMenu />
+      <NavMenu userId={userId} />
       <div className='navbar-title'>Henry Art Gallery</div>
       <div className='navlinks-container'>
         {loggedIn ? (
           <div className='profile-menu' onClick={handleLogout}>
-            <p className='user-welcome'>{firstName}</p>
+            <p className='user-welcome'>{userName}</p>
             <div className='profile-menu-photo-container'>
-              <img
-                src={profilePhotoUrl}
-                alt=''
-                className='profile-menu-photo'
-              />
+              <img src={profilePicture} alt='' className='profile-menu-photo' />
             </div>
           </div>
         ) : (

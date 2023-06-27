@@ -1,14 +1,14 @@
-import styles from './Favorites.modules.css?inline'; //Este enfoque utiliza una consulta especial en la ruta del archivo de estilo para incluir directamente los estilos CSS en el archivo JavaScript en lugar de cargarlos por separado.
-import Card from '../../components/Card/Card';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { getFavorites } from '../../redux/actions';
-import Loader from '../../components/Loader/Loader';
+import Card from '../../components/Card/Card';
+// import Loader from '../../components/Loader/Loader';
 import CustomPagination from '../../components/Pagination/Pagination';
-import NavMenu from '../../components/NavMenu/NavMenu';
+// import NavMenu from '../../components/NavMenu/NavMenu';
+import styles from './Favorites.modules.css?inline'; //Este enfoque utiliza una consulta especial en la ruta del archivo de estilo para incluir directamente los estilos CSS en el archivo JavaScript en lugar de cargarlos por separado.
 
-const LOCAL_STORAGE_KEY = 'myFavorites'; //*** */
+const LOCAL_STORAGE_KEY = 'myFavorites';
 
 const Favorites = () => {
   const dispatch = useDispatch();
@@ -28,16 +28,14 @@ const Favorites = () => {
 
   //*/*/*
   useEffect(() => {
+    //****/ // ↓Obtener los favoritos guardados en el almacenamiento local
+    const storedFavorites = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+    // ↓Si hay favoritos almacenados, actualizar el estado de Redux
+    if (storedFavorites) {
+      dispatch({ type: 'SET_FAVORITES', payload: storedFavorites });
+    }
     dispatch(getFavorites(userId));
   }, [dispatch, userId]);
-
-  //*** */ // ↓Obtener los favoritos guardados en el almacenamiento local
-  const storedFavorites = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-  // ↓Si hay favoritos almacenados, actualizar el estado de Redux
-  if (storedFavorites) {
-    dispatch({ type: 'SET_FAVORITES', payload: storedFavorites });
-  }
-  // ↓Obtener los favoritos del servidor
 
   ///** */
   useEffect(() => {
@@ -55,12 +53,15 @@ const Favorites = () => {
           </div>
         ))}
       </div>
-      <CustomPagination
-        artsPerPage={artsPerPage}
-        allArts={myFavorites.length}
-        currentPage={currentPage}
-        pagination={pagination}
-      />
+      <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
+      <div>
+        {myFavorites.map((art) => (
+          <div className={styles['boxFav']} key={art.artworkId}>
+            <Card art={art} />
+          </div>
+        ))}
+      </div>
+      <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
     </div>
   );
 };

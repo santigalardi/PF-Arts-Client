@@ -1,13 +1,7 @@
 import style from './indexDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import {
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-  FaPinterest,
-  FaYoutube,
-} from 'react-icons/fa';
+import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
 
 const UserDetail = (user) => {
   return (
@@ -24,16 +18,10 @@ const UserDetail = (user) => {
                 />
               </div>
               <div className={style.item}>
-                <img
-                  src='https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg'
-                  alt='Image'
-                />
+                <img src='https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg' alt='Image' />
               </div>
               <div className={style.item}>
-                <img
-                  src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU'
-                  alt='Image'
-                />
+                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU' alt='Image' />
               </div>
             </div>
           </div>

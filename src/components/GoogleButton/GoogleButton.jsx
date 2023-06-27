@@ -4,7 +4,7 @@ import { auth, googleProvider } from '../../Firebase/config';
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers, postUsers, updateUser } from '../../redux/actions';
+import { getAllUsers, postUsers, updateUser, setLoggedUser } from '../../redux/actions';
 import axios from 'axios';
 import googleLogo from '../../assets/img/google.png';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
@@ -35,6 +35,8 @@ const GoogleButton = () => {
           const { token, success } = response.data;
 
           if (success) {
+            const loginUser = allUsers.find((user) => user.email === email);
+            dispatch(setLoggedUser(loginUser));
             localStorage.setItem('token', token);
             navigate('/');
           } else {
