@@ -14,7 +14,7 @@ import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 import Users from './views/Users/Users';
-import UserDetail from './components/UserCardDetail/indexUD';
+import UserDetail from './components/UserDetail/UserDetail';
 import Cart from './views/Cart/Cart';
 import Checkout from './views/Checkout/Checkout';
 import Dashboard from './views/Dashboard/Dashboard';
