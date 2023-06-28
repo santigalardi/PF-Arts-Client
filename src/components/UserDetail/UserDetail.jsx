@@ -33,8 +33,7 @@ const UserDetail = () => {
   return (
     <div className={style.containerUserDetail}>
       <NavLink className={style['BttBack']} to='/users'>
-        {' '}
-        ← BACK{' '}
+        {' '}← BACK{' '}
       </NavLink>
       <div className={style.carruselContainer} >
           <CarruselUsers images={images} />
@@ -42,12 +41,12 @@ const UserDetail = () => {
       <div className={style.userDetail}>
         <ul className={style['details']}>
           <li>Name: {userDetail?.userName || '--'}</li>
-          <li>Email: {userDetail?.email || '--'}</li>
+          <li> Email: {userDetail?.email || '--'}</li>
           <li>Description: {userDetail?.description || '--'}</li>
           <li>Phone Number: {userDetail?.phoneNumber || '--'}</li>
           <li>Country: {userDetail?.location || '--'}</li>
         </ul>
-        <img src={userDetail.profilePicture} alt="" className={style['photoPerfil']} />
+        <img src={userDetail.profilePicture} alt="img" className={style['photoPerfil']} />
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
       <div className={style.floatbox}>
