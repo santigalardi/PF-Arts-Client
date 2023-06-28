@@ -35,35 +35,27 @@ const UsersPage = () => {
     const newSearchUser = searchParamsUser.toString();
     navigate({ search: `?${newSearchUser}` });
   };
-
+  /* 
   const handleEditUser = (userId) => {
     // Lógica para editar el usuario con el ID correspondiente
     console.log(`Editar usuario con ID: ${userId}`);
-  };
+  }; */
 
   return (
     <div>
-        <NavLink className={styles['BttBack']} to='/'>
+      <NavLink className={styles['BttBack']} to='/'>
         {' '}
         ← BACK{' '}
       </NavLink>
       <div className={styles.usersPage}>
         <div className={styles.userCards}>
           {currentUsers.map((user) => (
-            <UserCard 
-            key={user.userId} 
-            user={user} 
-            value={handleEditUser} />
+            <UserCard key={user.userId} user={user} /* value={handleEditUser} */ />
           ))}
         </div>
       </div>
       <div className={styles['pagination']}>
-      <UserPagination
-        usersPerPage={usersPerPage}
-        totalUsers={allUsers.length}
-        currentUsersPage={currentUsersPage}
-        handlePageChange={handlePageChange}
-      />
+        <UserPagination usersPerPage={usersPerPage} totalUsers={allUsers.length} currentUsersPage={currentUsersPage} handlePageChange={handlePageChange} />
       </div>
     </div>
   );
