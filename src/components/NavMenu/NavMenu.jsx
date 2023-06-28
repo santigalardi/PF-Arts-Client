@@ -1,13 +1,18 @@
 import './NavMenu.css';
 import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-import { AiFillHeart } from 'react-icons/ai'
+import { AiFillHeart } from 'react-icons/ai';
+import { IoStatsChartSharp } from 'react-icons/io5';
 
 const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const loggedUser = useSelector((state) => state.loggedUser);
+
+  const { userId } = loggedUser;
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -30,10 +35,7 @@ const NavMenu = () => {
 
   return (
     <nav>
-      <div
-        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
-        onClick={toggleMenu}
-      >
+      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
@@ -57,12 +59,12 @@ const NavMenu = () => {
           </li>
           <hr />
           <li>
-            <NavLink to='/favorites' onClick={toggleMenu}>
             <AiFillHeart />
+            <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
               {' '}
-             Favorites
+              Favorites
             </NavLink>
-          </li> 
+          </li>
           <hr />
           <li>
             <GiPencilBrush />
@@ -72,18 +74,19 @@ const NavMenu = () => {
             </NavLink>
           </li>
           <hr />
-          {/* <li>
-            <GiPencilBrush />
-            <NavLink to="/MyCreations" onClick={toggleMenu}>
-              My creations
+          <li>
+            <IoStatsChartSharp />
+            <NavLink to='/dashboard' onClick={toggleMenu}>
+              {' '}
+              Dashboard
             </NavLink>
           </li>
-          <hr /> */}
+          <hr />
           <li>
             <FaPowerOff />
             <NavLink to='/login' onClick={toggleMenu}>
               {' '}
-              Login
+              Log Out
             </NavLink>
           </li>
         </ul>

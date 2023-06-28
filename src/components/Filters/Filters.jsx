@@ -35,21 +35,28 @@ const Filters = ({ setCurrentPage }) => {
     <div className={styles.container}>
       <form onSubmit={handleFilterSubmit}>
         <label>
-          <span className={styles.span}>By Century </span>
-          <select name='century' value={filters.century} onChange={handleFilterChange}>
+          <span className={styles.span}>By Category </span>
+          <select
+            name='century'
+            value={filters.century}
+            onChange={handleFilterChange}
+          >
             <option value=''>All</option>
-            <option value='15'>15th</option>
-            <option value='16'>16th</option>
-            <option value='17'>17th</option>
-            <option value='18'>18th</option>
-            <option value='19'>19th</option>
-            <option value='20'>20th</option>
-            <option value='21'>21st</option>
+            <option value='15'>Painting</option>
+            <option value='16'>Illustration</option>
+            <option value='17'>3D</option>
+            <option value='18'>Collage</option>
+            <option value='19'>Pixel Art</option>
+            <option value='20'>Photography</option>
           </select>
         </label>
         <label>
           <span className={styles.span}>By Price </span>
-          <select name='order' value={filters.order} onChange={handleFilterChange}>
+          <select
+            name='order'
+            value={filters.order}
+            onChange={handleFilterChange}
+          >
             <option value=''>All</option>
             <option value='ASC'>Lowest</option>
             <option value='DESC'>Highest</option>
@@ -57,7 +64,11 @@ const Filters = ({ setCurrentPage }) => {
         </label>
         <label>
           <span className={styles.span}>By Source </span>
-          <select name='created' value={filters.created} onChange={handleFilterChange}>
+          <select
+            name='created'
+            value={filters.created}
+            onChange={handleFilterChange}
+          >
             <option value=''>All</option>
             <option value='true'>Users Art</option>
             <option value='false'>Historical Art</option>

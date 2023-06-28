@@ -14,12 +14,14 @@ import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 import Users from './views/Users/Users';
+import UserDetail from './components/UserDetail/UserDetail';
 import Cart from './views/Cart/Cart';
+import Checkout from './views/Checkout/Checkout';
+import Dashboard from './views/Dashboard/Dashboard';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
-  const isLandingPage = location.pathname === '/register';
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -27,12 +29,13 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
-      {location.pathname !== '/register' && location.pathname !== '/login' && <Navbar />}
+      {location.pathname !== '/register' && location.pathname !== '/login' && (
+        <Navbar />
+      )}
       <button className='darkModeButton' onClick={toggleDarkMode}>
         {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
       <Routes>
-        {isLandingPage && <Route path='/' element={<Home />} />}
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Home />} />
@@ -41,11 +44,17 @@ function App() {
         <Route path='/advisory' element={<AdvisoryServices />} />
         <Route path='/about-us' element={<Aboutus />} />
         <Route path='/FAQ' element={<Buyer />} />
-        <Route path='/favorites' element={<Favorites />} />
+        <Route path='/favorites/:userId' element={<Favorites />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/users/detail/:userId' element={<UserDetail />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
-      {location.pathname !== '/register' && location.pathname !== '/login' && <Footer />}
+      {location.pathname !== '/register' && location.pathname !== '/login' && (
+        <Footer />
+      )}
+      {/* hola */}
     </div>
   );
 }

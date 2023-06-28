@@ -99,7 +99,7 @@
   font-style: oblique;
 }
 
-.prop{
+.prop {
   font-weight: bolder;
 }
 
@@ -253,9 +253,8 @@
   margin-right: 8px;
 }
 
-
 /* Estilos para la edición y lápiz */
-.all{
+.all {
   display: inline-block;
   width: 230px;
   margin-top: 95px;
@@ -264,10 +263,10 @@
   /* background-color:#3498db; */
 }
 
-.editC{
+.editC {
   margin-top: 10px;
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .editButton {
@@ -276,7 +275,7 @@
   cursor: pointer;
   color: #999999;
   background-color: transparent;
-  padding:0;
+  padding: 0;
   margin: 10px 0 0 0;
 }
 
