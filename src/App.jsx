@@ -14,8 +14,10 @@ import Aboutus from './components/Footer/Aboutus/About';
 import Footer from './components/Footer/Footer';
 import Favorites from './views/Favorites/Favorites';
 import Users from './views/Users/Users';
-import Cart from './views/Cart/Cart';
 import UserDetail from './components/UserDetail/UserDetail';
+import Cart from './views/Cart/Cart';
+import Checkout from './views/Checkout/Checkout';
+import Dashboard from './views/Dashboard/Dashboard';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -46,6 +48,8 @@ function App() {
         <Route path='/users' element={<Users />} />
         <Route path='/users/detail/:userId' element={<UserDetail />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (
         <Footer />

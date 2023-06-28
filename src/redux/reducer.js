@@ -4,6 +4,7 @@ import {
   GET_ARTS_BY_TITLE,
   GET_ARTS_BY_AUTHOR_NAME,
   GET_USERS,
+  SET_IS_LOGGED_IN,
   POST_ART,
   ADD_FAVORITE,
   DELETE_FAVORITE,
@@ -16,8 +17,12 @@ import {
   UPDATE_ARTWORK,
   GET_FAVORITES,
   GET_USERS_DETAIL,
-  SET_CART,
+  SET_CART_ITEMS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CLEAR_CART,
   SET_LOGGED_USER,
+  CHECK_AUTHENTICATION,
 } from './actions';
 
 const initialState = {
@@ -29,8 +34,15 @@ const initialState = {
   detail: {},
   users: [], //almacena datos de usuarios individuales.
   usersdetail: [],
-  cart: [], //inicializa cart como un array vacío.
+  cart: localStorage.getItem('cartItems')
+    ? JSON.parse(localStorage.getItem('cartItems'))
+    : [],
   loggedUser: {},
+  isLoggedIn: false,
+  auth: {
+    isAuthenticated: false,
+    cartItems: [],
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -58,10 +70,29 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allUsers: action.payload,
       };
+
     case GET_USERS_DETAIL:
       return {
         ...state,
         usersdetail: action.payload,
+      };
+
+    case SET_IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.payload,
+      };
+
+    case SET_IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.payload,
+      };
+
+    case SET_IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.payload,
       };
 
     case ADD_FAVORITE:
@@ -157,10 +188,40 @@ const rootReducer = (state = initialState, action) => {
         allArts: action.payload,
       };
 
-    case SET_CART:
+    case SET_CART_ITEMS:
       return {
         ...state,
         cart: action.payload,
+      };
+
+    case ADD_TO_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
+
+    case REMOVE_FROM_CART:
+      console.log('Removing from cart:', action.payload.artworkId);
+      return {
+        ...state,
+        cart: state.cart.filter(
+          (item) => item.artworkId !== action.payload.artworkId
+        ),
+      };
+
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: [],
+      };
+
+    case CHECK_AUTHENTICATION:
+      return {
+        ...state,
+        auth: {
+          ...state.auth,
+          isAuthenticated: action.payload,
+        },
       };
 
     default:

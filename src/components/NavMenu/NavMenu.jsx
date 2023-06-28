@@ -6,6 +6,7 @@ import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
+import { IoStatsChartSharp } from 'react-icons/io5';
 
 const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,7 +35,10 @@ const NavMenu = () => {
 
   return (
     <nav>
-      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+      <div
+        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -68,6 +72,14 @@ const NavMenu = () => {
             <NavLink to='/create' onClick={toggleMenu}>
               {' '}
               Create
+            </NavLink>
+          </li>
+          <hr />
+          <li>
+            <IoStatsChartSharp />
+            <NavLink to='/dashboard' onClick={toggleMenu}>
+              {' '}
+              Dashboard
             </NavLink>
           </li>
           <hr />
