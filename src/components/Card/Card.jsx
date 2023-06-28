@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addFavorite, deleteFavorite } from '../../redux/actions';
@@ -8,23 +8,21 @@ function Card({ art }) {
   const dispatch = useDispatch();
   const { image, artworkId } = art;
   const [isFav, setIsFav] = useState(false);
-  const myFavorites = useSelector((state) => state.myFavorites);
+  // const myFavorites = useSelector((state) => state.myFavorites);
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userId } = loggedUser;
 
-  console.log(loggedUser);
-
-  useEffect(() => {
+  /*   useEffect(() => {
     const isFavorite = myFavorites.some((fav) => fav.artworkId === artworkId);
     setIsFav(isFavorite);
-  }, [art, myFavorites, artworkId]);
+  }, [art, myFavorites, artworkId]); */
 
   const handleFavorite = (event) => {
     event.preventDefault(); // Detenemos el comportamiento predeterminado del enlace NavLink
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(artworkId));
+      dispatch(deleteFavorite(userId, artworkId));
     } else {
       setIsFav(true);
       dispatch(addFavorite(userId, artworkId, art));
