@@ -29,11 +29,6 @@ const Favorites = () => {
   // };
 
   const myFavorites = useSelector((state) => state.myFavorites);
-
-  const { userFav } = myFavorites;
-
-  console.log(userFav);
-
   //*/*/*
   useEffect(() => {
     //****/ // ↓Obtener los favoritos guardados en el almacenamiento local
@@ -45,6 +40,8 @@ const Favorites = () => {
     dispatch(getFavorites(userId));
   }, [dispatch, userId]);
 
+  const { userFav } = myFavorites;
+  console.log(userFav);
   ///** */
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
@@ -58,6 +55,7 @@ const Favorites = () => {
         {userFav &&
           userFav.map((fav) => (
             <div className={styles['boxFav']} key={fav.artworkId}>
+            <div className={styles['boxFav']}>
               <Card art={fav} />
             </div>
           ))}
