@@ -1,0 +1,39 @@
+.carruselContainer {
+   position: relative;
+    margin-left:130px;
+}
+
+.image {
+   max-width: 100%;
+   max-height: 100%;
+   width: 555px; /* Ancho deseadoimg */
+   height: 200px; /* Alto deseadoimg */
+}
+.prevButton,
+.nextButton {
+   position: absolute;
+   top: 50%;
+   transform: translateY(-50%);
+   border: none;
+   background-color: transparent;
+   color: transparent;
+   font-size: 50px;
+   padding-top: 7%;
+   padding-bottom: 7%;
+}
+
+.prevButton {
+    left: 0px;
+    padding-right: 20rem;
+}
+.prevButton:hover{
+    color: aliceblue;
+}
+
+.nextButton {
+    padding-left: 20rem;
+   right: 110px;
+}
+.nextButton:hover{
+    color: aliceblue;
+}

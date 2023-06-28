@@ -52,7 +52,7 @@
   font-weight: 400;
   font-style: oblique;
   color: rgb(53, 53, 53);
-  /* Color de texto */
+  cursor: pointer;
   text-shadow: black 0.4px 0.4px;
 }
 

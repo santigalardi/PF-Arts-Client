@@ -27,6 +27,7 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
 .imageU:hover {
   box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 30px -1px rgba(0, 0, 0, 0.75);

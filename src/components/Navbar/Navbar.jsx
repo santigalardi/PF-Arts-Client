@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../../Firebase/config';
 import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
@@ -14,6 +14,7 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userName, profilePicture, userId } = loggedUser;
@@ -53,11 +54,13 @@ function Navbar() {
   console.log(storedUser);
 
   console.log(loggedIn);
-
+   const OnclickHome =()=>{
+    navigate('/')
+   }
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu userId={userId} />
-      <div className='navbar-title'>Henry Art Gallery</div>
+      <div className='navbar-title' onClick={OnclickHome}>Henry Art Gallery</div>
       <div className='navlinks-container'>
         {loggedIn ? (
           <div className='profile-menu' onClick={handleLogout}>
