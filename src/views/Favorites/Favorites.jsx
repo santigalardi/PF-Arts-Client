@@ -15,6 +15,7 @@ const LOCAL_STORAGE_KEY = 'myFavorites';
 const Favorites = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
   // const location = useLocation();
 
@@ -49,15 +50,13 @@ const Favorites = () => {
   }, [myFavorites]);
 
   return (
-    <div>
-      <div className={styles['favContainer']}>
-        {userFav &&
-          userFav.map((fav) => (
-            <div className={styles['boxFav']} key={fav.artworkId}>
-              <Card art={fav} />
-            </div>
-          ))}
-      </div>
+    <div className={styles['boxFav']}>
+      {userFav &&
+        userFav.map((fav) => (
+          <div key={fav.artworkId}>
+            <Card art={fav} imageSize='120px' containerSize='120px' />
+          </div>
+        ))}
       {/* <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} /> */}
     </div>
   );

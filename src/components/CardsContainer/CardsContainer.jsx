@@ -16,10 +16,12 @@ const CardsContainer = () => {
   const allArts = useSelector((state) => state.allArts);
   const allUsers = useSelector((state) => state.allUsers);
   const [currentPage, setCurrentPage] = useState(1);
-  const artsPerPage = 8;
+  const artsPerPage = 9;
   const indexOfLastArt = currentPage * artsPerPage;
   const indexOfFirstArt = indexOfLastArt - artsPerPage;
-  const [currentArts, setCurrentArts] = useState(allArts.slice(indexOfFirstArt, indexOfLastArt));
+  const [currentArts, setCurrentArts] = useState(
+    allArts.slice(indexOfFirstArt, indexOfLastArt)
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const pagination = (pageNumber) => {
@@ -68,17 +70,22 @@ const CardsContainer = () => {
         ) : (
           <div className={styles['CardsContainer']}>
             {currentArts.map((art) => (
-              <NavLink to={`/detail/${art.artworkId}`} key={art.artworkId} className={styles.link}>
+              <NavLink
+                to={`/detail/${art.artworkId}`}
+                key={art.artworkId}
+                className={styles.link}
+              >
                 <Card art={art} />
               </NavLink>
             ))}
           </div>
         )}
         <CustomPagination
-        artsPerPage={artsPerPage} 
-        allArts={allArts.length} 
-        currentPage={currentPage}
-        pagination={pagination} />
+          artsPerPage={artsPerPage}
+          allArts={allArts.length}
+          currentPage={currentPage}
+          pagination={pagination}
+        />
       </div>
     </div>
   );
