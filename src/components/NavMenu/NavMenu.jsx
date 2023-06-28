@@ -71,18 +71,11 @@ const NavMenu = () => {
             </NavLink>
           </li>
           <hr />
-          {/* <li>
-            <GiPencilBrush />
-            <NavLink to="/MyCreations" onClick={toggleMenu}>
-              My creations
-            </NavLink>
-          </li>
-          <hr /> */}
           <li>
             <FaPowerOff />
             <NavLink to='/login' onClick={toggleMenu}>
               {' '}
-              Login
+              Log Out
             </NavLink>
           </li>
         </ul>

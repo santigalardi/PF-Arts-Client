@@ -1,15 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTruck,
-  faUndo,
-  faCertificate,
-  faGlobe,
-  faLock,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { faTruck, faUndo, faCertificate, faGlobe, faLock, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loadScript } from '@paypal/paypal-js';
@@ -42,9 +36,7 @@ const Checkout = () => {
 
   const removeArtworkFromCart = () => {
     // Lógica para eliminar el artículo del carrito
-    const updatedCart = cartItems.filter(
-      (item) => item.id !== selectedArtwork.id
-    );
+    const updatedCart = cartItems.filter((item) => item.id !== selectedArtwork.id);
     setCartItems(updatedCart);
     setShowDetail(false);
     dispatch(setCart(updatedCart)); // Actualizar el carrito en Redux
@@ -54,8 +46,7 @@ const Checkout = () => {
     const initializePayPal = async () => {
       try {
         paypal = await loadScript({
-          clientId:
-            'AR7Htz5PEZkht1GZRgG-IjedcAkciDgEHHRk1gLEcbnlWGmKIrUWyIBoRUmEXjhmdPj26nJL0MY5CmGR',
+          clientId: 'AR7Htz5PEZkht1GZRgG-IjedcAkciDgEHHRk1gLEcbnlWGmKIrUWyIBoRUmEXjhmdPj26nJL0MY5CmGR',
         });
 
         paypal
@@ -75,9 +66,7 @@ const Checkout = () => {
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (details) {
                 // Mensaje de compra exitosa
-                toast.success(
-                  'Successful purchase! Thank you for your purchase.'
-                );
+                toast.success('Successful purchase! Thank you for your purchase.');
                 // Actualizar el estado de detail en cart, queda en 0. Lo ideal es configurar stock.
                 dispatch(clearDetail());
               });
@@ -116,51 +105,40 @@ const Checkout = () => {
             <p>{selectedArtwork.date}</p>
             <div className={styles.separator}></div>
             <p>
-              <span className={styles.boldText}>PRICE</span>{' '}
-              {selectedArtwork.price} USD
+              <span className={styles.boldText}>PRICE</span> {selectedArtwork.price} USD
             </p>
             <p>
               <span className={styles.boldText}>SHIPPING COSTS </span> included
             </p>
             <p>
-              <span className={styles.boldText}>TOTAL</span>{' '}
-              {selectedArtwork.price} USD
+              <span className={styles.boldText}>TOTAL</span> {selectedArtwork.price} USD
             </p>
             <div className={styles.separator}></div>
-            <button
-              className={styles.deleteButton}
-              onClick={removeArtworkFromCart}
-            >
+            <button className={styles.deleteButton} onClick={removeArtworkFromCart}>
               <FontAwesomeIcon icon={faTrash} />
             </button>
           </div>
           <div className={styles.rightColumn}>
             <div className={styles.infoBox}>
               <p>
-                <FontAwesomeIcon icon={faTruck} className={styles.icon} />{' '}
-                Professional delivery between 7 to 10 days
+                <FontAwesomeIcon icon={faTruck} className={styles.icon} /> Professional delivery between 7 to 10 days
               </p>
               <p>
-                <FontAwesomeIcon icon={faGlobe} className={styles.icon} />{' '}
-                International delivery
+                <FontAwesomeIcon icon={faGlobe} className={styles.icon} /> International delivery
               </p>
               <p>
-                <FontAwesomeIcon icon={faLock} className={styles.icon} /> Secure
-                payment
+                <FontAwesomeIcon icon={faLock} className={styles.icon} /> Secure payment
               </p>
               <p>
-                <FontAwesomeIcon icon={faUndo} className={styles.icon} /> Free
-                returns 14 days after delivery
+                <FontAwesomeIcon icon={faUndo} className={styles.icon} /> Free returns 14 days after delivery
               </p>
               <p>
-                <FontAwesomeIcon icon={faCertificate} className={styles.icon} />{' '}
-                Original piece with certificate of authenticity
+                <FontAwesomeIcon icon={faCertificate} className={styles.icon} /> Original piece with certificate of authenticity
               </p>
             </div>
             <div className={styles.separator}></div>
             <div id='your-container-element'></div>
-            <div id='paypal-button-container'></div>{' '}
-            {/* Contenedor para el botón de PayPal */}
+            <div id='paypal-button-container'></div> {/* Contenedor para el botón de PayPal */}
           </div>
         </>
       ) : (

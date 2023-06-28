@@ -55,7 +55,6 @@ const Favorites = () => {
         {userFav &&
           userFav.map((fav) => (
             <div className={styles['boxFav']} key={fav.artworkId}>
-            <div className={styles['boxFav']}>
               <Card art={fav} />
             </div>
           ))}
