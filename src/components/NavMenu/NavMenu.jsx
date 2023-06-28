@@ -35,10 +35,7 @@ const NavMenu = () => {
 
   return (
     <nav>
-      <div
-        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
-        onClick={toggleMenu}
-      >
+      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <span></span>
         <span></span>
         <span></span>
@@ -62,8 +59,10 @@ const NavMenu = () => {
           </li>
           <hr />
           <li>
+            <AiFillHeart />
             <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
-              <AiFillHeart /> Favorites
+              {' '}
+              Favorites
             </NavLink>
           </li>
           <hr />

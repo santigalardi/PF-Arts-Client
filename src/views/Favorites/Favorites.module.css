@@ -10,11 +10,14 @@
   }
 }
 
+.favContainer {
+  min-height: 80vh;
+}
+
 .boxFav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  min-height: 80vh;
   width: 100%;
   margin-top: 50px;
 }

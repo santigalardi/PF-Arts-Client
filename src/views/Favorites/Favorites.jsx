@@ -42,16 +42,15 @@ const Favorites = () => {
 
   const { userFav } = myFavorites;
   console.log(userFav);
-  ///** */
+
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myFavorites));
   }, [myFavorites]);
-  //*** */
 
   return (
     <div>
-      <div>
+      <div className={styles['favContainer']}>
         {userFav &&
           userFav.map((fav) => (
             <div className={styles['boxFav']} key={fav.artworkId}>
