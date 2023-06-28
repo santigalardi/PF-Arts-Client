@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-key */
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -6,25 +8,31 @@ import Card from '../../components/Card/Card';
 // import Loader from '../../components/Loader/Loader';
 import CustomPagination from '../../components/Pagination/Pagination';
 // import NavMenu from '../../components/NavMenu/NavMenu';
-import styles from './Favorites.modules.css?inline'; //Este enfoque utiliza una consulta especial en la ruta del archivo de estilo para incluir directamente los estilos CSS en el archivo JavaScript en lugar de cargarlos por separado.
+import styles from './Favorites.module.css';
 
 const LOCAL_STORAGE_KEY = 'myFavorites';
 
 const Favorites = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const artsPerPage = 8;
+  // const pagination = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  //   const searchParams = new URLSearchParams(location.search);
+  //   searchParams.set('page', pageNumber);
+  //   const newSearch = searchParams.toString();
+  //   navigate(`/?${newSearch}`);
+  // };
+
   const myFavorites = useSelector((state) => state.myFavorites);
-  const [currentPage, setCurrentPage] = useState(1);
-  const artsPerPage = 8;
-  const pagination = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('page', pageNumber);
-    const newSearch = searchParams.toString();
-    navigate(`/?${newSearch}`);
-  };
+
+  const { userFav } = myFavorites;
+
+  console.log(userFav);
 
   //*/*/*
   useEffect(() => {
@@ -47,13 +55,14 @@ const Favorites = () => {
   return (
     <div>
       <div>
-        {myFavorites.map((art) => (
-          <div className={styles['boxFav']} key={art.artworkId}>
-            <Card art={art} />
-          </div>
-        ))}
+        {userFav &&
+          userFav.map((fav) => (
+            <div className={styles['boxFav']} key={fav.artworkId}>
+              <Card art={fav} />
+            </div>
+          ))}
       </div>
-      <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
+      {/* <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} /> */}
     </div>
   );
 };
