@@ -38,14 +38,13 @@ const Favorites = () => {
   }, [dispatch, userId]);
 
   const { userFav } = myFavorites;
+  console.log(userFav);
   ///** */
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myFavorites));
   }, [myFavorites]);
   //*** */
-
-  console.log(userFav);
 
   return (
     <div>
@@ -57,16 +56,7 @@ const Favorites = () => {
             </div>
           ))}
       </div>
-<<<<<<< Updated upstream
-      <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
-=======
-      {/* <CustomPagination
-        artsPerPage={artsPerPage}
-        allArts={userFav.length}
-        currentPage={currentPage}
-        pagination={pagination}
-      /> */}
->>>>>>> Stashed changes
+      {/* <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} /> */}
     </div>
   );
 };
