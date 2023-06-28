@@ -17,7 +17,6 @@ const Detail = () => {
   const [year, setYear] = useState('');
   const [dimensions, setDimensions] = useState('');
   const [price, setPrice] = useState('');
-  const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showLoader, setShowLoader] = useState(true);
@@ -43,13 +42,13 @@ const Detail = () => {
     };
   }, [dispatch, id]);
 
-  useEffect(() => {
+  /*  useEffect(() => {
     myFavorites.forEach((fav) => {
       if (fav.id === detail.id) {
         setIsFav(true);
       }
     });
-  }, [detail.id, myFavorites]);
+  }, [detail.id, myFavorites]); */
 
   useEffect(() => {
     setArtist(detail.authorName);
