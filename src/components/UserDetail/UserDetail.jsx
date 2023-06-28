@@ -1,36 +1,30 @@
-// import PropTypes from 'prop-types'; 
-import style from './indexDetail.module.css';
+// import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import style from './UserDetail.module.css';
 
 const UserDetail = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const [userCardDetail, setUserCardDetail]=useState(false)
-  const userdetail = useSelector(state => state.usersdetail);
-  const allUsers = useSelector(state => state.allUsers);
+  const allUsers = useSelector((state) => state.allUsers);
 
-  useEffect(() => {
-    const currentUser = allUsers.find(user => user.userId === userId);
-    setUserCardDetail(currentUser);
-  }, [userId, allUsers])
+  const userDetail = allUsers.find((user) => user.userId === userId);
+
+  // const { userName, email, location, phoneNumber, description, profilePicture } = userDetail;
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch, userId]);
 
-  // console.log(getUserDetail)
-
   return (
     <div className={style.containerUserDetail}>
-        <NavLink className={style['BttBack']} to='/users'>
+      <NavLink className={style['BttBack']} to='/users'>
         {' '}
         ← BACK{' '}
       </NavLink>
@@ -56,13 +50,11 @@ const UserDetail = () => {
         </div>
 
         <ul className={style['details']}>
-
-          <li>Name:{userCardDetail?.userName||'N/A'}</li>
-          <li>Email:{userdetail?.email||'N/A'}</li>
-          <li>UserId:{userdetail?.userId||'N/A'}</li>
-          <li>Description:{userdetail?.description||'N/A'}</li>
-          <li>PhoneNumber:{userdetail?.phoneNumber||'N/A'}</li>
-          <li>Country:{userdetail?.location||'N/A'}</li>
+          <li>Name: {userDetail?.userName || 'N/A'}</li>
+          <li>Email: {userDetail?.email || 'N/A'}</li>
+          <li>Description: {userDetail?.description || 'N/A'}</li>
+          <li>Phone Number: {userDetail?.phoneNumber || 'N/A'}</li>
+          <li>Country: {userDetail?.location || 'N/A'}</li>
         </ul>
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
@@ -86,38 +78,3 @@ const UserDetail = () => {
 };
 
 export default UserDetail;
-
-
-// ------------------- ESTO DE ACÁ ABAJO ES DE ALEX --------------- //
-// import PropTypes from 'prop-types';
-// import style from './indexDetail.module.css';
-// import { getUserDetail } from '../../redux/actions';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { useEffect } from 'react';
-// const dispatch = useDispatch();
-// const userDetail = useSelector(state => state.userDetail);
-
-// useEffect(() => {
-//   dispatch(getUserDetail(userCardId));
-// }, [dispatch, userCardId]);
-
-// const { name ,email,userId,description, phoneNumber,location } = userDetail;
-
-//  <li>Name:{name}</li>
-//  <li>Email:{email}</li>
-//  <li>UserId:{userId}</li>
-//  <li>Description:{description}</li>
-//  <li>Phone Number:{phoneNumber}</li>
-//  <li>Country:{location}</li> 
-//   )}
-
-
-//FCC
-
-  /* <li>Name:</li>
-<li>Email:</li>
-<li>UserId:</li>
-<li>Description:</li>
-<li>Phone Number:</li>
-<li>Country:</li> */
-

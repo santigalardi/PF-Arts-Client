@@ -16,15 +16,15 @@ const Favorites = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const myFavorites = useSelector((state) => state.myFavorites);
-  const [currentPage, setCurrentPage] = useState(1);
-  const artsPerPage = 8;
-  const pagination = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    const searchParams = new URLSearchParams(location.search);
-    searchParams.set('page', pageNumber);
-    const newSearch = searchParams.toString();
-    navigate(`/?${newSearch}`);
-  };
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const artsPerPage = 8;
+  // const pagination = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  //   const searchParams = new URLSearchParams(location.search);
+  //   searchParams.set('page', pageNumber);
+  //   const newSearch = searchParams.toString();
+  //   navigate(`/?${newSearch}`);
+  // };
 
   //*/*/*
   useEffect(() => {
@@ -37,6 +37,7 @@ const Favorites = () => {
     dispatch(getFavorites(userId));
   }, [dispatch, userId]);
 
+  const { userFav } = myFavorites;
   ///** */
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
@@ -44,16 +45,28 @@ const Favorites = () => {
   }, [myFavorites]);
   //*** */
 
+  console.log(userFav);
+
   return (
     <div>
       <div>
-        {myFavorites.map((art) => (
-          <div className={styles['boxFav']} key={art.artworkId}>
-            <Card art={art} />
-          </div>
-        ))}
+        {userFav &&
+          userFav.map((fav) => (
+            <div className={styles['boxFav']}>
+              <Card art={fav} />
+            </div>
+          ))}
       </div>
+<<<<<<< Updated upstream
       <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} />
+=======
+      {/* <CustomPagination
+        artsPerPage={artsPerPage}
+        allArts={userFav.length}
+        currentPage={currentPage}
+        pagination={pagination}
+      /> */}
+>>>>>>> Stashed changes
     </div>
   );
 };

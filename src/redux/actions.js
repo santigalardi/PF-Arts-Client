@@ -99,7 +99,11 @@ export const updateUser = (updatedUser) => {
 
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${URL}/users/edit`, updatedUser, config);
+      const response = await axios.put(
+        `${URL}/users/edit`,
+        updatedUser,
+        config
+      );
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -191,7 +195,9 @@ export function clearDetail() {
 }
 export const getArtsByFilters = (century, order, created) => {
   return async function (dispatch) {
-    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
+    console.log(
+      `Filters received: century=${century}, order=${order}, created=${created}`
+    );
     try {
       const params = {};
       if (century) {
@@ -225,7 +231,11 @@ export const updateArtwork = (id, updatedArtwork) => {
 
   return async function (dispatch) {
     try {
-      const response = await axios.put(`${URL}/artworks/edit/${id}`, updatedArtwork, config);
+      const response = await axios.put(
+        `${URL}/artworks/edit/${id}`,
+        updatedArtwork,
+        config
+      );
       dispatch({ type: UPDATE_ARTWORK, payload: response.data });
       return response;
     } catch (error) {
@@ -251,7 +261,10 @@ export function deleteArt(id) {
 
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`${URL}/delete/${id}`, config);
+      const response = await axios.delete(
+        `${URL}/artworks/delete/${id}`,
+        config
+      );
       dispatch({ type: DELETE_ART, payload: response.data });
       return response;
     } catch (error) {
