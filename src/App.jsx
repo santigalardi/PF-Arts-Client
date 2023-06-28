@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/NavBar/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Detail from './views/Detail/Detail';
 import Form from './views/Form/Form';
 import Home from './views/Home/Home';
@@ -27,7 +27,9 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
-      {location.pathname !== '/register' && location.pathname !== '/login' && <Navbar />}
+      {location.pathname !== '/register' && location.pathname !== '/login' && (
+        <Navbar />
+      )}
       <button className='darkModeButton' onClick={toggleDarkMode}>
         {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
@@ -45,7 +47,10 @@ function App() {
         <Route path='/users/detail/:userId' element={<UserDetail />} />
         <Route path='/cart' element={<Cart />} />
       </Routes>
-      {location.pathname !== '/register' && location.pathname !== '/login' && <Footer />}
+      {location.pathname !== '/register' && location.pathname !== '/login' && (
+        <Footer />
+      )}
+      {/* hola */}
     </div>
   );
 }
