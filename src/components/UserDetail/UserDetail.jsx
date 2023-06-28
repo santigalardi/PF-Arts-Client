@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import CarruselUsers from '../CarruselUsers/CarruselUsers';
 import style from './UserDetail.module.css';
 
 const UserDetail = () => {
@@ -22,40 +23,31 @@ const UserDetail = () => {
     dispatch(getAllUsers());
   }, [dispatch, userId]);
 
+  const images = ['https://www.bicaalu.com/wp-content/uploads/el_tarot_de_leonora_carrington.jpg',
+            'https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg',
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU',
+                  'https://i0.wp.com/hotbook.mx/wp-content/uploads/2014/10/hotbook-94.jpg?fit=1024%2C768&ssl=1',
+                'https://i0.wp.com/arteyalgomas.com/wp-content/uploads/2020/01/Van_Gogh.-Campo-de-trigo-con-cuervos.-1890.jpg?resize=1140%2C713&ssl=1',
+              'https://i.pinimg.com/originals/fd/65/c5/fd65c5b4d77549893ee645706e30605c.jpg' ];
+
   return (
     <div className={style.containerUserDetail}>
       <NavLink className={style['BttBack']} to='/users'>
         {' '}
         ← BACK{' '}
       </NavLink>
+      <div className={style.carruselContainer} >
+          <CarruselUsers images={images} />
+      </div>
       <div className={style.userDetail}>
-        <div className={style.galleryWrapper}>
-          <div className={style.galleryScroll}>
-            <div className={style.gallery}>
-              <div className={style.item}>
-                <img
-                  //Acá después hay que jugar con cada obra de cada artista
-                  src='https://www.bicaalu.com/wp-content/uploads/el_tarot_de_leonora_carrington.jpg'
-                  alt='Image'
-                />
-              </div>
-              <div className={style.item}>
-                <img src='https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg' alt='Image' />
-              </div>
-              <div className={style.item}>
-                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU' alt='Image' />
-              </div>
-            </div>
-          </div>
-        </div>
-
         <ul className={style['details']}>
-          <li>Name: {userDetail?.userName || 'N/A'}</li>
-          <li>Email: {userDetail?.email || 'N/A'}</li>
-          <li>Description: {userDetail?.description || 'N/A'}</li>
-          <li>Phone Number: {userDetail?.phoneNumber || 'N/A'}</li>
-          <li>Country: {userDetail?.location || 'N/A'}</li>
+          <li>Name: {userDetail?.userName || '--'}</li>
+          <li>Email: {userDetail?.email || '--'}</li>
+          <li>Description: {userDetail?.description || '--'}</li>
+          <li>Phone Number: {userDetail?.phoneNumber || '--'}</li>
+          <li>Country: {userDetail?.location || '--'}</li>
         </ul>
+        <img src={userDetail.profilePicture} alt="" className={style['photoPerfil']} />
       </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
       <div className={style.floatbox}>
