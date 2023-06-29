@@ -36,7 +36,15 @@ const Cart = () => {
   const renderCartItems = () => {
     if (cartItems.length === 0) {
       return (
-        <div className='card text-center'>
+        <div
+          className='card text-center'
+          style={{
+            marginTop: '150px',
+            marginLeft: '400px',
+            marginRight: '400px',
+            marginBottom: '186px',
+          }}
+        >
           <div className='card-body'>
             <h5 className='card-title'>Your cart is empty.</h5>
             <p className='card-text'>
@@ -87,12 +95,15 @@ const Cart = () => {
     }
 
     return (
-      <div className='d-flex justify-content-center'>
+      <div
+        className='d-flex justify-content-center'
+        style={{ marginTop: '34px' }}
+      >
         {cartItems.map((item) => (
           <div
             className='card mx-2'
             key={item.artworkId}
-            style={{ width: '18rem' }}
+            style={{ width: '15rem' }}
           >
             <img
               src={item.image}

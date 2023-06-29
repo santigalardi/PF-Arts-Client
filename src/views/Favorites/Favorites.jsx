@@ -44,20 +44,28 @@ const Favorites = () => {
   const { userFav } = myFavorites;
   console.log(userFav);
 
+  const numberOfFav = userFav ? userFav.length : userFav;
+
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myFavorites));
   }, [myFavorites]);
 
   return (
-    <div className={styles['boxFav']}>
-      {userFav &&
-        userFav.map((fav) => (
-          <div key={fav.artworkId}>
-            <Card art={fav} imageSize='120px' containerSize='120px' />
-          </div>
-        ))}
-      {/* <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} /> */}
+    <div>
+      <div className={styles['textContainer']}>
+        <p className={styles['text']}>
+          Bookmarked Art <sup className={styles['expo']}>{numberOfFav}</sup>
+        </p>
+      </div>
+      <div className={styles['boxFav']}>
+        {userFav &&
+          userFav.map((fav) => (
+            <div key={fav.artworkId}>
+              <Card art={fav} imageSize='120px' containerSize='120px' />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
