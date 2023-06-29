@@ -1,48 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFavorite, deleteFavorite } from '../../redux/actions';
+import { addFavorite, deleteFavorite, getFavorites } from '../../redux/actions';
 import styles from './Card.module.css';
 
 function Card({ art, imageSize, containerSize }) {
   const dispatch = useDispatch();
-  const { image, artworkId } = art;
+  const { image, artworkId, title } = art;
   const [isFav, setIsFav] = useState(false);
-  // const myFavorites = useSelector((state) => state.myFavorites);
+  const myFavorites = useSelector((state) => state.myFavorites);
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userId } = loggedUser;
 
-  /*   useEffect(() => {
-    const isFavorite = myFavorites.some((fav) => fav.artworkId === artworkId);
-    setIsFav(isFavorite);
-  }, [art, myFavorites, artworkId]); */
-
   const handleFavorite = (event) => {
-    event.preventDefault(); // Detenemos el comportamiento predeterminado del enlace NavLink
+    event.preventDefault();
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(userId, artworkId));
+      dispatch(deleteFavorite(userId, artworkId)).then(() => {
+        const updatedFavorites = myFavorites.userFav.filter((fav) => fav.artworkId !== artworkId);
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     } else {
       setIsFav(true);
-      dispatch(addFavorite(userId, artworkId, art));
+      dispatch(addFavorite(userId, artworkId, art)).then(() => {
+        const updatedFavorites = [...myFavorites.userFav, art];
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     }
   };
 
+  useEffect(() => {
+    dispatch(getFavorites(userId)).then((res) => {
+      const userFavString = JSON.stringify(res.data.userFav);
+      localStorage.setItem('Favorites', userFavString);
+      const favorites = JSON.parse(userFavString);
+      const isFavorite = favorites.some((favorite) => favorite.title === title);
+      setIsFav(isFavorite);
+    });
+  }, [dispatch, title, userId]);
+
   return (
-    <div
-      className={styles['cardContainer']}
-      style={{ width: containerSize, height: '350px' }}
-    >
+    <div className={styles['cardContainer']} style={{ width: containerSize, height: '350px' }}>
       <button className={styles['likeStyle']} onClick={handleFavorite}>
         {isFav ? '❤️' : '🤍'}
       </button>
       <div className={styles['imgContainer']}>
-        <img
-          src={image}
-          alt={'pic'}
-          style={{ width: imageSize, height: '350px' }}
-        />
+        <img src={image} alt={'pic'} style={{ width: imageSize, height: '350px' }} />
       </div>
       <div className={styles['propsContainer']} />
     </div>
@@ -53,7 +59,10 @@ Card.propTypes = {
   art: PropTypes.shape({
     image: PropTypes.string.isRequired,
     artworkId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   }).isRequired,
+  imageSize: PropTypes.string.isRequired,
+  containerSize: PropTypes.string.isRequired,
 };
 
 export default Card;

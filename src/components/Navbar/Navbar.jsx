@@ -39,8 +39,7 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled =
-        window.scrollY > 0 && !location.pathname.includes('/detail');
+      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
 
       setScrolled(isScrolled);
     };
@@ -51,10 +50,6 @@ function Navbar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [location]);
-
-  console.log(storedUser);
-
-  console.log(loggedIn);
   const OnclickHome = () => {
     navigate('/');
   };

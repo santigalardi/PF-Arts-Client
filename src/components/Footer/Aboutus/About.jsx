@@ -17,7 +17,6 @@ const AboutUs = () => {
           {' '}
           ← BACK{' '}
         </NavLink>
-
         <hr />
         <br />
         <h1>Discover Our Team</h1>
