@@ -18,7 +18,6 @@ const Favorites = () => {
   const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
   // const location = useLocation();
-
   // const [currentPage, setCurrentPage] = useState(1);
   // const artsPerPage = 8;
   // const pagination = (pageNumber) => {
@@ -30,14 +29,10 @@ const Favorites = () => {
   // };
 
   const myFavorites = useSelector((state) => state.myFavorites);
-  //*/*/*
+
+  console.log(myFavorites);
+
   useEffect(() => {
-    //****/ // ↓Obtener los favoritos guardados en el almacenamiento local
-    const storedFavorites = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    // ↓Si hay favoritos almacenados, actualizar el estado de Redux
-    if (storedFavorites) {
-      dispatch({ type: 'SET_FAVORITES', payload: storedFavorites });
-    }
     dispatch(getFavorites(userId));
   }, [dispatch, userId]);
 
