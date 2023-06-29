@@ -18,6 +18,7 @@ import UserDetail from './components/UserDetail/UserDetail';
 import Cart from './views/Cart/Cart';
 import Checkout from './views/Checkout/Checkout';
 import Dashboard from './views/Dashboard/Dashboard';
+import VerifyToken from './components/VerifyToken/VerifyToken';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -36,6 +37,7 @@ function App() {
         {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
       <Routes>
+        <Route path="/verify/" element={<VerifyToken />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Home />} />
