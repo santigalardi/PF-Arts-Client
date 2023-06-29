@@ -42,10 +42,10 @@ const CarruselUsers = ({ images }) => {
         ))}
       </div>
       <button className={styles.prevButton} onClick={handlePrev}>
-        {'←'}
+        {'<'}
       </button>
       <button className={styles.nextButton} onClick={handleNext}>
-        {'→'}
+        {'>'}
       </button>
     </div>
   );
