@@ -15,6 +15,7 @@ const LOCAL_STORAGE_KEY = 'myFavorites';
 const Favorites = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
   // const location = useLocation();
 
@@ -43,6 +44,8 @@ const Favorites = () => {
   const { userFav } = myFavorites;
   console.log(userFav);
 
+  const numberOfFav = userFav ? userFav.length : userFav;
+
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myFavorites));
@@ -50,15 +53,19 @@ const Favorites = () => {
 
   return (
     <div>
-      <div className={styles['favContainer']}>
+      <div className={styles['textContainer']}>
+        <p className={styles['text']}>
+          Bookmarked Art <sup className={styles['expo']}>{numberOfFav}</sup>
+        </p>
+      </div>
+      <div className={styles['boxFav']}>
         {userFav &&
           userFav.map((fav) => (
-            <div className={styles['boxFav']} key={fav.artworkId}>
-              <Card art={fav} />
+            <div key={fav.artworkId}>
+              <Card art={fav} imageSize='120px' containerSize='120px' />
             </div>
           ))}
       </div>
-      {/* <CustomPagination artsPerPage={artsPerPage} allArts={myFavorites.length} currentPage={currentPage} pagination={pagination} /> */}
     </div>
   );
 };

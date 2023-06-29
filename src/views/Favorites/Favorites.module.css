@@ -10,14 +10,25 @@
   }
 }
 
-.favContainer {
-  min-height: 80vh;
+.textContainer{
+  margin-left: 90px;
+  /* background-color: red; */
+  font-style: oblique;
 }
 
 .boxFav {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 50px;
+  flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 56vh;
+    margin-bottom:60px;
+    /* margin-left: -20px; */
 }
+
+.expo{
+  color: blue;
+  font-weight: bold;
+}
+
+
