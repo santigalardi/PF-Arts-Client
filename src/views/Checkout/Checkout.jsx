@@ -99,20 +99,31 @@ const Checkout = () => {
   }, []);
 
   return (
-    <div className={`${styles.row} row g-0 text-center`}>
-      <div className='col-sm-6 col-md-8'>
+    <div
+      className={`${styles.row} row g-0 text-center`}
+      style={{ height: '100%' }}
+    >
+      <div className='col-sm-6 col-md-8' style={{ width: '650px' }}>
         <h2 className={styles.checkoutTitle}>Checkout</h2>
         <div className={styles.separator}></div>
         {renderCheckoutItems()}
         <p className={styles.boldText}>SHIPPING COSTS included</p>
-        <p>Total: {calculateTotal()} USD</p>
+        <p>
+          <span className={styles.total}>Total:</span> {calculateTotal()} USD
+        </p>
         <div className={styles.separator}></div>
         <Link to='/cart' className={styles.buttonShopping}>
           <FontAwesomeIcon icon={faArrowLeft} className='mr-2' /> Back to Cart
         </Link>
       </div>
 
-      <div className='col-6 col-md-4'>
+      <div
+        className='col-6 col-md-4'
+        style={{
+          marginTop: '31px',
+          marginRight: '35px',
+        }}
+      >
         <div className={styles.infoBox}>
           <p>
             <FontAwesomeIcon icon={faTruck} className={styles.icon} />{' '}

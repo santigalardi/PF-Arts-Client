@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { addFavorite, deleteFavorite } from '../../redux/actions';
 import styles from './Card.module.css';
 
-function Card({ art }) {
+function Card({ art, imageSize, containerSize }) {
   const dispatch = useDispatch();
   const { image, artworkId } = art;
   const [isFav, setIsFav] = useState(false);
@@ -30,12 +30,19 @@ function Card({ art }) {
   };
 
   return (
-    <div className={styles['cardContainer']}>
+    <div
+      className={styles['cardContainer']}
+      style={{ width: containerSize, height: '350px' }}
+    >
       <button className={styles['likeStyle']} onClick={handleFavorite}>
         {isFav ? '❤️' : '🤍'}
       </button>
       <div className={styles['imgContainer']}>
-        <img src={image} alt={'pic'} />
+        <img
+          src={image}
+          alt={'pic'}
+          style={{ width: imageSize, height: '350px' }}
+        />
       </div>
       <div className={styles['propsContainer']} />
     </div>

@@ -39,7 +39,8 @@ function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 0 && !location.pathname.includes('/detail');
+      const isScrolled =
+        window.scrollY > 0 && !location.pathname.includes('/detail');
 
       setScrolled(isScrolled);
     };
@@ -54,13 +55,17 @@ function Navbar() {
   console.log(storedUser);
 
   console.log(loggedIn);
-   const OnclickHome =()=>{
-    navigate('/')
-   }
+  const OnclickHome = () => {
+    navigate('/');
+  };
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu userId={userId} />
-      <div className='navbar-title' onClick={OnclickHome}>Henry Art Gallery</div>
+      <div className='navbar-title' onClick={OnclickHome}>
+        <span className='logo'>aA</span>
+        <span className='space'> </span>
+      </div>
+      <span className='sub'>BETA</span>
       <div className='navlinks-container'>
         {loggedIn ? (
           <div className='profile-menu' onClick={handleLogout}>
