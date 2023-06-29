@@ -4,7 +4,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FaTwitter, FaFacebook, FaInstagram, FaPinterest, FaYoutube } from 'react-icons/fa';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers } from '../../redux/actions';
+import { getAllUsers, getAllArts } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import CarruselUsers from '../CarruselUsers/CarruselUsers';
@@ -14,14 +14,19 @@ const UserDetail = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const allUsers = useSelector((state) => state.allUsers);
+  const artworkId = useSelector((state)=> state.allArts);
 
   const userDetail = allUsers.find((user) => user.userId === userId);
+  const artwordUsers= artworkId.find((user)=> user.userId === userId)
 
   // const { userName, email, location, phoneNumber, description, profilePicture } = userDetail;
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch, userId]);
+  useEffect(()=>{
+    dispatch(getAllArts());
+  },[dispatch, userId])
 
   const images = ['https://www.bicaalu.com/wp-content/uploads/el_tarot_de_leonora_carrington.jpg',
             'https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg',
@@ -35,6 +40,9 @@ const UserDetail = () => {
       <NavLink className={style['BttBack']} to='/users'>
         {' '}← BACK{' '}
       </NavLink>
+      <div>
+        <img src={artwordUsers?.image||'-.-'} alt="" />
+      </div>
       <div className={style.carruselContainer} >
           <CarruselUsers images={images} />
       </div>
@@ -47,7 +55,7 @@ const UserDetail = () => {
           <li>Country: {userDetail?.location || '--'}</li>
         </ul>
         <img src={userDetail.profilePicture} alt="img" className={style['photoPerfil']} />
-      </div>
+      {/* </div>
       <h1 className={style.categoryTitle}>My Categories</h1>
       <div className={style.floatbox}>
         <div className={style.item}>
@@ -55,7 +63,7 @@ const UserDetail = () => {
         </div>
         <div className={style.item}>
           <div className={style.content}>Illustration</div>
-        </div>
+        </div> */}
       </div>
       <FontAwesomeIcon icon={faStar} className={style.starIcon} />
       <div className={style.socialIcons}></div>

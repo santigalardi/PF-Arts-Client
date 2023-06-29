@@ -83,17 +83,18 @@ const rootReducer = (state = initialState, action) => {
         isLoggedIn: action.payload,
       };
 
-    case SET_IS_LOGGED_IN:
-      return {
-        ...state,
-        isLoggedIn: action.payload,
-      };
+    // // eslint-disable-next-line no-duplicate-case
+    // case SET_IS_LOGGED_IN:
+    //   return {
+    //     ...state,
+    //     isLoggedIn: action.payload,
+    //   };
 
-    case SET_IS_LOGGED_IN:
-      return {
-        ...state,
-        isLoggedIn: action.payload,
-      };
+    // case SET_IS_LOGGED_IN:
+    //   return {
+    //     ...state,
+    //     isLoggedIn: action.payload,
+    //   };
 
     case ADD_FAVORITE:
       return {
