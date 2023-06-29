@@ -1,29 +1,5 @@
 /* eslint-disable no-case-declarations */
-import {
-  GET_ARTS,
-  GET_ARTS_BY_TITLE,
-  GET_ARTS_BY_AUTHOR_NAME,
-  GET_USERS,
-  SET_IS_LOGGED_IN,
-  POST_ART,
-  ADD_FAVORITE,
-  DELETE_FAVORITE,
-  GET_DETAIL,
-  CLEAR_DETAIL,
-  GET_ARTS_BY_FILTERS,
-  POST_USERS,
-  DELETE_ART,
-  UPDATE_USER,
-  UPDATE_ARTWORK,
-  GET_FAVORITES,
-  GET_USERS_DETAIL,
-  SET_CART_ITEMS,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
-  SET_LOGGED_USER,
-  CHECK_AUTHENTICATION,
-} from './actions';
+import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, SET_IS_LOGGED_IN, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART_ITEMS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, SET_LOGGED_USER, CHECK_AUTHENTICATION } from './actions';
 
 const initialState = {
   allArts: [],
@@ -34,9 +10,7 @@ const initialState = {
   detail: {},
   users: [], //almacena datos de usuarios individuales.
   usersdetail: [],
-  cart: localStorage.getItem('cartItems')
-    ? JSON.parse(localStorage.getItem('cartItems'))
-    : [],
+  cart: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
   loggedUser: {},
   isLoggedIn: false,
   auth: {
@@ -83,23 +57,10 @@ const rootReducer = (state = initialState, action) => {
         isLoggedIn: action.payload,
       };
 
-    // // eslint-disable-next-line no-duplicate-case
-    // case SET_IS_LOGGED_IN:
-    //   return {
-    //     ...state,
-    //     isLoggedIn: action.payload,
-    //   };
-
-    // case SET_IS_LOGGED_IN:
-    //   return {
-    //     ...state,
-    //     isLoggedIn: action.payload,
-    //   };
-
     case ADD_FAVORITE:
       return {
         ...state,
-        myFavorites: [...state.myFavorites, action.payload],
+        myFavorites: action.payload,
       };
 
     case GET_FAVORITES:
@@ -111,9 +72,7 @@ const rootReducer = (state = initialState, action) => {
     case DELETE_FAVORITE:
       return {
         ...state,
-        myFavorites: state.myFavorites.filter(
-          (fav) => fav.id !== action.payload
-        ),
+        myFavorites: state.myFavorites.filter((fav) => fav.artworkId !== action.payload),
       };
 
     case SET_LOGGED_USER:
@@ -205,9 +164,7 @@ const rootReducer = (state = initialState, action) => {
       console.log('Removing from cart:', action.payload.artworkId);
       return {
         ...state,
-        cart: state.cart.filter(
-          (item) => item.artworkId !== action.payload.artworkId
-        ),
+        cart: state.cart.filter((item) => item.artworkId !== action.payload.artworkId),
       };
 
     case CLEAR_CART:
