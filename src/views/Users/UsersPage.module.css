@@ -1,16 +1,16 @@
 .usersPage {
    display: flex;
    flex-wrap: wrap;
-   min-height: 80vh;
+   min-height: 70vh;
 }
 .userCards {
    display: flex;
    flex-wrap: wrap;
    grid-gap: 6rem;
-   margin-right: auto;
-   margin-left: auto;
-   margin-bottom: auto;
-   margin-top: 2rem;
+   margin-right: 100px;
+   margin-left: 100px;
+   margin-bottom: 30px;
+   margin-top: 100px;
    justify-content: center;
 }
 .pagination{

@@ -53,7 +53,7 @@
 
 .navbar.scrolled .navbar-menu,
 .navbar.scrolled .menu-options {
-  background-color: rgba(213, 209, 209, 0.4);
+  background-color: transparent;
 }
 
 .navbar.scrolled .navbar-menu span {
