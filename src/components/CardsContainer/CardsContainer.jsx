@@ -19,9 +19,7 @@ const CardsContainer = () => {
   const artsPerPage = 9;
   const indexOfLastArt = currentPage * artsPerPage;
   const indexOfFirstArt = indexOfLastArt - artsPerPage;
-  const [currentArts, setCurrentArts] = useState(
-    allArts.slice(indexOfFirstArt, indexOfLastArt)
-  );
+  const [currentArts, setCurrentArts] = useState(allArts.slice(indexOfFirstArt, indexOfLastArt));
   const [isLoading, setIsLoading] = useState(false);
 
   const pagination = (pageNumber) => {
@@ -41,8 +39,7 @@ const CardsContainer = () => {
     } else {
       setIsLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allUsers]);
+  }, [allUsers, dispatch, allArts]);
 
   useEffect(() => {
     setCurrentArts(allArts.slice(indexOfFirstArt, indexOfLastArt));
@@ -70,22 +67,13 @@ const CardsContainer = () => {
         ) : (
           <div className={styles['CardsContainer']}>
             {currentArts.map((art) => (
-              <NavLink
-                to={`/detail/${art.artworkId}`}
-                key={art.artworkId}
-                className={styles.link}
-              >
+              <NavLink to={`/detail/${art.artworkId}`} key={art.artworkId} className={styles.link}>
                 <Card art={art} />
               </NavLink>
             ))}
           </div>
         )}
-        <CustomPagination
-          artsPerPage={artsPerPage}
-          allArts={allArts.length}
-          currentPage={currentPage}
-          pagination={pagination}
-        />
+        <CustomPagination artsPerPage={artsPerPage} allArts={allArts.length} currentPage={currentPage} pagination={pagination} />
       </div>
     </div>
   );

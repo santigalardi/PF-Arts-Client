@@ -63,12 +63,13 @@ const UserDetail = () => {
   return (
     <div className={style['containerUserDetail']}>
       <NavLink className={style['BttBack']} to='/users'>
-        {' '}← BACK{' '}
+        {' '}
+        ← BACK{' '}
       </NavLink>
       <div className={style['userDetail']}>
         <ul className={style['details']}>
           <li>Name: {userDetail?.userName || '--'}</li>
-          <li> Email: {userDetail?.email || '--'}</li>
+          <li>Email: {userDetail?.email || '--'}</li>
           <li>Description: {userDetail?.description || '--'}</li>
           <li>Phone Number: {userDetail?.phoneNumber || '--'}</li>
           <li>Country: {userDetail?.location || '--'}</li>
