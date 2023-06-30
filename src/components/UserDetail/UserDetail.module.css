@@ -10,11 +10,11 @@
   bottom: 100%;
   display: flex;
   flex-wrap: wrap;
-  margin-left: 8rem;
-  margin-right: 6.9rem;
 }
 
 .details {
+  margin-left: auto;
+  margin-right: auto;
   width: 82.5%;
   font-weight:bold;
   background-color: #f6f6f6;
