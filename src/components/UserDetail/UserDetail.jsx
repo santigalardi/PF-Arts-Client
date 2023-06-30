@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers, getAllArts, getDetail } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import CarruselUsers from '../CarruselUsers/CarruselUsers';
 import style from './UserDetail.module.css';
 
@@ -62,10 +61,6 @@ const UserDetail = () => {
 
   return (
     <div className={style['containerUserDetail']}>
-      <NavLink className={style['BttBack']} to='/users'>
-        {' '}
-        ← BACK{' '}
-      </NavLink>
       <div className={style['userDetail']}>
         <ul className={style['details']}>
           <li>Name: {userDetail?.userName || '--'}</li>
