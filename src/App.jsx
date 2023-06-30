@@ -39,7 +39,7 @@ function App() {
         {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
       </button>
       <Routes>
-        <Route path="/verify/" element={<VerifyToken />} />
+        <Route path='/verify/' element={<VerifyToken />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/' element={<Home />} />
@@ -54,6 +54,9 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/reports' element={<Reports />} />
+        <Route path='/products' element={<Products />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (
         <Footer />
