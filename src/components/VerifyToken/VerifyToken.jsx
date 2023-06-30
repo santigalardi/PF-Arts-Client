@@ -15,7 +15,7 @@ const VerifyToken = () => {
       try {
         await axios.post('http://localhost:3001/users/verify', { token });
         console.log('Token verified successfully');
-        navigate('/'); 
+        navigate('/login'); 
       } catch (error) {
         console.error('Error verifying token:', error.response.data.error);
         navigate('/register'); 
