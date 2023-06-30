@@ -19,7 +19,9 @@ import Cart from './views/Cart/Cart';
 import Checkout from './views/Checkout/Checkout';
 import Dashboard from './views/Dashboard/Dashboard';
 import VerifyToken from './components/VerifyToken/VerifyToken';
-
+import Orders from './views/Orders/Orders';
+import Reports from './views/Reports/Reports';
+import Products from './views/Products/Products';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();

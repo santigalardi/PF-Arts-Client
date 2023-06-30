@@ -11,6 +11,7 @@ import {
   getAllArts,
   updateArtwork,
   addToCart,
+  getFavorites,
 } from '../../redux/actions';
 import {
   FaShoppingCart,
@@ -20,6 +21,7 @@ import {
   FaPencilAlt,
 } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
+import ReviewSection from '../ReviewSection/ReviewSection';
 import frame from '../../assets/img/marco.png';
 import styles from './Detail.module.css';
 
@@ -27,7 +29,6 @@ const Detail = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [isFav, setIsFav] = useState(false);
-  const [rating, setRating] = useState(0);
   const [artist, setArtist] = useState('');
   const [year, setYear] = useState('');
   const [dimensions, setDimensions] = useState('');
@@ -37,8 +38,11 @@ const Detail = () => {
   const detail = useSelector((state) => state.detail);
   const cartItems = useSelector((state) => state.cart);
   const myFavorites = useSelector((state) => state.myFavorites);
+  const loggedUser = useSelector((state) => state.loggedUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { userId } = loggedUser;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -57,14 +61,6 @@ const Detail = () => {
     };
   }, [dispatch, id]);
 
-  /*  useEffect(() => {
-    myFavorites.forEach((fav) => {
-      if (fav.id === detail.id) {
-        setIsFav(true);
-      }
-    });
-  }, [detail.id, myFavorites]); */
-
   useEffect(() => {
     setArtist(detail.authorName);
     setYear(detail.date);
@@ -72,13 +68,36 @@ const Detail = () => {
     setPrice(detail.price);
   }, [detail]);
 
-  const handleFavorite = () => {
+  useEffect(() => {
+    dispatch(getFavorites(userId)).then((res) => {
+      const userFavString = JSON.stringify(res.data.userFav);
+      localStorage.setItem('Favorites', userFavString);
+      const favorites = JSON.parse(userFavString);
+      const isFavorite = favorites.some(
+        (favorite) => favorite.title === detail.title
+      );
+      setIsFav(isFavorite);
+    });
+  }, [dispatch, detail.title, userId]);
+
+  const handleFavorite = (event) => {
+    event.preventDefault();
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(detail));
+      dispatch(deleteFavorite(userId, detail.artworkId)).then(() => {
+        const updatedFavorites = myFavorites.userFav.filter(
+          (fav) => fav.artworkId !== detail.artworkId
+        );
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     } else {
       setIsFav(true);
-      dispatch(addFavorite({ detail }));
+      dispatch(addFavorite(userId, detail.artworkId, detail)).then(() => {
+        const updatedFavorites = [...myFavorites.userFav, detail];
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     }
   };
 
@@ -89,10 +108,6 @@ const Detail = () => {
     }
     dispatch(addToCart(detail));
     navigate('/cart');
-  };
-
-  const handleRatingChange = (value) => {
-    setRating(value);
   };
 
   const handleDelete = () => {
@@ -165,8 +180,6 @@ const Detail = () => {
   };
   // ------------------------------------------------------------------------------
 
-  const isCreatedByUser = detail.user && detail.user.userName.length > 0;
-
   return (
     <div className={styles.detailContainer}>
       <div className={styles.imgContainer}>
@@ -233,7 +246,7 @@ const Detail = () => {
               <span>{detail.price} USD</span>
             )}
           </p>
-          {isCreatedByUser && (
+          {detail.user && detail.user.userName.length > 0 && (
             <div>
               <p>
                 <span className={styles.prop}>Published By:</span>{' '}
@@ -258,7 +271,8 @@ const Detail = () => {
               </button>
             </>
           ) : (
-            isCreatedByUser && (
+            detail.user &&
+            detail.user.userName.length > 0 && (
               <button
                 className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`}
                 onClick={handleUpdate}
@@ -267,7 +281,7 @@ const Detail = () => {
               </button>
             )
           )}
-          {isEditing && isCreatedByUser && (
+          {isEditing && detail.user && detail.user.userName.length > 0 && (
             <button
               className={styles.deleteButton}
               onClick={() => {
@@ -281,15 +295,13 @@ const Detail = () => {
         </div>
       </div>
       <div className={styles.actionsContainer}>
-        {isFav ? (
-          <button className={styles.likeStyle} onClick={handleFavorite}>
-            ❤️
-          </button>
-        ) : (
-          <button className={styles.likeStyle} onClick={handleFavorite}>
-            🤍
-          </button>
-        )}
+        <button className={styles['likeStyle']} onClick={handleFavorite}>
+          {isFav ? (
+            <span className={styles['red']}>♥️</span>
+          ) : (
+            <span className={styles['white']}>♥️</span>
+          )}
+        </button>
         <button className={styles.cartButton} onClick={handleBuy}>
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
@@ -303,32 +315,27 @@ const Detail = () => {
             You cannot add more than 4 items to the cart.
           </Alert>
         )}
+
         <div>
-          <div className={styles.ratingContainer}>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                className={`${styles.ratingStar} ${
-                  value <= rating ? styles.ratingStarActive : ''
-                }`}
-                onClick={() => handleRatingChange(value)}
-              >
-                ★
-              </button>
-            ))}
+          <div className={styles.shareButtons}>
+            <button className={styles.shareButton} onClick={handleTwitterShare}>
+              <FaTwitter className={styles.shareIcon} />
+            </button>
+            <button
+              className={styles.shareButton}
+              onClick={handleFacebookShare}
+            >
+              <FaFacebook className={styles.shareIcon} />
+            </button>
+            <button
+              className={styles.shareButton}
+              onClick={handleInstagramShare}
+            >
+              <FaInstagram className={styles.shareIcon} />
+            </button>
           </div>
         </div>
-        <div className={styles.shareButtons}>
-          <button className={styles.shareButton} onClick={handleTwitterShare}>
-            <FaTwitter className={styles.shareIcon} />
-          </button>
-          <button className={styles.shareButton} onClick={handleFacebookShare}>
-            <FaFacebook className={styles.shareIcon} />
-          </button>
-          <button className={styles.shareButton} onClick={handleInstagramShare}>
-            <FaInstagram className={styles.shareIcon} />
-          </button>
-        </div>
+        <ReviewSection artworkId={id} />
       </div>
     </div>
   );

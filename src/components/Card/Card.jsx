@@ -45,7 +45,7 @@ function Card({ art, imageSize, containerSize }) {
   return (
     <div className={styles['cardContainer']} style={{ width: containerSize, height: '350px' }}>
       <button className={styles['likeStyle']} onClick={handleFavorite}>
-        {isFav ? '❤️' : '🤍'}
+        {isFav ? <span className={styles['red']}>♥️</span> : <span className={styles['white']}>♥️</span>}
       </button>
       <div className={styles['imgContainer']}>
         <img src={image} alt={'pic'} style={{ width: imageSize, height: '350px' }} />

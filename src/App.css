@@ -1,6 +1,6 @@
 .dark {
-  background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);
-  color: #8f8f8f;
+  background: rgb(34, 34, 34);
+  color: #000000;
 }
 
 .darkModeButton {
