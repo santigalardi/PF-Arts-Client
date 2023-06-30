@@ -18,7 +18,9 @@ import UserDetail from './components/UserDetail/UserDetail';
 import Cart from './views/Cart/Cart';
 import Checkout from './views/Checkout/Checkout';
 import Dashboard from './views/Dashboard/Dashboard';
-
+import Orders from './views/Orders/Orders';
+import Reports from './views/Reports/Reports';
+import Products from './views/Products/Products';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
@@ -50,6 +52,9 @@ function App() {
         <Route path='/cart' element={<Cart />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/orders' element={<Orders />} />
+        <Route path='/reports' element={<Reports />} />
+        <Route path='/products' element={<Products />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (
         <Footer />

@@ -2,9 +2,26 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
-import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork, addToCart, getFavorites } from '../../redux/actions';
-import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 'react-icons/fa';
+import {
+  addFavorite,
+  clearDetail,
+  deleteFavorite,
+  getDetail,
+  deleteArt,
+  getAllArts,
+  updateArtwork,
+  addToCart,
+  getFavorites,
+} from '../../redux/actions';
+import {
+  FaShoppingCart,
+  FaTwitter,
+  FaFacebook,
+  FaInstagram,
+  FaPencilAlt,
+} from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
+import ReviewSection from '../ReviewSection/ReviewSection';
 import frame from '../../assets/img/marco.png';
 import styles from './Detail.module.css';
 
@@ -12,7 +29,6 @@ const Detail = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [isFav, setIsFav] = useState(false);
-  const [rating, setRating] = useState(0);
   const [artist, setArtist] = useState('');
   const [year, setYear] = useState('');
   const [dimensions, setDimensions] = useState('');
@@ -57,7 +73,9 @@ const Detail = () => {
       const userFavString = JSON.stringify(res.data.userFav);
       localStorage.setItem('Favorites', userFavString);
       const favorites = JSON.parse(userFavString);
-      const isFavorite = favorites.some((favorite) => favorite.title === detail.title);
+      const isFavorite = favorites.some(
+        (favorite) => favorite.title === detail.title
+      );
       setIsFav(isFavorite);
     });
   }, [dispatch, detail.title, userId]);
@@ -67,7 +85,9 @@ const Detail = () => {
     if (isFav) {
       setIsFav(false);
       dispatch(deleteFavorite(userId, detail.artworkId)).then(() => {
-        const updatedFavorites = myFavorites.userFav.filter((fav) => fav.artworkId !== detail.artworkId);
+        const updatedFavorites = myFavorites.userFav.filter(
+          (fav) => fav.artworkId !== detail.artworkId
+        );
         const userFavString = JSON.stringify(updatedFavorites);
         localStorage.setItem('Favorites', userFavString);
       });
@@ -88,10 +108,6 @@ const Detail = () => {
     }
     dispatch(addToCart(detail));
     navigate('/cart');
-  };
-
-  const handleRatingChange = (value) => {
-    setRating(value);
   };
 
   const handleDelete = () => {
@@ -145,20 +161,24 @@ const Detail = () => {
 
   //------------ BOTONES DE REDES SOCIALES -------------------------------
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      detail.title
+    )}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href
+    )}`;
     window.open(url, '_blank');
   };
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(
+      window.location.href
+    )}`;
     window.open(url, '_blank');
   };
   // ------------------------------------------------------------------------------
-
-  const isCreatedByUser = detail.user && detail.user.userName.length > 0;
 
   return (
     <div className={styles.detailContainer}>
@@ -177,15 +197,37 @@ const Detail = () => {
           <h3>{detail.title}</h3>
           <hr className={styles.hr} />
           <p>
-            <span className={styles.prop}>Artist:</span> {isEditing ? <input type='text' value={artist} onChange={(e) => setArtist(e.target.value)} /> : <span>{detail.authorName}</span>}
+            <span className={styles.prop}>Artist:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={artist}
+                onChange={(e) => setArtist(e.target.value)}
+              />
+            ) : (
+              <span>{detail.authorName}</span>
+            )}
           </p>
           <p>
-            <span className={styles.prop}>Year:</span> {isEditing ? <input type='text' value={year} onChange={(e) => setYear(e.target.value)} /> : <span>{detail.date}</span>}
+            <span className={styles.prop}>Year:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              />
+            ) : (
+              <span>{detail.date}</span>
+            )}
           </p>
           <p>
             <span className={styles.prop}>Dimensions:</span>{' '}
             {isEditing ? (
-              <input type='text' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
+              <input
+                type='text'
+                value={dimensions}
+                onChange={(e) => setDimensions(e.target.value)}
+              />
             ) : (
               <span>
                 {detail.height} x {detail.width}
@@ -193,9 +235,18 @@ const Detail = () => {
             )}
           </p>
           <p>
-            <span className={styles.prop}>Price:</span> {isEditing ? <input type='text' value={price} onChange={(e) => setPrice(e.target.value)} /> : <span>{detail.price} USD</span>}
+            <span className={styles.prop}>Price:</span>{' '}
+            {isEditing ? (
+              <input
+                type='text'
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            ) : (
+              <span>{detail.price} USD</span>
+            )}
           </p>
-          {isCreatedByUser && (
+          {detail.user && detail.user.userName.length > 0 && (
             <div>
               <p>
                 <span className={styles.prop}>Published By:</span>{' '}
@@ -212,18 +263,25 @@ const Detail = () => {
               <button className={styles.updateButtonSave} onClick={handleSave}>
                 Save
               </button>
-              <button className={styles.updateButtonCancel} onClick={handleCancel}>
+              <button
+                className={styles.updateButtonCancel}
+                onClick={handleCancel}
+              >
                 Cancel
               </button>
             </>
           ) : (
-            isCreatedByUser && (
-              <button className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`} onClick={handleUpdate}>
+            detail.user &&
+            detail.user.userName.length > 0 && (
+              <button
+                className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`}
+                onClick={handleUpdate}
+              >
                 <FaPencilAlt className={styles.updateIcon} />
               </button>
             )
           )}
-          {isEditing && isCreatedByUser && (
+          {isEditing && detail.user && detail.user.userName.length > 0 && (
             <button
               className={styles.deleteButton}
               onClick={() => {
@@ -238,37 +296,46 @@ const Detail = () => {
       </div>
       <div className={styles.actionsContainer}>
         <button className={styles['likeStyle']} onClick={handleFavorite}>
-          {isFav ? <span className={styles['red']}>♥️</span> : <span className={styles['white']}>♥️</span>}
+          {isFav ? (
+            <span className={styles['red']}>♥️</span>
+          ) : (
+            <span className={styles['white']}>♥️</span>
+          )}
         </button>
         <button className={styles.cartButton} onClick={handleBuy}>
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
         {showNotification && (
-          <Alert variant='danger' onClose={() => setShowNotification(false)} dismissible>
+          <Alert
+            variant='danger'
+            onClose={() => setShowNotification(false)}
+            dismissible
+          >
             You cannot add more than 4 items to the cart.
           </Alert>
         )}
+
         <div>
-          <div className={styles.ratingContainer}>
-            {[1, 2, 3, 4, 5].map((value) => (
-              <button key={value} className={`${styles.ratingStar} ${value <= rating ? styles.ratingStarActive : ''}`} onClick={() => handleRatingChange(value)}>
-                ★
-              </button>
-            ))}
+          <div className={styles.shareButtons}>
+            <button className={styles.shareButton} onClick={handleTwitterShare}>
+              <FaTwitter className={styles.shareIcon} />
+            </button>
+            <button
+              className={styles.shareButton}
+              onClick={handleFacebookShare}
+            >
+              <FaFacebook className={styles.shareIcon} />
+            </button>
+            <button
+              className={styles.shareButton}
+              onClick={handleInstagramShare}
+            >
+              <FaInstagram className={styles.shareIcon} />
+            </button>
           </div>
         </div>
-        <div className={styles.shareButtons}>
-          <button className={styles.shareButton} onClick={handleTwitterShare}>
-            <FaTwitter className={styles.shareIcon} />
-          </button>
-          <button className={styles.shareButton} onClick={handleFacebookShare}>
-            <FaFacebook className={styles.shareIcon} />
-          </button>
-          <button className={styles.shareButton} onClick={handleInstagramShare}>
-            <FaInstagram className={styles.shareIcon} />
-          </button>
-        </div>
+        <ReviewSection artworkId={id} />
       </div>
     </div>
   );
