@@ -9,7 +9,7 @@ import {
   FaFileExport,
 } from 'react-icons/fa';
 
-const Dashboard = () => {
+const Orders = () => {
   return (
     <div>
       <div className='container-fluid'>
@@ -60,7 +60,7 @@ const Dashboard = () => {
 
           <main role='main' className='col-md-9 ml-sm-auto col-lg-10 px-md-4'>
             <div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
-              <h1 className='h2'>Dashboard</h1>
+              <h1 className='h2'>Orders</h1>
               <div className='btn-toolbar mb-2 mb-md-0'>
                 <div className='btn-group mr-2'>
                   <button className='btn btn-sm btn-outline-secondary'>
@@ -78,7 +78,7 @@ const Dashboard = () => {
             </div>
 
             <div>
-              <p> - Acá va gráfico extraído de Paypal. </p>
+              <p> - Esto puede ser tabla de ordenes y ventas. </p>
             </div>
           </main>
         </div>
@@ -87,4 +87,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Orders;
