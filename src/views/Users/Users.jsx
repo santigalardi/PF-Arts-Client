@@ -5,7 +5,6 @@ import { getAllUsers, getAllArts } from '../../redux/actions';
 import UserCard from '../../components/UserCard/UserCard';
 import styles from './UsersPage.module.css';
 import UserPagination from '../../components/PgUser/PgUser';
-import { NavLink } from 'react-router-dom';
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -37,32 +36,18 @@ const UsersPage = () => {
     const newSearchUser = searchParamsUser.toString();
     navigate({ search: `?${newSearchUser}` });
   };
-  /* 
-  const handleEditUser = (userId) => {
-    // Lógica para editar el usuario con el ID correspondiente
-    console.log(`Editar usuario con ID: ${userId}`);
-  }; */
 
   return (
     <div>
       <div className={styles.usersPage}>
         <div className={styles.userCards}>
           {currentUsers.map((user) => (
-            <UserCard
-              key={user.userId}
-              user={user}
-              art={allArts} /* value={handleEditUser} */
-            />
+            <UserCard key={user.userId} user={user} art={allArts} />
           ))}
         </div>
       </div>
       <div className={styles['pagination']}>
-        <UserPagination
-          usersPerPage={usersPerPage}
-          totalUsers={allUsers.length}
-          currentUsersPage={currentUsersPage}
-          handlePageChange={handlePageChange}
-        />
+        <UserPagination usersPerPage={usersPerPage} totalUsers={allUsers.length} currentUsersPage={currentUsersPage} handlePageChange={handlePageChange} />
       </div>
     </div>
   );

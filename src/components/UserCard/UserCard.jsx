@@ -5,17 +5,12 @@ import styles from './UserCard.module.css';
 const UserCard = ({ user, art }) => {
   const { userName, userId, profilePicture } = user;
 
-  console.log(art);
-
   return (
     <div className={styles['userCard']}>
       <img src={profilePicture} className={styles['imageU']} />
       <h3>{userName}</h3>
-      <div className={styles['backG']}>
-        <NavLink
-          className={styles['detailButton']}
-          to={`/users/detail/${userId}`}
-        >
+      <div>
+        <NavLink className={styles['detailButton']} to={`/users/detail/${userId}`}>
           Detail
         </NavLink>
       </div>
