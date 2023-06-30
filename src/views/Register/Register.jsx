@@ -94,7 +94,6 @@ const Register = () => {
           setSubmitted(false);
           setErrors({});
           dispatch(setIsLoggedIn(true));
-          alert(`Welcome ${updatedInput.userName}, Please check your email inbox or spam folder`)
           if (!showAlert) {
             //Revisar que realmente no redireccione al tener errores(user exists)
             navigate('/login');

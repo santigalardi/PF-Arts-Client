@@ -53,7 +53,6 @@ const GoogleButton = () => {
             ...userExists,
             profilePicture: photoURL,
             googleUser: true,
-            verified: true
           };
           console.log(updatedUser);
           dispatch(updateUser(updatedUser));
@@ -67,7 +66,6 @@ const GoogleButton = () => {
           password: newPassword,
           profilePicture: photoURL,
           googleUser: true,
-          verified:true
         };
         console.log(newUser);
         dispatch(postUsers(newUser)).then(async () => {
