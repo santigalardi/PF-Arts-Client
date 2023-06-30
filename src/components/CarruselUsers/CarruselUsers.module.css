@@ -1,39 +1,49 @@
 .carruselContainer {
-   position: relative;
-    margin-left:130px;
+    position: absolute;
+    margin-left: 130px;
+    width:69.5rem; /* Ajusta el ancho del contenedor */
+    height: 300px; /* Ajusta la altura del contenedor */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .image {
-   max-width: 100%;
-   max-height: 100%;
-   width: 555px; /* Ancho deseadoimg */
-   height: 200px; /* Alto deseadoimg */
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    margin: 0 50px;
+    /* border: 2px solid gold; 
+    transition: transform 0.3s ease; */
+}
+.image:hover{
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05); 
 }
 .prevButton,
 .nextButton {
-   position: absolute;
-   top: 50%;
-   transform: translateY(-50%);
-   border: none;
-   background-color: transparent;
-   color: transparent;
-   font-size: 50px;
-   padding-top: 7%;
-   padding-bottom: 7%;
+    position: absolute;
+    border: none;
+    text-shadow: 4px 1px 21px rgba(0,0,0,0.3);
+    background-color: transparent;
+    color: rgb(169, 167, 167);
+    font-size: 50px;
+    top: 10rem;
 }
 
 .prevButton {
     left: 0px;
-    padding-right: 20rem;
 }
 .prevButton:hover{
     color: aliceblue;
+    text-shadow: 4px 1px 21px rgba(0,0,0,1);
 }
 
 .nextButton {
-    padding-left: 20rem;
-   right: 110px;
+   right: 0px;
 }
 .nextButton:hover{
     color: aliceblue;
+    text-shadow: 4px 1px 21px rgba(0,0,0,1);
+
 }
