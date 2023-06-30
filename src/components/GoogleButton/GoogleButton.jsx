@@ -4,7 +4,12 @@ import { auth, googleProvider } from '../../Firebase/config';
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers, postUsers, updateUser, setLoggedUser } from '../../redux/actions';
+import {
+  getAllUsers,
+  postUsers,
+  updateUser,
+  setLoggedUser,
+} from '../../redux/actions';
 import axios from 'axios';
 import googleLogo from '../../assets/img/google.png';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
@@ -27,10 +32,13 @@ const GoogleButton = () => {
 
       if (userExists) {
         try {
-          const response = await axios.post('http://localhost:3001/users/login', {
-            username: userExists.userName,
-            password: userExists.password,
-          });
+          const response = await axios.post(
+            'http://localhost:3001/users/login',
+            {
+              username: userExists.userName,
+              password: userExists.password,
+            }
+          );
 
           const { token, success } = response.data;
 
@@ -53,7 +61,7 @@ const GoogleButton = () => {
             ...userExists,
             profilePicture: photoURL,
             googleUser: true,
-            verified: true
+            verified: true,
           };
           console.log(updatedUser);
           dispatch(updateUser(updatedUser));
@@ -67,15 +75,18 @@ const GoogleButton = () => {
           password: newPassword,
           profilePicture: photoURL,
           googleUser: true,
-          verified:true
+          verified: true,
         };
         console.log(newUser);
         dispatch(postUsers(newUser)).then(async () => {
           try {
-            const response = await axios.post('http://localhost:3001/users/login', {
-              username: newUser.userName,
-              password: newUser.password,
-            });
+            const response = await axios.post(
+              'http://localhost:3001/users/login',
+              {
+                username: newUser.userName,
+                password: newUser.password,
+              }
+            );
 
             const { token, success } = response.data;
 
@@ -101,9 +112,9 @@ const GoogleButton = () => {
   useEffect(() => {
     dispatch(getAllUsers());
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate('/');
-      }
+      // if (user) {
+      //   navigate('/');
+      // }
     });
 
     return unsubscribe;
@@ -118,7 +129,11 @@ const GoogleButton = () => {
       <Container className='w-100 my-3'>
         <Row>
           <Col>
-            <Button variant='outline-danger' className='w-100 my-1' onClick={handleGoogleSignIn}>
+            <Button
+              variant='outline-danger'
+              className='w-100 my-1'
+              onClick={handleGoogleSignIn}
+            >
               <Row className='align-items-center'>
                 <Col xs={1} className='d-block'>
                   <Image src={googleLogo} width='24' alt='' />
