@@ -335,7 +335,7 @@ const Detail = () => {
             </button>
           </div>
         </div>
-        <ReviewSection />
+        <ReviewSection artworkId={id} />
       </div>
     </div>
   );

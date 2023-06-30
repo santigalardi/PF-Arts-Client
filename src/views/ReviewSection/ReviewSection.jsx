@@ -1,26 +1,40 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReviewList from '../ReviewList/ReviewList';
 import styles from './ReviewSection.module.css';
 
-const ReviewSection = () => {
-  const [comments, setComments] = useState([]);
+const ReviewSection = ({ artworkId }) => {
+  const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [comment, setComment] = useState('');
+  const [review, setReview] = useState('');
 
-  const addComment = () => {
-    const newComment = {
+  useEffect(() => {
+    // Cargar comentarios guardados desde el almacenamiento local al montar el componente
+    const storedReviews = localStorage.getItem(`reviews_${artworkId}`);
+    if (storedReviews) {
+      setReviews(JSON.parse(storedReviews));
+    }
+  }, [artworkId]);
+
+  useEffect(() => {
+    // Guardar comentarios en el almacenamiento local cada vez que cambien
+    localStorage.setItem(`reviews_${artworkId}`, JSON.stringify(reviews));
+  }, [artworkId, reviews]);
+
+  const addReview = () => {
+    const newReview = {
+      artworkId: artworkId,
       name: name,
       email: email,
-      comment: comment,
+      review: review,
       rating: rating,
-      date: new Date().toLocaleDateString(), // Agrega la fecha actual al comentario
+      date: new Date().toLocaleDateString(),
     };
-    setComments([...comments, newComment]);
+    setReviews([...reviews, newReview]);
     setName('');
     setEmail('');
-    setComment('');
+    setReview('');
     setRating(0);
   };
 
@@ -30,13 +44,13 @@ const ReviewSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addComment();
+    addReview();
   };
 
-  const handleCommentChange = (e) => {
+  const handleReviewChange = (e) => {
     const value = e.target.value;
     if (value.length <= 150) {
-      setComment(value);
+      setReview(value);
     }
   };
 
@@ -84,18 +98,18 @@ const ReviewSection = () => {
           <div className={styles.formGroup}>
             <textarea
               className={styles.textarea}
-              id='comment'
+              id='review'
               placeholder='Review*'
               rows='2'
-              value={comment}
-              onChange={handleCommentChange}
+              value={review}
+              onChange={handleReviewChange}
             ></textarea>
           </div>
           <button type='submit' className={styles.submitButton}>
             Submit
           </button>
         </form>
-        <ReviewList comments={comments} />
+        <ReviewList reviews={reviews} />
       </div>
     </div>
   );
