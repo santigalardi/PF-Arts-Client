@@ -30,16 +30,18 @@ const Favorites = () => {
 
   const myFavorites = useSelector((state) => state.myFavorites);
 
-  console.log(myFavorites);
-
   useEffect(() => {
     dispatch(getFavorites(userId));
   }, [dispatch, userId]);
 
   const { userFav } = myFavorites;
-  console.log(userFav);
 
   const numberOfFav = userFav ? userFav.length : userFav;
+
+  const handleCardDelete = () => {
+    // Actualiza el estado de la lista de favoritos después de eliminar un favorito
+    dispatch(getFavorites(userId));
+  };
 
   useEffect(() => {
     // Guardar los favoritos en el almacenamiento local cuando se actualicen
@@ -57,7 +59,7 @@ const Favorites = () => {
         {userFav &&
           userFav.map((fav) => (
             <div key={fav.artworkId}>
-              <Card art={fav} imageSize='120px' containerSize='120px' />
+              <Card art={fav} imageSize='120px' containerSize='120px' onDelete={handleCardDelete} />
             </div>
           ))}
       </div>
