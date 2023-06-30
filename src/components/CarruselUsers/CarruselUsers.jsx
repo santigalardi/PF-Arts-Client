@@ -30,21 +30,21 @@ const CarruselUsers = ({ images }) => {
   };
 
   return (
-    <div className={styles.carruselContainer}>
-      <div className={styles.imageContainer}>
+    <div className={styles['carruselContainer']}>
+      <div className={styles['imageContainer']}>
         {images.slice(startIndex, startIndex + 2).map((image, index) => (
           <img
             key={index}
-            className={styles.image}
+            className={styles['image']}
             src={image}
             alt="User Image"
           />
         ))}
       </div>
-      <button className={styles.prevButton} onClick={handlePrev}>
+      <button className={styles['prevButton']} onClick={handlePrev}>
         {'<'}
       </button>
-      <button className={styles.nextButton} onClick={handleNext}>
+      <button className={styles['nextButton']} onClick={handleNext}>
         {'>'}
       </button>
     </div>
