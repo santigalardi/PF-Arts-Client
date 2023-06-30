@@ -2,23 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
-import {
-  addFavorite,
-  clearDetail,
-  deleteFavorite,
-  getDetail,
-  deleteArt,
-  getAllArts,
-  updateArtwork,
-  addToCart,
-} from '../../redux/actions';
-import {
-  FaShoppingCart,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-  FaPencilAlt,
-} from 'react-icons/fa';
+import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork, addToCart, getFavorites } from '../../redux/actions';
+import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
 import frame from '../../assets/img/marco.png';
 import styles from './Detail.module.css';
@@ -37,8 +22,11 @@ const Detail = () => {
   const detail = useSelector((state) => state.detail);
   const cartItems = useSelector((state) => state.cart);
   const myFavorites = useSelector((state) => state.myFavorites);
+  const loggedUser = useSelector((state) => state.loggedUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { userId } = loggedUser;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -57,14 +45,6 @@ const Detail = () => {
     };
   }, [dispatch, id]);
 
-  /*  useEffect(() => {
-    myFavorites.forEach((fav) => {
-      if (fav.id === detail.id) {
-        setIsFav(true);
-      }
-    });
-  }, [detail.id, myFavorites]); */
-
   useEffect(() => {
     setArtist(detail.authorName);
     setYear(detail.date);
@@ -72,13 +52,32 @@ const Detail = () => {
     setPrice(detail.price);
   }, [detail]);
 
-  const handleFavorite = () => {
+  useEffect(() => {
+    dispatch(getFavorites(userId)).then((res) => {
+      const userFavString = JSON.stringify(res.data.userFav);
+      localStorage.setItem('Favorites', userFavString);
+      const favorites = JSON.parse(userFavString);
+      const isFavorite = favorites.some((favorite) => favorite.title === detail.title);
+      setIsFav(isFavorite);
+    });
+  }, [dispatch, detail.title, userId]);
+
+  const handleFavorite = (event) => {
+    event.preventDefault();
     if (isFav) {
       setIsFav(false);
-      dispatch(deleteFavorite(detail));
+      dispatch(deleteFavorite(userId, detail.artworkId)).then(() => {
+        const updatedFavorites = myFavorites.userFav.filter((fav) => fav.artworkId !== detail.artworkId);
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     } else {
       setIsFav(true);
-      dispatch(addFavorite({ detail }));
+      dispatch(addFavorite(userId, detail.artworkId, detail)).then(() => {
+        const updatedFavorites = [...myFavorites.userFav, detail];
+        const userFavString = JSON.stringify(updatedFavorites);
+        localStorage.setItem('Favorites', userFavString);
+      });
     }
   };
 
@@ -146,21 +145,15 @@ const Detail = () => {
 
   //------------ BOTONES DE REDES SOCIALES -------------------------------
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      detail.title
-    )}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   // ------------------------------------------------------------------------------
@@ -184,37 +177,15 @@ const Detail = () => {
           <h3>{detail.title}</h3>
           <hr className={styles.hr} />
           <p>
-            <span className={styles.prop}>Artist:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={artist}
-                onChange={(e) => setArtist(e.target.value)}
-              />
-            ) : (
-              <span>{detail.authorName}</span>
-            )}
+            <span className={styles.prop}>Artist:</span> {isEditing ? <input type='text' value={artist} onChange={(e) => setArtist(e.target.value)} /> : <span>{detail.authorName}</span>}
           </p>
           <p>
-            <span className={styles.prop}>Year:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-              />
-            ) : (
-              <span>{detail.date}</span>
-            )}
+            <span className={styles.prop}>Year:</span> {isEditing ? <input type='text' value={year} onChange={(e) => setYear(e.target.value)} /> : <span>{detail.date}</span>}
           </p>
           <p>
             <span className={styles.prop}>Dimensions:</span>{' '}
             {isEditing ? (
-              <input
-                type='text'
-                value={dimensions}
-                onChange={(e) => setDimensions(e.target.value)}
-              />
+              <input type='text' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
             ) : (
               <span>
                 {detail.height} x {detail.width}
@@ -222,16 +193,7 @@ const Detail = () => {
             )}
           </p>
           <p>
-            <span className={styles.prop}>Price:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            ) : (
-              <span>{detail.price} USD</span>
-            )}
+            <span className={styles.prop}>Price:</span> {isEditing ? <input type='text' value={price} onChange={(e) => setPrice(e.target.value)} /> : <span>{detail.price} USD</span>}
           </p>
           {isCreatedByUser && (
             <div>
@@ -250,19 +212,13 @@ const Detail = () => {
               <button className={styles.updateButtonSave} onClick={handleSave}>
                 Save
               </button>
-              <button
-                className={styles.updateButtonCancel}
-                onClick={handleCancel}
-              >
+              <button className={styles.updateButtonCancel} onClick={handleCancel}>
                 Cancel
               </button>
             </>
           ) : (
             isCreatedByUser && (
-              <button
-                className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`}
-                onClick={handleUpdate}
-              >
+              <button className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`} onClick={handleUpdate}>
                 <FaPencilAlt className={styles.updateIcon} />
               </button>
             )
@@ -281,38 +237,22 @@ const Detail = () => {
         </div>
       </div>
       <div className={styles.actionsContainer}>
-        {isFav ? (
-          <button className={styles.likeStyle} onClick={handleFavorite}>
-            ❤️
-          </button>
-        ) : (
-          <button className={styles.likeStyle} onClick={handleFavorite}>
-            🤍
-          </button>
-        )}
+        <button className={styles['likeStyle']} onClick={handleFavorite}>
+          {isFav ? <span className={styles['red']}>♥️</span> : <span className={styles['white']}>♥️</span>}
+        </button>
         <button className={styles.cartButton} onClick={handleBuy}>
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
         {showNotification && (
-          <Alert
-            variant='danger'
-            onClose={() => setShowNotification(false)}
-            dismissible
-          >
+          <Alert variant='danger' onClose={() => setShowNotification(false)} dismissible>
             You cannot add more than 4 items to the cart.
           </Alert>
         )}
         <div>
           <div className={styles.ratingContainer}>
             {[1, 2, 3, 4, 5].map((value) => (
-              <button
-                key={value}
-                className={`${styles.ratingStar} ${
-                  value <= rating ? styles.ratingStarActive : ''
-                }`}
-                onClick={() => handleRatingChange(value)}
-              >
+              <button key={value} className={`${styles.ratingStar} ${value <= rating ? styles.ratingStarActive : ''}`} onClick={() => handleRatingChange(value)}>
                 ★
               </button>
             ))}
