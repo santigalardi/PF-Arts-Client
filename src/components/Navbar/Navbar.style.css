@@ -138,8 +138,9 @@
 }
 
 .cartLogo {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
 }
 
 .profile-menu {
@@ -151,20 +152,22 @@
 
 .user-welcome {
   margin: 10px 10px;
+  font-style: oblique;
+  font-weight: lighter;
 }
 
 .profile-menu-photo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 10px 0 0;
 }
 
 .profile-menu-photo-container .profile-menu-photo {
-  width: 30px;
+  width: 40px;
   margin: 0;
 }
