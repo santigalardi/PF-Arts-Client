@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { addFavorite, deleteFavorite, getFavorites } from '../../redux/actions';
 import styles from './Card.module.css';
 
-function Card({ art, imageSize, containerSize }) {
+function Card({ art, imageSize, containerSize, onDelete }) {
   const dispatch = useDispatch();
   const { image, artworkId, title } = art;
   const [isFav, setIsFav] = useState(false);
@@ -21,6 +21,7 @@ function Card({ art, imageSize, containerSize }) {
         const updatedFavorites = myFavorites.userFav.filter((fav) => fav.artworkId !== artworkId);
         const userFavString = JSON.stringify(updatedFavorites);
         localStorage.setItem('Favorites', userFavString);
+        onDelete();
       });
     } else {
       setIsFav(true);
@@ -63,6 +64,7 @@ Card.propTypes = {
   }).isRequired,
   imageSize: PropTypes.string.isRequired,
   containerSize: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Card;
