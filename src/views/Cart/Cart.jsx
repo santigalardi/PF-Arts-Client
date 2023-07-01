@@ -39,7 +39,7 @@ const Cart = () => {
         <div
           className='card text-center'
           style={{
-            marginTop: '150px',
+            marginTop: '190px',
             marginLeft: '400px',
             marginRight: '400px',
             marginBottom: '186px',

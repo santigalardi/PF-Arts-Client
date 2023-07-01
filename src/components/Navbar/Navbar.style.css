@@ -33,6 +33,7 @@
   transition: background-color 0.3s ease;
   /* Transición de color de fondo */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 60px;
 }
 
 .navbar.scrolled {

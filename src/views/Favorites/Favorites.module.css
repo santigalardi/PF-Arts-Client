@@ -11,8 +11,12 @@
 }
 
 .textContainer{
+  /* background-color: rgb(243, 243, 243); */
+  width: fit-content;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;  
   margin-left: 90px;
-  /* background-color: red; */
+  margin-top: -20px;
   font-style: oblique;
 }
 
@@ -21,8 +25,8 @@
   flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    min-height: 56vh;
-    margin-bottom:60px;
+    min-height: 60.5vh;
+    margin-bottom: 30px;
     /* margin-left: -20px; */
 }
 
