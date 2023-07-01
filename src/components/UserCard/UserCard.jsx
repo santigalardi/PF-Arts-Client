@@ -17,10 +17,7 @@ const UserCard = ({ user, art }) => {
       <img src={profilePicture} className={styles['imageU']} />
       <h3>{userName}</h3>
       <div className={styles['backG']}>
-        <NavLink
-          className={styles['detailButton']}
-          to={`/users/detail/${userId}`}
-        >
+        <NavLink className={styles['detailButton']} to={`/users/detail/${userId}`}>
           Detail
         </NavLink>
       </div>
@@ -31,8 +28,8 @@ const UserCard = ({ user, art }) => {
   );
 };
 UserCard.propTypes = {
-  // id: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
+  art: PropTypes.array.isRequired,
 };
 
 export default UserCard;

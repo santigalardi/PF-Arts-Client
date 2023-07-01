@@ -230,19 +230,25 @@ export const getDetail = (id) => {
 export function clearDetail() {
   return { type: CLEAR_DETAIL };
 }
-export const getArtsByFilters = (century, order, created) => {
+export const getArtsByFilters = (minPrice, maxPrice, order, category, orderType) => {
   return async function (dispatch) {
-    console.log(`Filters received: century=${century}, order=${order}, created=${created}`);
+    console.log(`Filters received: minPrice=${minPrice}, maxPrice=${maxPrice}, order=${order}, category=${category}, orderType=${orderType}`);
     try {
       const params = {};
-      if (century) {
-        params.century = century;
+      if (minPrice) {
+        params.minPrice = minPrice;
+      }
+      if (maxPrice) {
+        params.maxPrice = maxPrice;
       }
       if (order) {
         params.order = order;
       }
-      if (created) {
-        params.created = created;
+      if (category) {
+        params.category = category;
+      }
+      if (orderType) {
+        params.orderType = orderType;
       }
       const response = await axios.get(`${URL}/artworks/db`, { params });
       dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data.rows });
