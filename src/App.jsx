@@ -23,6 +23,8 @@ import Orders from './views/Orders/Orders';
 import Reports from './views/Reports/Reports';
 import Products from './views/Products/Products';
 import Customers from './views/Customers/Customers';
+import FloatingNotification from './components/FloatingNotifications/FloatingNotifications';
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
@@ -63,7 +65,7 @@ function App() {
       {location.pathname !== '/register' && location.pathname !== '/login' && (
         <Footer />
       )}
-      {/* hola */}
+      <FloatingNotification />
     </div>
   );
 }

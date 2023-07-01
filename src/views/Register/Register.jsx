@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { postUsers, setIsLoggedIn } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
+import { postUsers, setIsLoggedIn, showNotification } from '../../redux/actions';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './Register.module.css';
@@ -83,7 +83,10 @@ const Register = () => {
         password: input.password,
       };
       dispatch(postUsers(updatedInput))
-        .then(() => {
+      .then((response) => {
+        console.log("register",response);
+        if (response) {
+          // Respuesta exitosa
           setShowConfirmation(true);
           setInput({
             userName: '',
@@ -93,19 +96,36 @@ const Register = () => {
           });
           setSubmitted(false);
           setErrors({});
-          dispatch(setIsLoggedIn(true));
-          alert(`Welcome ${updatedInput.userName}, Please check your email inbox or spam folder`)
+          dispatch(
+            showNotification(
+              `Welcome ${updatedInput.userName}, Please check your email inbox or spam folder`
+            )
+          );
           if (!showAlert) {
-            //Revisar que realmente no redireccione al tener errores(user exists)
             navigate('/login');
           }
-        })
-        .catch((error) => {
+          dispatch(setIsLoggedIn(true));
+        } else {
+          // Respuesta de error
           setShowAlert(true);
-          console.log('Error:', error);
-        });
-    } else {
-      setShowAlert(true);
+          if (response && response.error) {
+            dispatch(showNotification(response.error.message));
+          } else {
+            dispatch(showNotification('An error occurred during registration'));
+          }
+        }
+      })
+      .catch((error) => {
+        setShowAlert(true);
+        if (error.response && error.response.data && error.response.data.error) {
+          const errorMessage = error.response.data.error;
+          dispatch(showNotification(errorMessage));
+        } else {
+          dispatch(showNotification('An error occurred during registration'));
+        }
+        console.log(error);
+      });
+      
     }
   }
 

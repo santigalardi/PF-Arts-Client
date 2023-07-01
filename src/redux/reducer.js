@@ -1,7 +1,9 @@
 /* eslint-disable no-case-declarations */
-import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, SET_IS_LOGGED_IN, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART_ITEMS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, SET_LOGGED_USER, CHECK_AUTHENTICATION } from './actions';
+import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, SET_IS_LOGGED_IN, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART_ITEMS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, SET_LOGGED_USER, CHECK_AUTHENTICATION, SHOW_NOTIFICATION, HIDE_NOTIFICATION } from './actions';
 
 const initialState = {
+  notificationVisible: false,
+  notificationMessage: '',
   allArts: [],
   allUsers: [], //almacena todos los usuarios.
   filteredArts: [],
@@ -13,14 +15,28 @@ const initialState = {
   cart: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
   loggedUser: {},
   isLoggedIn: false,
+  
   auth: {
     isAuthenticated: false,
     cartItems: [],
+    
   },
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case HIDE_NOTIFICATION:
+      return {
+        ...state,
+        notificationVisible: false
+      };
+      case SHOW_NOTIFICATION:
+        return {
+          ...state,
+          notificationVisible:true,
+          notificationMessage: action.payload,
+        };
     case GET_ARTS:
       return {
         ...state,
