@@ -7,6 +7,7 @@ import {
   FaCalendar,
   FaShare,
   FaFileExport,
+  FaUser,
 } from 'react-icons/fa';
 
 const Reports = () => {
@@ -52,6 +53,15 @@ const Reports = () => {
                     to='/products'
                   >
                     <FaBox /> Products
+                  </NavLink>
+                </li>
+                <li className='nav-item'>
+                  <NavLink
+                    className='nav-link'
+                    activeClassName='active'
+                    to='/customers'
+                  >
+                    <FaUser /> Customers
                   </NavLink>
                 </li>
               </ul>

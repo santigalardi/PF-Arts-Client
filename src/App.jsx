@@ -22,6 +22,7 @@ import VerifyToken from './components/VerifyToken/VerifyToken';
 import Orders from './views/Orders/Orders';
 import Reports from './views/Reports/Reports';
 import Products from './views/Products/Products';
+import Customers from './views/Customers/Customers';
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
@@ -57,6 +58,7 @@ function App() {
         <Route path='/orders' element={<Orders />} />
         <Route path='/reports' element={<Reports />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/customers' element={<Customers />} />
       </Routes>
       {location.pathname !== '/register' && location.pathname !== '/login' && (
         <Footer />
