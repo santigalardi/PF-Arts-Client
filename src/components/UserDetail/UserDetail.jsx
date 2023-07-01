@@ -65,7 +65,7 @@ const UserDetail = () => {
 
   const imagesDefault = [
     'https://www.bicaalu.com/wp-content/uploads/el_tarot_de_leonora_carrington.jpg',
-    'https://www.feelcats.com/wp-content/uploads/2014/11/Henrietta-Ronner_cuadro_011.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUu3fDtzvSqItWb3w7aXPsdT7SEM2KkMPdpw&usqp=CAU',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU',
     'https://i0.wp.com/hotbook.mx/wp-content/uploads/2014/10/hotbook-94.jpg?fit=1024%2C768&ssl=1',
     'https://i0.wp.com/arteyalgomas.com/wp-content/uploads/2020/01/Van_Gogh.-Campo-de-trigo-con-cuervos.-1890.jpg?resize=1140%2C713&ssl=1',
@@ -101,9 +101,18 @@ const UserDetail = () => {
   return (
     <div className={style['containerUserDetail']}>
       <div className={style['userDetail']}>
-        <ul className={style['details']}>
-          <li>
-            <span className={style.bold}>Name:</span>{' '}
+        <div className={style['positionPhoto']}>
+          {userDetail?.profilePicture && (
+            <img
+              src={userDetail.profilePicture}
+              alt='img'
+              className={style['photoPerfil']}
+            />
+          )}
+        </div>
+        <div className={style['details']}>
+          <div>
+            <span className={style.bold}>Username:</span>{' '}
             {isEditing ? (
               <input
                 type='text'
@@ -113,14 +122,14 @@ const UserDetail = () => {
                 }
               />
             ) : (
-              userDetail?.userName || '--'
+              userDetail?.userName || '-'
             )}
-          </li>
-          <li>
+          </div>
+          <div>
             <span className={style.bold}>Email:</span>{' '}
-            {userDetail?.email || '--'}
-          </li>
-          <li>
+            {userDetail?.email || '-'}
+          </div>
+          <div>
             <span className={style.bold}>Description:</span>{' '}
             {isEditing ? (
               <textarea
@@ -130,10 +139,10 @@ const UserDetail = () => {
                 }
               />
             ) : (
-              userDetail?.description || '--'
+              userDetail?.description || '-'
             )}
-          </li>
-          <li>
+          </div>
+          <div>
             <span className={style.bold}>Phone Number:</span>{' '}
             {isEditing ? (
               <input
@@ -144,10 +153,10 @@ const UserDetail = () => {
                 }
               />
             ) : (
-              userDetail?.phoneNumber || '--'
+              userDetail?.phoneNumber || '-'
             )}
-          </li>
-          <li>
+          </div>
+          <div>
             <span className={style.bold}>Country:</span>{' '}
             {isEditing ? (
               <input
@@ -158,9 +167,9 @@ const UserDetail = () => {
                 }
               />
             ) : (
-              userDetail?.location || '--'
+              userDetail?.location || '-'
             )}
-          </li>
+          </div>
           {isEditing ? (
             <>
               <button className={style.updateButtonSave} onClick={handleSave}>
@@ -178,16 +187,8 @@ const UserDetail = () => {
               <FaPencilAlt className={style.updateIcon} />
             </button>
           )}
-        </ul>
-        <div className={style['positionPhoto']}>
-          {userDetail?.profilePicture && (
-            <img
-              src={userDetail.profilePicture}
-              alt='img'
-              className={style['photoPerfil']}
-            />
-          )}
         </div>
+
         <div className={style['socialIcons']}>
           <FaTwitter
             className={style['shareIcon']}
