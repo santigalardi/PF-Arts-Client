@@ -16,29 +16,31 @@
   margin-left: auto;
   margin-right: auto;
   width: 82.5%;
-  font-weight:bold;
   background-color: #f6f6f6;
   padding-top: 15px;
   list-style: none;
   border-radius: 5px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .socialIcons {
   display: flex;
-  margin-top: -6rem;
-  column-gap: 5rem;
-  margin-left: 23rem;
+  margin-top: -4rem;
+  column-gap: 2rem;
+  margin-left: 50rem;
 }
 
 .shareIcon {
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
 }
-.shareIcon:hover{
-  color: blue;
-  transform: scale(1.05); 
+
+.shareIcon:hover {
+  transform: scale(1.05);
 }
 
 .BttBack {
@@ -61,13 +63,12 @@
   margin-right: auto;
 }
 
-.positionPhoto{
+.positionPhoto {
   /* para moverlo con tranquilidad */
   position: absolute;
   right: 8rem;
-  
 }
-.photoPerfil{
+.photoPerfil {
   margin-top: 8px;
   box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.75);
@@ -76,4 +77,100 @@
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+/* Estilos para botones Save y Cancel del edit */
+.updateButtonSave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: rgb(146, 194, 146); /*fondo*/
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  color: #ffffff; /*texto*/
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.updateButtonSave:focus {
+  outline: none;
+}
+
+.updateButtonSave:hover {
+  background-color: rgb(95, 129, 95);
+  color: #ffffff;
+}
+
+.updateButtonCancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background-color: rgb(121, 165, 190);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-right: 2px;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 4px 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.updateButtonCancel:focus {
+  outline: none;
+}
+
+.updateButtonCancel:hover {
+  background-color: #3498db;
+  color: #ffffff;
+}
+
+.updateIcon {
+  margin-right: 8px;
+  margin-bottom: 25px;
+}
+
+/* Estilos para la edición y lápiz */
+.all {
+  display: inline-block;
+  width: 230px;
+  margin-top: 95px;
+  margin-left: 70px;
+  margin-right: 15px;
+}
+
+.editC {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.editButton {
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  color: #999999;
+  background-color: transparent;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.editButton:hover {
+  background-color: transparent;
+  color: #c7c7c7;
+}
+
+.editButton:focus {
+  outline: none;
+}
+
+.editIcon {
+  margin-right: 8px;
 }
