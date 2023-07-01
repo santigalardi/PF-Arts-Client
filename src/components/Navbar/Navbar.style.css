@@ -137,8 +137,9 @@
 }
 
 .cartLogo {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
 }
 
 .profile-menu {
@@ -150,6 +151,8 @@
 
 .user-welcome {
   margin: 10px 10px;
+  font-style: oblique;
+  font-weight: lighter;
 }
 
 .profile-menu-photo-container {
@@ -164,6 +167,7 @@
 }
 
 .profile-menu-photo-container .profile-menu-photo {
+
   height: 40px;
   margin: 0;
 }
