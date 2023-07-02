@@ -5,46 +5,38 @@ import styles from './CarruselUsers.module.css'; // Archivo de estilos CSS
 const CarruselUsers = ({ images }) => {
   const [startIndex, setStartIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     // Calcula el siguiente índice
-  //     const nextIndex = (startIndex + 1) % images.length;
-  //     setStartIndex(nextIndex);
-  //   }, 3000); // Intervalo de 3 segundos
-
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [startIndex, images]);
-
   const handleNext = () => {
     setStartIndex((prevIndex) =>
-      prevIndex + 2 >= images.length ? 0 : prevIndex + 1
+      prevIndex + 4 >= images.length ? 0 : prevIndex + 1
     );
   };
 
   const handlePrev = () => {
     setStartIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 2 : prevIndex - 1
+      prevIndex === 0 ? images.length - 4 : prevIndex - 1
     );
   };
 
   return (
-    <div className={styles['carruselContainer']}>
-      <div className={styles['imageContainer']}>
-        {images.slice(startIndex, startIndex + 2).map((image, index) => (
-          <img
-            key={index}
-            className={styles['image']}
-            src={image}
-            alt="User Image"
-          />
-        ))}
+    <div className={styles.carruselContainer}>
+      <div className={styles.gridContainer}>
+        <div className={styles.div1}>
+          <img className={styles.image} src={images[startIndex]} />
+        </div>
+        <div className={styles.div2}>
+          <img className={styles.image} src={images[startIndex + 1]} />
+        </div>
+        <div className={styles.div3}>
+          <img className={styles.image} src={images[startIndex + 2]} />
+        </div>
+        <div className={styles.div4}>
+          <img className={styles.image} src={images[startIndex + 3]} />
+        </div>
       </div>
-      <button className={styles['prevButton']} onClick={handlePrev}>
+      <button className={styles.prevButton} onClick={handlePrev}>
         {'<'}
       </button>
-      <button className={styles['nextButton']} onClick={handleNext}>
+      <button className={styles.nextButton} onClick={handleNext}>
         {'>'}
       </button>
     </div>
