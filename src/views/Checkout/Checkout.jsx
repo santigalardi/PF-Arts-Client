@@ -101,7 +101,7 @@ const Checkout = () => {
   return (
     <div
       className={`${styles.row} row g-0 text-center`}
-      style={{ height: '90vh' }}
+      style={{ height: '100%' }}
     >
       <div className='col-sm-6 col-md-8' style={{ width: '650px' }}>
         <h2 className={styles.checkoutTitle}>Checkout</h2>
