@@ -22,17 +22,17 @@ import style from './UserDetail.module.css';
 const UserDetail = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.allUsers); //usuario
-  const artworkId = useSelector((state) => state.allArts); //obras
+  const allUsers = useSelector((state) => state.allUsers); // usuario
+  const artworkId = useSelector((state) => state.allArts); // obras
   const [isEditing, setIsEditing] = useState(false);
-  const userDetail = allUsers.find((user) => user.userId === userId); //datos del usuario
-  // const artworkIdArray = Array.isArray(artworkId) ? artworkId : [];
+  const userDetail = allUsers.find((user) => user.userId === userId); // datos del usuario
+
   const filteredArtworks = artworkId.filter(
     (artwork) => artwork.userId === userId
-  ); //si la obra coincide con el Id
+  ); // obras del usuario
 
   const [editedData, setEditedData] = useState({
-    //Estado local para editar datos personales.
+    // Estado local para editar datos personales.
     name: userDetail?.userName || '',
     description: userDetail?.description || '',
     phoneNumber: userDetail?.phoneNumber || '',
@@ -66,15 +66,19 @@ const UserDetail = () => {
     dispatch(getDetail());
   }, [dispatch, userId]);
 
-  const imagesDefault = [
-    'https://img.freepik.com/fotos-premium/fondo-pantalla-predeterminado-fondo-abstracto-moda-futurista-onda-minimalista-diseno-3d-diseno_477306-878.jpg',
-    'https://img.freepik.com/fotos-premium/fondo-pantalla-predeterminado-fondo-abstracto-moda-futurista-onda-minimalista-diseno-3d-diseno_477306-829.jpg',
-  ];
-  //para elegir que se va ver en el carrusel
-  const images =
-    filteredArtworks.length > 0
-      ? filteredArtworks.map((artwork) => artwork.image)
-      : imagesDefault;
+  // Necesita 4 obras para completar el carrusel:
+  const artworksNeeded = 4 - filteredArtworks.length;
+  //Si no completa le agrega una img en color gris:
+  const grayImages = Array.from({ length: artworksNeeded }, (_, index) => ({
+    image: `https://via.placeholder.com/300x200/808080?text=Artwork+${
+      index + 1
+    }`,
+    title: `Artwork ${index + 1}`,
+  }));
+  // Combina las obras del usuario con la img en gris si es necesario:
+  const combinedArtworks = [...filteredArtworks, ...grayImages];
+  // Muestra el carrusel solo si el usuario tiene al menos una obra:
+  const showCarousel = combinedArtworks.length > 0;
 
   //enlaces para las redes
   const handleTwitterShare = () => {
@@ -232,7 +236,11 @@ const UserDetail = () => {
         </div>
       </div>
 
-      <CarruselUsers images={images} />
+      {showCarousel && (
+        <CarruselUsers
+          images={combinedArtworks.map((artwork) => artwork.image)}
+        />
+      )}
     </div>
   );
 };
