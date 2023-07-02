@@ -8,10 +8,13 @@ import {
 } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import {
-  FaTwitter,
-  FaFacebookF,
-  FaInstagram,
+  FaTwitterSquare,
+  FaFacebookSquare,
+  FaInstagramSquare,
   FaPencilAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaMobileAlt,
 } from 'react-icons/fa';
 import CarruselUsers from '../CarruselUsers/CarruselUsers';
 import style from './UserDetail.module.css';
@@ -64,12 +67,8 @@ const UserDetail = () => {
   }, [dispatch, userId]);
 
   const imagesDefault = [
-    'https://www.bicaalu.com/wp-content/uploads/el_tarot_de_leonora_carrington.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUu3fDtzvSqItWb3w7aXPsdT7SEM2KkMPdpw&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPU0TPyuimzbBY8WaUq-5AUqAd4ONhQTUd7g&usqp=CAU',
-    'https://i0.wp.com/hotbook.mx/wp-content/uploads/2014/10/hotbook-94.jpg?fit=1024%2C768&ssl=1',
-    'https://i0.wp.com/arteyalgomas.com/wp-content/uploads/2020/01/Van_Gogh.-Campo-de-trigo-con-cuervos.-1890.jpg?resize=1140%2C713&ssl=1',
-    'https://i.pinimg.com/originals/fd/65/c5/fd65c5b4d77549893ee645706e30605c.jpg',
+    'https://img.freepik.com/fotos-premium/fondo-pantalla-predeterminado-fondo-abstracto-moda-futurista-onda-minimalista-diseno-3d-diseno_477306-878.jpg',
+    'https://img.freepik.com/fotos-premium/fondo-pantalla-predeterminado-fondo-abstracto-moda-futurista-onda-minimalista-diseno-3d-diseno_477306-829.jpg',
   ];
   //para elegir que se va ver en el carrusel
   const images =
@@ -111,10 +110,11 @@ const UserDetail = () => {
           )}
         </div>
         <div className={style['details']}>
-          <div>
-            <span className={style.bold}>Username:</span>{' '}
+          <div className={style['username']}>
             {isEditing ? (
               <input
+                className={style.inputName}
+                placeholder='Username'
                 type='text'
                 value={editedData.name}
                 onChange={(e) =>
@@ -122,94 +122,117 @@ const UserDetail = () => {
                 }
               />
             ) : (
-              userDetail?.userName || '-'
+              <span className={style['username-text']}>
+                {userDetail?.userName || '-'}
+              </span>
             )}
+            <span>
+              {isEditing ? (
+                <>
+                  <div className={style['editBs']}>
+                    <button
+                      className={style.updateButtonSave}
+                      onClick={handleSave}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className={style.updateButtonCancel}
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <button className={style.editButton} onClick={handleEdit}>
+                  <FaPencilAlt className={style.updateIcon} />
+                </button>
+              )}
+            </span>
           </div>
+
           <div>
-            <span className={style.bold}>Email:</span>{' '}
-            {userDetail?.email || '-'}
+            <FaEnvelope className={style['iconEmail']} />{' '}
+            <span className={style['email-text']}>
+              {userDetail?.email || '-'}
+            </span>{' '}
+            <FaMapMarkerAlt className={style['iconLocation']} />{' '}
+            <span className={style['location']}>
+              {isEditing ? (
+                <input
+                  className={style.inputName}
+                  placeholder='Location'
+                  type='text'
+                  value={editedData.location}
+                  onChange={(e) =>
+                    setEditedData({ ...editedData, location: e.target.value })
+                  }
+                />
+              ) : (
+                <span className={style['location-text']}>
+                  {userDetail?.location || '-'}
+                </span>
+              )}
+            </span>
           </div>
-          <div>
-            <span className={style.bold}>Description:</span>{' '}
-            {isEditing ? (
-              <textarea
-                value={editedData.description}
-                onChange={(e) =>
-                  setEditedData({ ...editedData, description: e.target.value })
-                }
-              />
-            ) : (
-              userDetail?.description || '-'
-            )}
-          </div>
-          <div>
-            <span className={style.bold}>Phone Number:</span>{' '}
+
+          <div className={style['phone']}>
+            <FaMobileAlt className={style['iconPhone']} />{' '}
             {isEditing ? (
               <input
-                type='number'
+                className={style.inputName}
+                placeholder='Phone number'
+                type='text'
                 value={editedData.phoneNumber}
                 onChange={(e) =>
                   setEditedData({ ...editedData, phoneNumber: e.target.value })
                 }
               />
             ) : (
-              userDetail?.phoneNumber || '-'
+              <span className={style['phone-text']}>
+                {userDetail?.phoneNumber || '-'}
+              </span>
             )}
           </div>
-          <div>
-            <span className={style.bold}>Country:</span>{' '}
+          <div className={style['bio']}>
             {isEditing ? (
-              <input
-                type='text'
-                value={editedData.location}
+              <textarea
+                className={style.inputBio}
+                placeholder='Tell us about yourself'
+                value={editedData.description}
                 onChange={(e) =>
-                  setEditedData({ ...editedData, location: e.target.value })
+                  setEditedData({ ...editedData, description: e.target.value })
                 }
               />
             ) : (
-              userDetail?.location || '-'
+              <p className={style['bio-text']}>
+                {userDetail?.description || '-'}
+              </p>
             )}
           </div>
-          {isEditing ? (
-            <>
-              <button className={style.updateButtonSave} onClick={handleSave}>
-                Save
-              </button>
-              <button
-                className={style.updateButtonCancel}
-                onClick={handleCancel}
-              >
-                Cancel
-              </button>
-            </>
-          ) : (
-            <button className={style.editButton} onClick={handleEdit}>
-              <FaPencilAlt className={style.updateIcon} />
-            </button>
-          )}
         </div>
 
         <div className={style['socialIcons']}>
-          <FaTwitter
+          <FaTwitterSquare
             className={style['shareIcon']}
             style={{ color: '#55acee' }}
             onClick={handleTwitterShare}
           />
-          <FaFacebookF
+          <FaFacebookSquare
             className={style['shareIcon']}
             style={{ color: '#3b5998' }}
             onClick={handleFacebookShare}
           />
-          <FaInstagram
+          <FaInstagramSquare
             className={style['shareIcon']}
-            style={{ color: '#ac2bac' }}
+            style={{ color: '#3374FF' }}
             onClick={handleInstagramShare}
           />
         </div>
       </div>
-      <div>
-        <CarruselUsers images={images} />
-      </div>
+
+      <CarruselUsers images={images} />
     </div>
   );
 };
