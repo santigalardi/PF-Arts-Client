@@ -30,6 +30,24 @@ export const CHECK_AUTHENTICATION = 'CHECK_AUTHENTICATION';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAR_CART = 'CLEAR_CART';
+// -------- NOTIFICACION ------
+export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
+
+// actions.js
+export const showNotification = (message) => {
+  return {
+    type: SHOW_NOTIFICATION,
+    payload: message,
+  };
+};
+
+
+export const hideNotification = () => {
+  return {
+    type: HIDE_NOTIFICATION
+  };
+};
 
 export const getAllArts = () => {
   return async function (dispatch) {
@@ -90,6 +108,7 @@ export function postUsers(payload) {
     try {
       const response = await axios.post(`${URL}/users`, payload);
       dispatch({ type: POST_USERS, payload: response.data });
+      console.log("actions",response);
       return response;
     } catch (error) {
       console.error(error);

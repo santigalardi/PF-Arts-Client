@@ -9,6 +9,7 @@ import {
   postUsers,
   updateUser,
   setLoggedUser,
+  showNotification,
 } from '../../redux/actions';
 import axios from 'axios';
 import googleLogo from '../../assets/img/google.png';
@@ -48,12 +49,15 @@ const GoogleButton = () => {
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(loginUser));
             navigate('/');
+            dispatch(showNotification("Login successfully"));
           } else {
             setLoginError(true); // Mostrar mensaje de error
+            dispatch(showNotification("Login error"))
           }
         } catch (error) {
           console.error('Error:', error);
           setLoginError(true); // Mostrar mensaje de error
+          dispatch(showNotification(error.message))
         }
 
         if (!userExists.googleUser) {
@@ -66,6 +70,7 @@ const GoogleButton = () => {
           console.log(updatedUser);
           dispatch(updateUser(updatedUser));
           localStorage.setItem('user', JSON.stringify(updatedUser));
+          dispatch(showNotification("Login successfully"))
         }
       } else {
         const newPassword = data._tokenResponse.idToken.slice(0, 12);
@@ -94,12 +99,15 @@ const GoogleButton = () => {
               localStorage.setItem('token', token);
               localStorage.setItem('user', JSON.stringify(newUser));
               navigate('/');
+              dispatch(showNotification("Login successfully"))
             } else {
               setLoginError(true); // Mostrar mensaje de error
+              dispatch(showNotification("Login error"))
             }
           } catch (error) {
             console.error('Error:', error);
             setLoginError(true); // Mostrar mensaje de error
+            dispatch(showNotification(error.message))
           }
         });
       }

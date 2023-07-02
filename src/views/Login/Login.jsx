@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoggedUser, setIsLoggedIn } from '../../redux/actions';
+import { setLoggedUser, setIsLoggedIn,showNotification } from '../../redux/actions';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import axios from 'axios';
@@ -72,6 +72,8 @@ const Login = () => {
           dispatch(setIsLoggedIn(true)); //Indica que el usuario inicio sesión y me sirve para el cart.
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(loginUser));
+          dispatch(showNotification("Login successfully")
+          );
           console.log('Login successfully', token);
           setInput({
             username: '',
