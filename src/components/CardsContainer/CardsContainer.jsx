@@ -39,7 +39,8 @@ const CardsContainer = () => {
     } else {
       setIsLoading(false);
     }
-  }, [allUsers, dispatch, allArts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allUsers, dispatch]);
 
   useEffect(() => {
     setCurrentArts(allArts.slice(indexOfFirstArt, indexOfLastArt));

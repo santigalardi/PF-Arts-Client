@@ -10,11 +10,11 @@
   }
 }
 
-.textContainer{
+.textContainer {
   /* background-color: rgb(243, 243, 243); */
   width: fit-content;
   padding: 0 5px 0 5px;
-  border-radius: 5px;  
+  border-radius: 5px;
   margin-left: 90px;
   margin-top: -20px;
   font-style: oblique;
@@ -23,16 +23,21 @@
 .boxFav {
   display: flex;
   flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    min-height: 60.5vh;
-    margin-bottom: 30px;
-    /* margin-left: -20px; */
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 60.5vh;
+  margin-bottom: 30px;
+  /* margin-left: -20px; */
 }
 
-.expo{
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 61.5vh;
+}
+
+.expo {
   color: blue;
   font-weight: bold;
 }
-
-

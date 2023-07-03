@@ -2,24 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
-import {
-  addFavorite,
-  clearDetail,
-  deleteFavorite,
-  getDetail,
-  deleteArt,
-  getAllArts,
-  updateArtwork,
-  addToCart,
-  getFavorites,
-} from '../../redux/actions';
-import {
-  FaShoppingCart,
-  FaTwitter,
-  FaFacebook,
-  FaInstagram,
-  FaPencilAlt,
-} from 'react-icons/fa';
+import { addFavorite, clearDetail, deleteFavorite, getDetail, deleteArt, getAllArts, updateArtwork, addToCart, getFavorites } from '../../redux/actions';
+import { FaShoppingCart, FaTwitter, FaFacebook, FaInstagram, FaPencilAlt } from 'react-icons/fa';
 import Loader from '../../components/Loader/Loader';
 import ReviewSection from '../ReviewSection/ReviewSection';
 import frame from '../../assets/img/marco.png';
@@ -28,6 +12,7 @@ import styles from './Detail.module.css';
 const Detail = () => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
+  const [enabledUserEdit, setEnabledUserEdit] = useState(false);
   const [isFav, setIsFav] = useState(false);
   const [artist, setArtist] = useState('');
   const [year, setYear] = useState('');
@@ -66,6 +51,8 @@ const Detail = () => {
     setYear(detail.date);
     setDimensions(`${detail.width} x ${detail.height}`);
     setPrice(detail.price);
+    enableEdit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [detail]);
 
   useEffect(() => {
@@ -73,9 +60,7 @@ const Detail = () => {
       const userFavString = JSON.stringify(res.data.userFav);
       localStorage.setItem('Favorites', userFavString);
       const favorites = JSON.parse(userFavString);
-      const isFavorite = favorites.some(
-        (favorite) => favorite.title === detail.title
-      );
+      const isFavorite = favorites.some((favorite) => favorite.title === detail.title);
       setIsFav(isFavorite);
     });
   }, [dispatch, detail.title, userId]);
@@ -85,9 +70,7 @@ const Detail = () => {
     if (isFav) {
       setIsFav(false);
       dispatch(deleteFavorite(userId, detail.artworkId)).then(() => {
-        const updatedFavorites = myFavorites.userFav.filter(
-          (fav) => fav.artworkId !== detail.artworkId
-        );
+        const updatedFavorites = myFavorites.userFav.filter((fav) => fav.artworkId !== detail.artworkId);
         const userFavString = JSON.stringify(updatedFavorites);
         localStorage.setItem('Favorites', userFavString);
       });
@@ -108,6 +91,24 @@ const Detail = () => {
     }
     dispatch(addToCart(detail));
     navigate('/cart');
+  };
+
+  const enableEdit = () => {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      const storedUserId = user.userId;
+
+      // Comparar storedUserId con el userId recibido por los parámetros
+      if (storedUserId === detail.userId) {
+        // Realizar acciones en caso de que sean iguales
+        setEnabledUserEdit(true);
+      } else {
+        // Realizar acciones en caso de que no sean iguales
+        setEnabledUserEdit(false);
+      }
+    }
   };
 
   const handleDelete = () => {
@@ -161,21 +162,15 @@ const Detail = () => {
 
   //------------ BOTONES DE REDES SOCIALES -------------------------------
   const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      detail.title
-    )}&url=${encodeURIComponent(window.location.href)}`;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(detail.title)}&url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(
-      window.location.href
-    )}`;
+    const url = `https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`;
     window.open(url, '_blank');
   };
   // ------------------------------------------------------------------------------
@@ -197,37 +192,15 @@ const Detail = () => {
           <h3>{detail.title}</h3>
           <hr className={styles.hr} />
           <p>
-            <span className={styles.prop}>Artist:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={artist}
-                onChange={(e) => setArtist(e.target.value)}
-              />
-            ) : (
-              <span>{detail.authorName}</span>
-            )}
+            <span className={styles.prop}>Artist:</span> {isEditing ? <input type='text' value={artist} onChange={(e) => setArtist(e.target.value)} /> : <span>{detail.authorName}</span>}
           </p>
           <p>
-            <span className={styles.prop}>Year:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-              />
-            ) : (
-              <span>{detail.date}</span>
-            )}
+            <span className={styles.prop}>Year:</span> {isEditing ? <input type='text' value={year} onChange={(e) => setYear(e.target.value)} /> : <span>{detail.date}</span>}
           </p>
           <p>
             <span className={styles.prop}>Dimensions:</span>{' '}
             {isEditing ? (
-              <input
-                type='text'
-                value={dimensions}
-                onChange={(e) => setDimensions(e.target.value)}
-              />
+              <input type='text' value={dimensions} onChange={(e) => setDimensions(e.target.value)} />
             ) : (
               <span>
                 {detail.height} x {detail.width}
@@ -235,22 +208,13 @@ const Detail = () => {
             )}
           </p>
           <p>
-            <span className={styles.prop}>Price:</span>{' '}
-            {isEditing ? (
-              <input
-                type='text'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            ) : (
-              <span>{detail.price} USD</span>
-            )}
+            <span className={styles.prop}>Price:</span> {isEditing ? <input type='text' value={price} onChange={(e) => setPrice(e.target.value)} /> : <span>{detail.price} USD</span>}
           </p>
           {detail.user && detail.user.userName.length > 0 && (
             <div>
               <p>
                 <span className={styles.prop}>Published By:</span>{' '}
-                <Link to='/users' className={styles.user}>
+                <Link to={`/users/detail/${detail.userId}`} className={styles.user}>
                   {detail.user.userName}
                 </Link>
               </p>
@@ -263,20 +227,13 @@ const Detail = () => {
               <button className={styles.updateButtonSave} onClick={handleSave}>
                 Save
               </button>
-              <button
-                className={styles.updateButtonCancel}
-                onClick={handleCancel}
-              >
+              <button className={styles.updateButtonCancel} onClick={handleCancel}>
                 Cancel
               </button>
             </>
           ) : (
-            detail.user &&
-            detail.user.userName.length > 0 && (
-              <button
-                className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`}
-                onClick={handleUpdate}
-              >
+            enabledUserEdit && (
+              <button className={`${styles.updateButtonSave} ${styles.updateButtonCancel} ${styles.editButton}`} onClick={handleUpdate}>
                 <FaPencilAlt className={styles.updateIcon} />
               </button>
             )
@@ -296,22 +253,14 @@ const Detail = () => {
       </div>
       <div className={styles.actionsContainer}>
         <button className={styles['likeStyle']} onClick={handleFavorite}>
-          {isFav ? (
-            <span className={styles['red']}>♥️</span>
-          ) : (
-            <span className={styles['white']}>♥️</span>
-          )}
+          {isFav ? <span className={styles['red']}>♥️</span> : <span className={styles['white']}>♥️</span>}
         </button>
         <button className={styles.cartButton} onClick={handleBuy}>
           <FaShoppingCart className={styles.cartIcon} />
           Add to Cart
         </button>
         {showNotification && (
-          <Alert
-            variant='danger'
-            onClose={() => setShowNotification(false)}
-            dismissible
-          >
+          <Alert variant='danger' onClose={() => setShowNotification(false)} dismissible>
             You cannot add more than 4 items to the cart.
           </Alert>
         )}
@@ -321,16 +270,10 @@ const Detail = () => {
             <button className={styles.shareButton} onClick={handleTwitterShare}>
               <FaTwitter className={styles.shareIcon} />
             </button>
-            <button
-              className={styles.shareButton}
-              onClick={handleFacebookShare}
-            >
+            <button className={styles.shareButton} onClick={handleFacebookShare}>
               <FaFacebook className={styles.shareIcon} />
             </button>
-            <button
-              className={styles.shareButton}
-              onClick={handleInstagramShare}
-            >
+            <button className={styles.shareButton} onClick={handleInstagramShare}>
               <FaInstagram className={styles.shareIcon} />
             </button>
           </div>

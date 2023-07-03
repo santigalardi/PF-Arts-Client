@@ -1,4 +1,4 @@
-import './NavMenu.css';
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
@@ -7,9 +7,13 @@ import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { IoStatsChartSharp } from 'react-icons/io5';
+import { auth } from '../../Firebase/config';
+import { signOut } from 'firebase/auth';
+import './NavMenu.css';
 
 const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userId } = loggedUser;
@@ -17,6 +21,13 @@ const NavMenu = () => {
   const toggleMenu = (event) => {
     event.stopPropagation();
     setMenuOpen(!menuOpen);
+  };
+
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      localStorage.clear();
+      setLoggedIn(false);
+    });
   };
 
   useEffect(() => {
@@ -84,7 +95,7 @@ const NavMenu = () => {
           <hr />
           <li>
             <FaPowerOff />
-            <NavLink to='/login' onClick={toggleMenu}>
+            <NavLink to='/login' onClick={() => handleLogout()}>
               {' '}
               Log Out
             </NavLink>

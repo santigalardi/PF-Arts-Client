@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -62,9 +63,6 @@ Card.propTypes = {
     artworkId: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
   }).isRequired,
-  imageSize: PropTypes.string.isRequired,
-  containerSize: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default Card;

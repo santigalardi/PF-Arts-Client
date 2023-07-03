@@ -15,28 +15,26 @@ const initialState = {
   cart: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
   loggedUser: {},
   isLoggedIn: false,
-  
+
   auth: {
     isAuthenticated: false,
     cartItems: [],
-    
   },
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case HIDE_NOTIFICATION:
       return {
         ...state,
-        notificationVisible: false
+        notificationVisible: false,
       };
-      case SHOW_NOTIFICATION:
-        return {
-          ...state,
-          notificationVisible:true,
-          notificationMessage: action.payload,
-        };
+    case SHOW_NOTIFICATION:
+      return {
+        ...state,
+        notificationVisible: true,
+        notificationMessage: action.payload,
+      };
     case GET_ARTS:
       return {
         ...state,

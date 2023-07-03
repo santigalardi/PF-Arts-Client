@@ -1,12 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { getFavorites } from '../../redux/actions';
 import Card from '../../components/Card/Card';
 // import Loader from '../../components/Loader/Loader';
-import CustomPagination from '../../components/Pagination/Pagination';
+// import CustomPagination from '../../components/Pagination/Pagination';
 // import NavMenu from '../../components/NavMenu/NavMenu';
 import styles from './Favorites.module.css';
 
@@ -15,7 +13,6 @@ const LOCAL_STORAGE_KEY = 'myFavorites';
 const Favorites = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
   // const navigate = useNavigate();
   // const location = useLocation();
   // const [currentPage, setCurrentPage] = useState(1);
@@ -55,14 +52,20 @@ const Favorites = () => {
           Bookmarked Art <sup className={styles['expo']}>{numberOfFav}</sup>
         </p>
       </div>
-      <div className={styles['boxFav']}>
-        {userFav &&
-          userFav.map((fav) => (
-            <div key={fav.artworkId}>
-              <Card art={fav} imageSize='120px' containerSize='120px' onDelete={handleCardDelete} />
-            </div>
-          ))}
-      </div>
+      {numberOfFav === 0 ? (
+        <div className={styles['no-results']}>
+          <p>No favorites added</p>
+        </div>
+      ) : (
+        <div className={styles['boxFav']}>
+          {userFav &&
+            userFav.map((fav) => (
+              <NavLink to={`/detail/${fav.artworkId}`} key={fav.artworkId} className={styles.link}>
+                <Card art={fav} imageSize='120px' containerSize='120px' onDelete={handleCardDelete} />
+              </NavLink>
+            ))}
+        </div>
+      )}
     </div>
   );
 };
