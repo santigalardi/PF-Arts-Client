@@ -30,11 +30,36 @@ export const CHECK_AUTHENTICATION = 'CHECK_AUTHENTICATION';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAR_CART = 'CLEAR_CART';
+// -------- TRANSACCION ------
+export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';
 // -------- NOTIFICACION ------
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
 
 // actions.js
+
+export function postTransaction(artworkIdsString, transactionData) {
+  return async function (dispatch) {
+    const token = localStorage.token;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      console.log('actions', token);
+      const response = await axios.post(
+        `${URL}/transactions/${artworkIdsString}`,
+        transactionData,
+        config
+      );
+      dispatch({ type: CREATE_TRANSACTION, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 export const showNotification = (message) => {
   return {
     type: SHOW_NOTIFICATION,
@@ -157,7 +182,11 @@ export const updateUser = (updatedUser) => {
 
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${URL}/users/edit`, updatedUser, config);
+      const response = await axios.put(
+        `${URL}/users/edit`,
+        updatedUser,
+        config
+      );
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -198,7 +227,10 @@ export const getUserDetail = (id) => {
 export function addFavorite(userId, artworkId, payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`${URL}/favorites/${userId}/${artworkId}`, payload);
+      const response = await axios.post(
+        `${URL}/favorites/${userId}/${artworkId}`,
+        payload
+      );
       dispatch({ type: ADD_FAVORITE, payload: response.data });
       return response;
     } catch (error) {
@@ -222,7 +254,10 @@ export const getFavorites = (userId) => {
 export function deleteFavorite(userId, artworkId, payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`${URL}/favorites/delete/${userId}/${artworkId}`, payload);
+      const response = await axios.delete(
+        `${URL}/favorites/delete/${userId}/${artworkId}`,
+        payload
+      );
       dispatch({ type: DELETE_FAVORITE, payload: response.data });
 
       return response;
@@ -247,8 +282,17 @@ export const getDetail = (id) => {
 export function clearDetail() {
   return { type: CLEAR_DETAIL };
 }
-export const getArtsByFilters = (minPrice, maxPrice, order, category, orderType) => {
+export const getArtsByFilters = (
+  minPrice,
+  maxPrice,
+  order,
+  category,
+  orderType
+) => {
   return async function (dispatch) {
+    console.log(
+      `Filters received: minPrice=${minPrice}, maxPrice=${maxPrice}, order=${order}, category=${category}, orderType=${orderType}`
+    );
     try {
       const params = {};
       if (minPrice) {
@@ -288,7 +332,11 @@ export const updateArtwork = (id, updatedArtwork) => {
 
   return async function (dispatch) {
     try {
-      const response = await axios.put(`${URL}/artworks/edit/${id}`, updatedArtwork, config);
+      const response = await axios.put(
+        `${URL}/artworks/edit/${id}`,
+        updatedArtwork,
+        config
+      );
       dispatch({ type: UPDATE_ARTWORK, payload: response.data });
       return response;
     } catch (error) {
@@ -314,7 +362,10 @@ export function deleteArt(id) {
 
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`${URL}/artworks/delete/${id}`, config);
+      const response = await axios.delete(
+        `${URL}/artworks/delete/${id}`,
+        config
+      );
       dispatch({ type: DELETE_ART, payload: response.data });
       return response;
     } catch (error) {
