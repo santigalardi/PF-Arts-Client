@@ -10,7 +10,7 @@ import {
   faLock,
   faArrowLeft,
 } from '@fortawesome/free-solid-svg-icons';
-import { clearCart } from '../../redux/actions';
+import { clearCart, postTransaction } from '../../redux/actions';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loadScript } from '@paypal/paypal-js';
@@ -21,6 +21,9 @@ const Checkout = () => {
   const [paymentApproved, setPaymentApproved] = useState(false);
   const dispatch = useDispatch();
   let paypal;
+
+  const artworkIds = cartItems.map((item) => item.artworkId);
+  const artworkIdsString = artworkIds.join(',');
 
   const renderCheckoutItems = () => {
     if (cartItems.length === 0 || paymentApproved) {
@@ -81,11 +84,17 @@ const Checkout = () => {
             onApprove: function (data, actions) {
               return actions.order.capture().then(function (cart) {
                 // Mensaje de compra exitosa
+                const transactionData = {
+                  paypal_id: cart.id,
+                  purchase_value: cart.purchase_units[0].amount.value,
+                  status: cart.status,
+                };
                 toast.success(
                   'Successful purchase! Thank you for your purchase.'
                 );
                 setPaymentApproved(true);
                 // Actualizar el estado en cart, queda en 0.
+                dispatch(postTransaction(artworkIdsString, transactionData));
                 dispatch(clearCart());
               });
             },
