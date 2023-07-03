@@ -2,21 +2,13 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers } from '../../redux/actions';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  FaHome,
-  FaClipboardList,
-  FaChartBar,
-  FaBox,
-  FaCalendar,
-  FaShare,
-  FaFileExport,
-  FaUser,
-} from 'react-icons/fa';
+import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
+import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 
 const Customers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state.allUsers);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -47,54 +39,7 @@ const Customers = () => {
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
             <div className='sidebar-sticky'>
-              <ul className='nav flex-column'>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/dashboard'
-                  >
-                    <FaHome /> Dashboard{' '}
-                    <span className='sr-only'>(current)</span>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/orders'
-                  >
-                    <FaClipboardList /> Orders
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/reports'
-                  >
-                    <FaChartBar /> Reports
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/products'
-                  >
-                    <FaBox /> Products
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/customers'
-                  >
-                    <FaUser /> Customers
-                  </NavLink>
-                </li>
-              </ul>
+              <DashboardMenu />
             </div>
           </nav>
 
@@ -129,7 +74,7 @@ const Customers = () => {
                     <th>Email</th>
                     <th>Phone Number</th>
                     <th>Century</th>
-                    {/* Agregar más encabezados de columnas según necesidades */}
+                    <th>Profile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -139,7 +84,16 @@ const Customers = () => {
                       <td>{user.email}</td>
                       <td>{user.phoneNumber}</td>
                       <td>{user.location}</td>
-                      {/* Agregar más celdas de datos según necesidades */}
+                      <td>
+                        <button
+                          className='btn btn-sm btn-primary'
+                          onClick={() =>
+                            navigate(`/users/detail/${user.userId}`)
+                          }
+                        >
+                          View Profile
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

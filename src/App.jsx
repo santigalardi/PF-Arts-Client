@@ -35,12 +35,15 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? 'dark' : ''}`}>
+      {location.pathname !== '/register' &&
+        location.pathname !== '/login' && ( //Verifica si las rutas son estas no se muestra el icono
+          <Navbar />
+        )}
       {location.pathname !== '/register' && location.pathname !== '/login' && (
-        <Navbar />
+        <button className='darkModeButton' onClick={toggleDarkMode}>
+          {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
+        </button>
       )}
-      <button className='darkModeButton' onClick={toggleDarkMode}>
-        {darkMode ? <FaSun className='icon' /> : <FaMoon className='icon' />}
-      </button>
       <Routes>
         <Route path='/verify/' element={<VerifyToken />} />
         <Route path='/login' element={<Login />} />

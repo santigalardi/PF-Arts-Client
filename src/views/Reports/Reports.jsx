@@ -1,70 +1,33 @@
-import { NavLink } from 'react-router-dom';
-import {
-  FaHome,
-  FaClipboardList,
-  FaChartBar,
-  FaBox,
-  FaCalendar,
-  FaShare,
-  FaFileExport,
-  FaUser,
-} from 'react-icons/fa';
+import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
+import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 
 const Reports = () => {
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Reports',
+          text: 'Check out these amazing Reports!',
+          url: window.location.href,
+        })
+        .then(() => {
+          console.log('Reports shared successfully');
+        })
+        .catch((error) => {
+          console.error('Error sharing Orders:', error);
+        });
+    } else {
+      console.log('Web Share API not supported in this browser');
+    }
+  };
+
   return (
     <div>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
             <div className='sidebar-sticky'>
-              <ul className='nav flex-column'>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/dashboard'
-                  >
-                    <FaHome /> Dashboard{' '}
-                    <span className='sr-only'>(current)</span>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/orders'
-                  >
-                    <FaClipboardList /> Orders
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/reports'
-                  >
-                    <FaChartBar /> Reports
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/products'
-                  >
-                    <FaBox /> Products
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/customers'
-                  >
-                    <FaUser /> Customers
-                  </NavLink>
-                </li>
-              </ul>
+              <DashboardMenu />
             </div>
           </nav>
 
@@ -73,7 +36,10 @@ const Reports = () => {
               <h1 className='h2'>Reports</h1>
               <div className='btn-toolbar mb-2 mb-md-0'>
                 <div className='btn-group mr-2'>
-                  <button className='btn btn-sm btn-outline-secondary'>
+                  <button
+                    className='btn btn-sm btn-outline-secondary'
+                    onClick={handleShare}
+                  >
                     <FaShare /> Share
                   </button>
                   <button className='btn btn-sm btn-outline-secondary'>
@@ -88,7 +54,7 @@ const Reports = () => {
             </div>
 
             <div>
-              <p> - Acá van más gráficos. </p>
+              <p> - Acá podemos poner 2 gráficos (usuarios y ventas). </p>
             </div>
           </main>
         </div>

@@ -1,21 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  FaHome,
-  FaClipboardList,
-  FaChartBar,
-  FaBox,
-  FaCalendar,
-  FaShare,
-  FaFileExport,
-  FaUser,
-} from 'react-icons/fa';
+import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import { getAllArts } from '../../redux/actions';
+import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 
 const Products = () => {
   const allArts = useSelector((state) => state.allArts);
-  const currentArts = allArts && Array.isArray(allArts) && allArts.slice(0, 3);
+  const currentArts = allArts && Array.isArray(allArts) && allArts;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -52,54 +44,7 @@ const Products = () => {
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
             <div className='sidebar-sticky'>
-              <ul className='nav flex-column'>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/dashboard'
-                  >
-                    <FaHome /> Dashboard{' '}
-                    <span className='sr-only'>(current)</span>
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/orders'
-                  >
-                    <FaClipboardList /> Orders
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/reports'
-                  >
-                    <FaChartBar /> Reports
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/products'
-                  >
-                    <FaBox /> Products
-                  </NavLink>
-                </li>
-                <li className='nav-item'>
-                  <NavLink
-                    className='nav-link'
-                    activeClassName='active'
-                    to='/customers'
-                  >
-                    <FaUser /> Customers
-                  </NavLink>
-                </li>
-              </ul>
+              <DashboardMenu />
             </div>
           </nav>
 
@@ -154,7 +99,8 @@ const Products = () => {
                             </button>
                           ) : (
                             <button className='btn btn-sm btn-success'>
-                              Available
+                              Published
+                              {/* Available (podemos poner esto si manejamos stock) */}
                             </button>
                           )}
                         </td>
