@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { auth } from '../../Firebase/config';
-import { signOut } from 'firebase/auth';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +16,6 @@ function Navbar() {
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userName, profilePicture, userId } = loggedUser;
-
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      localStorage.clear();
-      setLoggedIn(false);
-    });
-  };
 
   const storedUser = localStorage.getItem('token');
 
@@ -50,20 +41,24 @@ function Navbar() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [location]);
-  const OnclickHome = () => {
+
+  const handleNavigate = () => {
+    navigate(`/users/detail/${userId}`);
+  };
+  const onClickHome = () => {
     navigate('/');
   };
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu userId={userId} />
-      <div className='navbar-title' onClick={OnclickHome}>
+      <div className='navbar-title' onClick={onClickHome}>
         <span className='logo'>aA</span>
         <span className='space'> </span>
       </div>
       <span className='sub'>BETA</span>
       <div className='navlinks-container'>
         {loggedIn ? (
-          <div className='profile-menu' onClick={handleLogout}>
+          <div className='profile-menu' onClick={handleNavigate}>
             <p className='user-welcome'>{userName}</p>
             <div className='profile-menu-photo-container'>
               <img src={profilePicture} alt='' className='profile-menu-photo' />

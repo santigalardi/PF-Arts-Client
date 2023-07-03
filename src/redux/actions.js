@@ -42,10 +42,9 @@ export const showNotification = (message) => {
   };
 };
 
-
 export const hideNotification = () => {
   return {
-    type: HIDE_NOTIFICATION
+    type: HIDE_NOTIFICATION,
   };
 };
 
@@ -108,7 +107,7 @@ export function postUsers(payload) {
     try {
       const response = await axios.post(`${URL}/users`, payload);
       dispatch({ type: POST_USERS, payload: response.data });
-      console.log("actions",response);
+      console.log('actions', response);
       return response;
     } catch (error) {
       console.error(error);
@@ -210,7 +209,6 @@ export function addFavorite(userId, artworkId, payload) {
 
 // para mostrar los favoritos
 export const getFavorites = (userId) => {
-  console.log('id', userId);
   return async function (dispatch) {
     try {
       const response = await axios.get(`${URL}/favorites/${userId}`);
@@ -251,7 +249,6 @@ export function clearDetail() {
 }
 export const getArtsByFilters = (minPrice, maxPrice, order, category, orderType) => {
   return async function (dispatch) {
-    console.log(`Filters received: minPrice=${minPrice}, maxPrice=${maxPrice}, order=${order}, category=${category}, orderType=${orderType}`);
     try {
       const params = {};
       if (minPrice) {
