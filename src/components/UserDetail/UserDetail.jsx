@@ -11,6 +11,8 @@ import {
   FaEnvelope,
   FaMobileAlt,
 } from 'react-icons/fa';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import CarruselUsers from '../CarruselUsers/CarruselUsers';
 import style from './UserDetail.module.css';
 
@@ -41,6 +43,13 @@ const UserDetail = () => {
     ig: userDetail?.ig || '',
   });
 
+  const [isEditingSocial, setIsEditingSocial] = useState(false);
+  const [editedSocialData, setEditedSocialData] = useState({
+    fb: userDetail?.fb || '',
+    tw: userDetail?.tw || '',
+    ig: userDetail?.ig || '',
+  });
+
   const enableEdit = () => {
     if (storedUser) {
       const storedUserId = storedUser.userId;
@@ -60,6 +69,10 @@ const UserDetail = () => {
     setIsEditing(true);
   };
 
+  const handleEditSocial = () => {
+    setIsEditingSocial(true);
+  };
+
   const handleSave = async () => {
     try {
       // Llama a la acción updateUser y pasa los datos actualizados
@@ -67,13 +80,30 @@ const UserDetail = () => {
       dispatch(updateUser(editedData));
       // localStorage.setItem('user', JSON.stringify(editedData));
       setIsEditing(false);
+      setEditedData({ ...editedData, ...editedSocialData });
     } catch (error) {
       console.error(error);
     }
   };
+  const handleSaveSocial = () => {
+    // Realiza las acciones necesarias para guardar los datos actualizados
+    dispatch(updateUser({ userId, ...editedSocialData }));
+    setIsEditingSocial(false);
+  };
+
+  const handleSocialInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedSocialData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   const handleCancel = () => {
     setIsEditing(false);
+  };
+  const handleCancelSocial = () => {
+    setIsEditingSocial(false);
   };
 
   useEffect(() => {
@@ -98,24 +128,22 @@ const UserDetail = () => {
   const showCarousel = combinedArtworks.length > 0;
 
   //enlaces para las redes
-  const handleTwitterShare = () => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      // eslint-disable-next-line no-undef
-      window.location.href
-    )}&url=${encodeURIComponent(window.location.href)}`;
-    window.open(url, '_blank');
+  const handleTwitterClick = () => {
+    if (userDetail?.tw) {
+      window.open(userDetail.tw, '_blank');
+    }
   };
-  const handleFacebookShare = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
-    window.open(url, '_blank');
+
+  const handleFacebookClick = () => {
+    if (userDetail?.fb) {
+      window.open(userDetail.fb, '_blank');
+    }
   };
-  const handleInstagramShare = () => {
-    const url = `https://www.instagram.com/?url=${encodeURIComponent(
-      window.location.href
-    )}`;
-    window.open(url, '_blank');
+
+  const handleInstagramClick = () => {
+    if (userDetail?.ig) {
+      window.open(userDetail.ig, '_blank');
+    }
   };
 
   return (
@@ -206,7 +234,7 @@ const UserDetail = () => {
               <input
                 className={style.inputName}
                 placeholder='Phone number'
-                type='text'
+                type='number'
                 value={editedData.phoneNumber}
                 onChange={(e) =>
                   setEditedData({ ...editedData, phoneNumber: e.target.value })
@@ -237,21 +265,69 @@ const UserDetail = () => {
         </div>
 
         <div className={style['socialIcons']}>
-          <FaTwitterSquare
-            className={style['shareIcon']}
-            style={{ color: '#55acee' }}
-            onClick={handleTwitterShare}
-          />
-          <FaFacebookSquare
-            className={style['shareIcon']}
-            style={{ color: '#3b5998' }}
-            onClick={handleFacebookShare}
-          />
-          <FaInstagramSquare
-            className={style['shareIcon']}
-            style={{ color: '#3374FF' }}
-            onClick={handleInstagramShare}
-          />
+          {isEditingSocial ? (
+            <>
+              <input
+                className={style.inputSocial}
+                type='text'
+                name='fb'
+                placeholder='Facebook'
+                value={editedSocialData.fb}
+                onChange={handleSocialInputChange}
+              />
+              <input
+                className={style.inputSocial}
+                type='text'
+                name='tw'
+                placeholder='Twitter'
+                value={editedSocialData.tw}
+                onChange={handleSocialInputChange}
+              />
+              <input
+                className={style.inputSocial}
+                type='text'
+                name='ig'
+                placeholder='Instagram'
+                value={editedSocialData.ig}
+                onChange={handleSocialInputChange}
+              />
+              <button
+                className={style.updateSocialButtonSave}
+                onClick={handleSaveSocial}
+              >
+                Save
+              </button>
+              <button
+                className={style.updateSocialButtonCancel}
+                onClick={handleCancelSocial}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <FaTwitterSquare
+                className={style['shareIcon']}
+                style={{ color: '#55acee' }}
+                onClick={handleTwitterClick}
+              />
+              <FaFacebookSquare
+                className={style['shareIcon']}
+                style={{ color: '#3b5998' }}
+                onClick={handleFacebookClick}
+              />
+              <FaInstagramSquare
+                className={style['shareIcon']}
+                style={{ color: '#3374FF' }}
+                onClick={handleInstagramClick}
+              />
+              {enabledUserEdit && (
+                <button className={style.editButton} onClick={handleEditSocial}>
+                  <FontAwesomeIcon icon={faCog} className={style.updateIcon} />
+                </button>
+              )}
+            </>
+          )}
         </div>
       </div>
 
