@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import { deleteAdmin, getAdminArts } from '../../redux/actions';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
+import style from './Products.module.css';
 
 const Products = () => {
   const allArts = useSelector((state) => state.allAdminArts);
@@ -14,8 +15,6 @@ const Products = () => {
   useEffect(() => {
     dispatch(getAdminArts());
   }, [dispatch]);
-
-  console.log('allArts', allArts);
 
   const handleArtworkClick = (artworkId) => {
     navigate(`/detail/${artworkId}`);
@@ -45,7 +44,7 @@ const Products = () => {
   };
 
   return (
-    <div>
+    <div className={style.allContainer}>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
@@ -111,7 +110,11 @@ const Products = () => {
                           )}
                         </td>
                         <td>
-                          <button onClick={() => handleDelete(art.artworkId)}>
+                          <button
+                            className={style.deleteButton}
+                            onClick={() => handleDelete(art.artworkId)}
+                            title='Delete'
+                          >
                             {' '}
                             x{' '}
                           </button>
