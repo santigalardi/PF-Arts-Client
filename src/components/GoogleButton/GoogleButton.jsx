@@ -120,9 +120,9 @@ const GoogleButton = () => {
   useEffect(() => {
     dispatch(getAllUsers());
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
+  /*     if (user) {
         navigate('/');
-      }
+      } */
     });
 
     return unsubscribe;
