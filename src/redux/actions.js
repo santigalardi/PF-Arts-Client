@@ -1,8 +1,4 @@
 import axios from 'axios';
-
-//const URL = 'https://pf-arts-api.vercel.app';
-const URL = 'http://localhost:3001';
-
 // -------- ARTS ---------
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
