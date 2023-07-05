@@ -1,15 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import { VictoryPie, VictoryLabel, VictoryBar, VictoryChart } from 'victory';
 import { PDFViewer } from '@react-pdf/renderer';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
+import { getAdminArts, getAllUsers, getTransaction } from '../../redux/actions';
 import jsPDF from 'jspdf';
 import DocPDF from './DocPDF';
 import styles from './Reports.module.css';
 
 const Reports = () => {
+  const dispatch = useDispatch()
   const [showPreview, setShowPreview] = useState(false);
+  const artworks = useSelector((state) => state.allAdminArts); // obras
+  const allUsers = useSelector((state) => state.allUsers); // usuario
+  const allSales = useSelector((state)=> state.allTrans)//ventas
 
+  const totalArtworks= artworks.length;
+  console.log("obras",totalArtworks);
+  const totalUsers= allUsers.length;
+  console.log("users", totalUsers)
+  const totalSales= allSales.length;
+  console.log("sales", totalSales);
+ 
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -49,6 +62,11 @@ const Reports = () => {
     // Descargar el PDF
     doc.save('customers.pdf')
   };
+  useEffect(()=>{
+    dispatch(getAdminArts());
+    dispatch(getAllUsers());
+    dispatch(getTransaction());
+  },[dispatch])
 
   return (
     <div>
@@ -90,14 +108,14 @@ const Reports = () => {
               //  grafico pastel
                 colorScale={['#e74c3c', '#2ecc', '#eeeb22cc']}
                 data={[
-                  { x: 'Users', y: 35 },
-                  { x: 'Sales', y: 40 },
-                  { x: 'artworks', y: 55 },
+                  { x: 'Users', y: totalUsers },
+                  { x: 'Sales', y: totalSales },
+                  { x: 'artworks', y: totalArtworks },
                 ]}
                 animate={[2000]}
-                labelComponent={<VictoryLabel domainPadding={-10} style={{ fill: 'red' }} />}
+                labelComponent={<VictoryLabel  style={{ fill: 'red' }} />}
               />
-              <VictoryChart domainPadding={{ x: 20 }}>
+              <VictoryChart domainPadding={{ x: 10 }}>
                 <VictoryBar
                 //grafico de barras
                   style={{
@@ -108,9 +126,9 @@ const Reports = () => {
                   }}
                   alignment='start'
                   data={[
-                    { x: 'Users', y: 35, fill: 'red' },
-                    { x: 'Sales', y: 40, fill: 'orange' },
-                    { x: 'artworks', y: 55, fill: 'blue' },
+                    { x: 'Users', y: totalUsers, fill: 'red' },
+                    { x: 'Sales', y: totalSales, fill: 'orange' },
+                    { x: 'artworks', y: totalArtworks, fill: 'blue' },
                   ]}
                   labels={({ datum }) => datum.y}
                   labelComponent={<VictoryLabel dy={0} dx={15} />}
