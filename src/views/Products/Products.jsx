@@ -1,22 +1,28 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
-import { getAllArts } from '../../redux/actions';
+import { deleteAdmin, getAdminArts } from '../../redux/actions';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 
 const Products = () => {
-  const allArts = useSelector((state) => state.allArts);
+  const allArts = useSelector((state) => state.allAdminArts);
   const currentArts = allArts && Array.isArray(allArts) && allArts;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getAllArts());
-  }, []);
+    dispatch(getAdminArts());
+  }, [dispatch]);
+
+  console.log('allArts', allArts);
 
   const handleArtworkClick = (artworkId) => {
     navigate(`/detail/${artworkId}`);
+  };
+
+  const handleDelete = (artworkId) => {
+    dispatch(deleteAdmin(artworkId)).then(() => dispatch(getAdminArts()));
   };
 
   const handleShare = () => {
@@ -75,10 +81,11 @@ const Products = () => {
                 <thead>
                   <tr>
                     <th>Title</th>
-                    <th>Author</th>
+                    <th>User</th>
                     <th>Date</th>
                     <th>Price</th>
                     <th>Status</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -86,15 +93,12 @@ const Products = () => {
                     currentArts.map((art) => (
                       <tr key={art.artworkId}>
                         <td>{art.title}</td>
-                        <td>{art.authorName}</td>
+                        <td>{art.user.userName}</td>
                         <td>{art.date}</td>
                         <td>{art.price}</td>
                         <td>
-                          {art.sold ? (
-                            <button
-                              className='btn btn-sm btn-danger'
-                              onClick={() => handleArtworkClick(art.artworkId)}
-                            >
+                          {art.deletedAt ? (
+                            <button className='btn btn-sm btn-danger' disabled>
                               Sold
                             </button>
                           ) : (
@@ -102,9 +106,15 @@ const Products = () => {
                               className='btn btn-sm btn-success'
                               onClick={() => handleArtworkClick(art.artworkId)}
                             >
-                              Published
+                              Available
                             </button>
                           )}
+                        </td>
+                        <td>
+                          <button onClick={() => handleDelete(art.artworkId)}>
+                            {' '}
+                            x{' '}
+                          </button>
                         </td>
                       </tr>
                     ))

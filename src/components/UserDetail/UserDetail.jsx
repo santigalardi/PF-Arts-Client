@@ -10,6 +10,7 @@ import {
   FaMapMarkerAlt,
   FaEnvelope,
   FaMobileAlt,
+  FaImage,
 } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
@@ -50,6 +51,8 @@ const UserDetail = () => {
     ig: userDetail?.ig || '',
   });
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
   const enableEdit = () => {
     if (storedUser) {
       const storedUserId = storedUser.userId;
@@ -67,6 +70,7 @@ const UserDetail = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
+    setShowFileInput(true);
   };
 
   const handleEditSocial = () => {
@@ -75,16 +79,30 @@ const UserDetail = () => {
 
   const handleSave = async () => {
     try {
-      // Llama a la acción updateUser y pasa los datos actualizados
-      console.log(editedData);
-      dispatch(updateUser(editedData));
-      // localStorage.setItem('user', JSON.stringify(editedData));
+      // Crea un objeto FormData para enviar los datos
+      const formData = new FormData();
+      formData.append('profilePicture', selectedFile); // Agrega el archivo al formData
+
+      // Agrega los demás datos actualizados al formData
+      Object.entries(editedData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      // Llama a la acción updateUser y pasa el formData como parámetro
+      dispatch(updateUser(formData));
+      localStorage.setItem('user', JSON.stringify(editedData));
       setIsEditing(false);
       setEditedData({ ...editedData, ...editedSocialData });
     } catch (error) {
       console.error(error);
     }
   };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
   const handleSaveSocial = () => {
     // Realiza las acciones necesarias para guardar los datos actualizados
     dispatch(updateUser({ userId, ...editedSocialData }));
@@ -117,7 +135,7 @@ const UserDetail = () => {
   const artworksNeeded = 4 - filteredArtworks.length;
   //Si no completa le agrega una img en color gris:
   const grayImages = Array.from({ length: artworksNeeded }, (_, index) => ({
-    image: `https://via.placeholder.com/300x200/808080?text=Artwork+${
+    image: `https://via.placeholder.com/300x200/D5D1D1?text=Artwork+${
       index + 1
     }`,
     title: `Artwork ${index + 1}`,
@@ -150,12 +168,20 @@ const UserDetail = () => {
     <div className={style['containerUserDetail']}>
       <div className={style['userDetail']}>
         <div className={style['positionPhoto']}>
-          {userDetail?.profilePicture && (
+          {selectedFile ? (
             <img
-              src={userDetail.profilePicture}
+              src={URL.createObjectURL(selectedFile)}
               alt='img'
               className={style['photoPerfil']}
             />
+          ) : (
+            userDetail?.profilePicture && (
+              <img
+                src={userDetail.profilePicture}
+                alt='img'
+                className={style['photoPerfil']}
+              />
+            )
           )}
         </div>
         <div className={style['details']}>
@@ -262,6 +288,21 @@ const UserDetail = () => {
               </p>
             )}
           </div>
+          {isEditing && (
+            <div>
+              <label htmlFor='fileInput' className={style.selectFileButton}>
+                <FaImage className={`${style.icon} icon`} /> Upload profile
+                picture
+              </label>
+              <input
+                id='fileInput'
+                type='file'
+                accept='image/*'
+                onChange={handleFileChange}
+                className={style.fileInput}
+              />
+            </div>
+          )}
         </div>
 
         <div className={style['socialIcons']}>

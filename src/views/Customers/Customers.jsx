@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../../redux/actions';
+import { getAllUsers, deleteAdmin } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import { PDFViewer } from '@react-pdf/renderer';
@@ -39,7 +39,10 @@ const Customers = () => {
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
-  
+
+  const handleDelete = (userId) => {
+    dispatch(deleteAdmin('', userId)).then(() => dispatch(getAllUsers()));
+  };
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -105,8 +108,9 @@ const Customers = () => {
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-                    <th>Country</th>
+                    <th>Location</th>
                     <th>Profile</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,6 +128,12 @@ const Customers = () => {
                           }
                         >
                           View Profile
+                        </button>
+                      </td>
+                      <td>
+                        <button onClick={() => handleDelete(user.userId)}>
+                          {' '}
+                          x{' '}
                         </button>
                       </td>
                     </tr>

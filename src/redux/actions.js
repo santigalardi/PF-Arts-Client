@@ -1,7 +1,7 @@
 import axios from 'axios';
 
- //const URL = 'https://pf-arts-api.vercel.app';
-  const URL = 'http://localhost:3001';
+//const URL = 'https://pf-arts-api.vercel.app';
+const URL = 'http://localhost:3001';
 
 // -------- ARTS ---------
 export const GET_ARTS = 'GET_ARTS';
@@ -23,6 +23,11 @@ export const POST_USERS = 'POST_USERS';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_LOGGED_USER = 'SET_LOGGED_USER';
 export const GET_USERS_DETAIL = 'GET_USERS_DETAIL';
+// -------- REVIEWS ------
+export const GET_REVIEWS = 'GET_REVIEWS';
+export const POST_REVIEW = 'POST_REVIEW';
+export const DELETE_REVIEW = 'DELETE_REVIEW';
+export const UPDATE_REVIEW = 'UPDATE_REVIEW';
 // -------- CARRITO ------
 export const SET_CART_ITEMS = 'SET_CART';
 export const SET_IS_LOGGED_IN = 'SET_IS_LOGGED_IN';
@@ -32,12 +37,120 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAR_CART = 'CLEAR_CART';
 // -------- TRANSACCION ------
 export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';
+export const GET_TRANS = 'GET_TRANS';
 // -------- NOTIFICACION ------
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
+// -------- ADMIN ------
+export const GET_ADMIN_ARTS = 'GET_ADMIN_ARTS';
+export const DELETE_ADMIN = 'DELETE_ADMIN';
 
-// actions.js
+export const getAdminArts = () => {
+  return async function (dispatch) {
+    const response = await axios.get('/admin');
+    return dispatch({
+      type: GET_ADMIN_ARTS,
+      payload: response.data,
+    });
+  };
+};
 
+export function deleteAdmin(artworkId, userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(
+        `/admin/delete?artworkId=${artworkId}&&userId=${userId}`
+      );
+      dispatch({ type: DELETE_ADMIN, payload: { artworkId, userId } });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getTransaction = (paypal_id) => {
+  return async function (dispatch) {
+    const response = await axios.get(`/transactions?paypal_id=${paypal_id}`);
+    return dispatch({
+      type: GET_TRANS,
+      payload: response.data,
+    });
+  };
+};
+
+export function getAllReviews(artworkId) {
+  console.log(artworkId);
+  return async function (dispatch) {
+    const arts = await axios.get(`/reviews/${artworkId}`);
+    dispatch({ type: GET_REVIEWS, payload: arts.data });
+  };
+}
+
+export function postReview(artworkId, reviewData) {
+  return async function (dispatch) {
+    const token = localStorage.token;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        `/reviews/${artworkId}`,
+        reviewData,
+        config
+      );
+      dispatch({ type: POST_REVIEW, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function deleteReview(artworkId, reviewId) {
+  return async function (dispatch) {
+    const token = localStorage.token;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.delete(
+        `/reviews/${artworkId}/${reviewId}`,
+        config
+      );
+      dispatch({ type: DELETE_REVIEW, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function updateReview(artworkId, reviewId, reviewData) {
+  return async function (dispatch) {
+    const token = localStorage.token;
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(
+        `/reviews/${artworkId}/${reviewId}`,
+        reviewData,
+        config
+      );
+      dispatch({ type: UPDATE_REVIEW, payload: response.data });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
 export function postTransaction(artworkIdsString, transactionData) {
   return async function (dispatch) {
     const token = localStorage.token;
@@ -75,7 +188,8 @@ export const hideNotification = () => {
 
 export const getAllArts = () => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL}/artworks`);
+    console.log('actions Get all arts');
+    const response = await axios.get('/artworks');
     return dispatch({
       type: GET_ARTS,
       payload: response.data,
@@ -84,21 +198,21 @@ export const getAllArts = () => {
 };
 export const getArtsByTitle = (title) => {
   return async function (dispatch) {
-    const arts = await axios.get(`${URL}/artworks?title=${title}`);
+    const arts = await axios.get(`/artworks?title=${title}`);
     console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_TITLE, payload: arts.data });
   };
 };
 export const getArtsByAuthor = (authorName) => {
   return async function (dispatch) {
-    const arts = await axios.get(`${URL}/artworks?authorName=${authorName}`);
+    const arts = await axios.get(`/artworks?authorName=${authorName}`);
     console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
 };
 export const getAllUsers = () => {
   return async function (dispatch) {
-    const response = await axios.get(`${URL}/users`);
+    const response = await axios.get(`/users`);
     return dispatch({
       type: GET_USERS,
       payload: response.data,
@@ -119,7 +233,7 @@ export function postArts(payload) {
         },
       };
       console.log('actions', token);
-      const response = await axios.post(`${URL}/artworks`, payload, config);
+      const response = await axios.post(`/artworks`, payload, config);
       dispatch({ type: POST_ART, payload: response.data });
       return response;
     } catch (error) {
@@ -130,7 +244,7 @@ export function postArts(payload) {
 export function postUsers(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(`${URL}/users`, payload);
+      const response = await axios.post(`/users`, payload);
       dispatch({ type: POST_USERS, payload: response.data });
       console.log('actions', response);
       return response;
@@ -144,7 +258,7 @@ export const checkAuthentication = () => {
   //Autenticación para usar carrito.
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/users`);
+      const response = await axios.get(`/users`);
       dispatch({ type: CHECK_AUTHENTICATION, payload: response.data });
       return response;
     } catch (error) {
@@ -182,11 +296,7 @@ export const updateUser = (updatedUser) => {
 
   return async (dispatch) => {
     try {
-      const response = await axios.put(
-        `${URL}/users/edit`,
-        updatedUser,
-        config
-      );
+      const response = await axios.put(`/users/edit`, updatedUser, config);
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -212,7 +322,7 @@ export const setIsLoggedIn = (isLoggedIn) => {
 export const getUserDetail = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/users/detail/${id}`);
+      const response = await axios.get(`/users/detail/${id}`);
       return dispatch({
         type: GET_USERS_DETAIL,
         payload: response.data,
@@ -228,7 +338,7 @@ export function addFavorite(userId, artworkId, payload) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        `${URL}/favorites/${userId}/${artworkId}`,
+        `/favorites/${userId}/${artworkId}`,
         payload
       );
       dispatch({ type: ADD_FAVORITE, payload: response.data });
@@ -243,7 +353,7 @@ export function addFavorite(userId, artworkId, payload) {
 export const getFavorites = (userId) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/favorites/${userId}`);
+      const response = await axios.get(`/favorites/${userId}`);
       dispatch({ type: GET_FAVORITES, payload: response.data });
       return response;
     } catch (error) {
@@ -255,7 +365,7 @@ export function deleteFavorite(userId, artworkId, payload) {
   return async function (dispatch) {
     try {
       const response = await axios.delete(
-        `${URL}/favorites/delete/${userId}/${artworkId}`,
+        `/favorites/delete/${userId}/${artworkId}`,
         payload
       );
       dispatch({ type: DELETE_FAVORITE, payload: response.data });
@@ -269,7 +379,7 @@ export function deleteFavorite(userId, artworkId, payload) {
 export const getDetail = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`${URL}/artworks/detail/${id}`);
+      const response = await axios.get(`/artworks/detail/${id}`);
       return dispatch({
         type: GET_DETAIL,
         payload: response.data,
@@ -310,7 +420,7 @@ export const getArtsByFilters = (
       if (orderType) {
         params.orderType = orderType;
       }
-      const response = await axios.get(`${URL}/artworks/db`, { params });
+      const response = await axios.get(`/artworks/db`, { params });
       dispatch({ type: GET_ARTS_BY_FILTERS, payload: response.data.rows });
       return response;
     } catch (error) {
@@ -362,10 +472,7 @@ export function deleteArt(id) {
 
   return async function (dispatch) {
     try {
-      const response = await axios.delete(
-        `${URL}/artworks/delete/${id}`,
-        config
-      );
+      const response = await axios.delete(`/artworks/delete/${id}`, config);
       dispatch({ type: DELETE_ART, payload: response.data });
       return response;
     } catch (error) {
@@ -373,5 +480,3 @@ export function deleteArt(id) {
     }
   };
 }
-
-// Acción para eliminar un favorito
