@@ -131,6 +131,7 @@ const Checkout = () => {
         style={{
           marginTop: '40px',
           marginRight: '35px',
+          marginBottom: '100px',
         }}
       >
         <div className={styles.infoBox}>

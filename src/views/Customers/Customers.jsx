@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllUsers } from '../../redux/actions';
+import { getAllUsers, deleteAdmin } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
@@ -9,11 +9,15 @@ const Customers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector((state) => state.allUsers);
+  console.log(users);
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+  const handleDelete = (userId) => {
+    dispatch(deleteAdmin('', userId)).then(() => dispatch(getAllUsers()));
+  };
   const handleShare = () => {
     if (navigator.share) {
       navigator
@@ -48,7 +52,10 @@ const Customers = () => {
               <h1 className='h2'>Customers</h1>
               <div className='btn-toolbar mb-2 mb-md-0'>
                 <div className='btn-group mr-2'>
-                  <button className='btn btn-sm btn-outline-secondary' onClick={handleShare}>
+                  <button
+                    className='btn btn-sm btn-outline-secondary'
+                    onClick={handleShare}
+                  >
                     <FaShare /> Share
                   </button>
                   <button className='btn btn-sm btn-outline-secondary'>
@@ -72,6 +79,7 @@ const Customers = () => {
                     <th>Phone Number</th>
                     <th>Location</th>
                     <th>Profile</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -82,8 +90,19 @@ const Customers = () => {
                       <td>{user.phoneNumber}</td>
                       <td>{user.location}</td>
                       <td>
-                        <button className='btn btn-sm btn-primary' onClick={() => navigate(`/users/detail/${user.userId}`)}>
+                        <button
+                          className='btn btn-sm btn-primary'
+                          onClick={() =>
+                            navigate(`/users/detail/${user.userId}`)
+                          }
+                        >
                           View Profile
+                        </button>
+                      </td>
+                      <td>
+                        <button onClick={() => handleDelete(user.userId)}>
+                          {' '}
+                          x{' '}
                         </button>
                       </td>
                     </tr>

@@ -29,9 +29,47 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const CLEAR_CART = 'CLEAR_CART';
 // -------- TRANSACCION ------
 export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';
+export const GET_TRANS = 'GET_TRANS';
 // -------- NOTIFICACION ------
 export const SHOW_NOTIFICATION = 'SHOW_NOTIFICATION';
 export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
+// -------- ADMIN ------
+export const GET_ADMIN_ARTS = 'GET_ADMIN_ARTS';
+export const DELETE_ADMIN = 'DELETE_ADMIN';
+
+export const getAdminArts = () => {
+  return async function (dispatch) {
+    const response = await axios.get('/admin');
+    return dispatch({
+      type: GET_ADMIN_ARTS,
+      payload: response.data,
+    });
+  };
+};
+
+export function deleteAdmin(artworkId, userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(
+        `/admin/delete?artworkId=${artworkId}&&userId=${userId}`
+      );
+      dispatch({ type: DELETE_ADMIN, payload: { artworkId, userId } });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export const getTransaction = (paypal_id) => {
+  return async function (dispatch) {
+    const response = await axios.get(`/transactions?paypal_id=${paypal_id}`);
+    return dispatch({
+      type: GET_TRANS,
+      payload: response.data,
+    });
+  };
+};
 
 export function postTransaction(artworkIdsString, transactionData) {
   return async function (dispatch) {
@@ -71,8 +109,8 @@ export const hideNotification = () => {
 
 export const getAllArts = () => {
   return async function (dispatch) {
-    console.log("actions Get all arts");
-    const response = await axios.get("/artworks");
+    console.log('actions Get all arts');
+    const response = await axios.get('/artworks');
     return dispatch({
       type: GET_ARTS,
       payload: response.data,
@@ -88,7 +126,7 @@ export const getArtsByTitle = (title) => {
 };
 export const getArtsByAuthor = (authorName) => {
   return async function (dispatch) {
-    const arts = await axios.get(`$/artworks?authorName=${authorName}`);
+    const arts = await axios.get(`/artworks?authorName=${authorName}`);
     console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
@@ -179,11 +217,7 @@ export const updateUser = (updatedUser) => {
 
   return async (dispatch) => {
     try {
-      const response = await axios.put(
-        `/users/edit`,
-        updatedUser,
-        config
-      );
+      const response = await axios.put(`/users/edit`, updatedUser, config);
       dispatch({ type: UPDATE_USER, payload: response.data });
       return response;
     } catch (error) {
@@ -359,10 +393,7 @@ export function deleteArt(id) {
 
   return async function (dispatch) {
     try {
-      const response = await axios.delete(
-        `/artworks/delete/${id}`,
-        config
-      );
+      const response = await axios.delete(`/artworks/delete/${id}`, config);
       dispatch({ type: DELETE_ART, payload: response.data });
       return response;
     } catch (error) {
