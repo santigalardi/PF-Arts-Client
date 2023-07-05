@@ -439,7 +439,7 @@ export const updateArtwork = (id, updatedArtwork) => {
   return async function (dispatch) {
     try {
       const response = await axios.put(
-        `${URL}/artworks/edit/${id}`,
+        `/artworks/edit/${id}`,
         updatedArtwork,
         config
       );
