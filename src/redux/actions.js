@@ -158,7 +158,7 @@ export function postTransaction(artworkIdsString, transactionData) {
       };
       console.log('actions', token);
       const response = await axios.post(
-        `${URL}/transactions/${artworkIdsString}`,
+        `/transactions/${artworkIdsString}`,
         transactionData,
         config
       );
