@@ -1,8 +1,4 @@
 import axios from 'axios';
-
-//const URL = 'https://pf-arts-api.vercel.app';
-const URL = 'http://localhost:3001';
-
 // -------- ARTS ---------
 export const GET_ARTS = 'GET_ARTS';
 export const GET_ARTS_BY_TITLE = 'GET_ARTS_BY_TITLE';
@@ -162,7 +158,7 @@ export function postTransaction(artworkIdsString, transactionData) {
       };
       console.log('actions', token);
       const response = await axios.post(
-        `${URL}/transactions/${artworkIdsString}`,
+        `/transactions/${artworkIdsString}`,
         transactionData,
         config
       );
@@ -443,7 +439,7 @@ export const updateArtwork = (id, updatedArtwork) => {
   return async function (dispatch) {
     try {
       const response = await axios.put(
-        `${URL}/artworks/edit/${id}`,
+        `/artworks/edit/${id}`,
         updatedArtwork,
         config
       );
