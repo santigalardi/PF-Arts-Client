@@ -2,21 +2,27 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
-import { getAllArts } from '../../redux/actions';
+import { deleteAdmin, getAdminArts } from '../../redux/actions';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 
 const Products = () => {
-  const allArts = useSelector((state) => state.allArts);
+  const allArts = useSelector((state) => state.allAdminArts);
   const currentArts = allArts && Array.isArray(allArts) && allArts;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getAllArts());
+    dispatch(getAdminArts());
   }, [dispatch]);
+
+  console.log('allArts', allArts);
 
   const handleArtworkClick = (artworkId) => {
     navigate(`/detail/${artworkId}`);
+  };
+
+  const handleDelete = (artworkId) => {
+    dispatch(deleteAdmin(artworkId)).then(() => dispatch(getAdminArts()));
   };
 
   const handleShare = () => {
@@ -53,7 +59,10 @@ const Products = () => {
               <h1 className='h2'>Products</h1>
               <div className='btn-toolbar mb-2 mb-md-0'>
                 <div className='btn-group mr-2'>
-                  <button className='btn btn-sm btn-outline-secondary' onClick={handleShare}>
+                  <button
+                    className='btn btn-sm btn-outline-secondary'
+                    onClick={handleShare}
+                  >
                     <FaShare /> Share
                   </button>
                   <button className='btn btn-sm btn-outline-secondary'>
@@ -76,6 +85,7 @@ const Products = () => {
                     <th>Date</th>
                     <th>Price</th>
                     <th>Status</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,15 +97,24 @@ const Products = () => {
                         <td>{art.date}</td>
                         <td>{art.price}</td>
                         <td>
-                          {art.sold ? (
-                            <button className='btn btn-sm btn-danger' onClick={() => handleArtworkClick(art.artworkId)}>
+                          {art.deletedAt ? (
+                            <button className='btn btn-sm btn-danger' disabled>
                               Sold
                             </button>
                           ) : (
-                            <button className='btn btn-sm btn-success' onClick={() => handleArtworkClick(art.artworkId)}>
-                              Published
+                            <button
+                              className='btn btn-sm btn-success'
+                              onClick={() => handleArtworkClick(art.artworkId)}
+                            >
+                              Available
                             </button>
                           )}
+                        </td>
+                        <td>
+                          <button onClick={() => handleDelete(art.artworkId)}>
+                            {' '}
+                            x{' '}
+                          </button>
                         </td>
                       </tr>
                     ))
