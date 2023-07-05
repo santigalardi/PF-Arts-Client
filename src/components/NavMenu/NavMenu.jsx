@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { GiPencilBrush } from 'react-icons/gi';
 import { FaPowerOff } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
@@ -9,6 +8,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { IoStatsChartSharp } from 'react-icons/io5';
 import { auth } from '../../Firebase/config';
 import { signOut } from 'firebase/auth';
+import { showNotification } from '../../redux/actions';
 import './NavMenu.css';
 
 const NavMenu = () => {
@@ -17,6 +17,8 @@ const NavMenu = () => {
   const loggedUser = useSelector((state) => state.loggedUser);
 
   const { userId } = loggedUser;
+
+  const dispatch = useDispatch();
 
   const toggleMenu = (event) => {
     event.stopPropagation();
@@ -69,14 +71,18 @@ const NavMenu = () => {
             </NavLink>
           </li>
           <hr />
-          <li>
-            <AiFillHeart />
-            <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
-              {' '}
-              Favorites
-            </NavLink>
-          </li>
-          <hr />
+          {userId && (
+            <>
+              <li>
+                <AiFillHeart />
+                <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
+                  {' '}
+                  Favorites
+                </NavLink>
+              </li>
+              <hr />
+            </>
+          )}
           <li>
             <GiPencilBrush />
             <NavLink to='/create' onClick={toggleMenu}>
@@ -95,10 +101,17 @@ const NavMenu = () => {
           <hr />
           <li>
             <FaPowerOff />
-            <NavLink to='/login' onClick={() => handleLogout()}>
-              {' '}
-              Log Out
-            </NavLink>
+            {userId ? (
+              <NavLink to='/login' onClick={() => handleLogout()}>
+                {' '}
+                Log Out
+              </NavLink>
+            ) : (
+              <span onClick={() => dispatch(showNotification("Please log in first."))}>
+                {' '}
+                Log Out
+              </span>
+            )}
           </li>
         </ul>
       </div>

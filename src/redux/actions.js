@@ -88,7 +88,7 @@ export const getArtsByTitle = (title) => {
 };
 export const getArtsByAuthor = (authorName) => {
   return async function (dispatch) {
-    const arts = await axios.get(`$/artworks?authorName=${authorName}`);
+    const arts = await axios.get(`/artworks?authorName=${authorName}`);
     console.log(arts.data);
     dispatch({ type: GET_ARTS_BY_AUTHOR_NAME, payload: arts.data });
   };
