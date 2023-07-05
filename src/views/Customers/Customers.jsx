@@ -4,12 +4,12 @@ import { getAllUsers, deleteAdmin } from '../../redux/actions';
 import { useNavigate } from 'react-router-dom';
 import { FaCalendar, FaShare, FaFileExport } from 'react-icons/fa';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
+import style from './Customers.module.css';
 
 const Customers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector((state) => state.allUsers);
-  console.log(users);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -38,7 +38,7 @@ const Customers = () => {
   };
 
   return (
-    <div>
+    <div className={style.allContainer}>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
@@ -100,7 +100,11 @@ const Customers = () => {
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(user.userId)}>
+                        <button
+                          className={style.deleteButton}
+                          onClick={() => handleDelete(user.userId)}
+                          title='Delete'
+                        >
                           {' '}
                           x{' '}
                         </button>

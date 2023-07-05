@@ -13,7 +13,6 @@ const Orders = () => {
   const dispatch = useDispatch();
   const transactions = useSelector((state) => state.allTrans);
   const [paypal, setPaypal] = useState('');
-  console.log(transactions);
 
   useEffect(() => {
     dispatch(getTransaction());
@@ -56,7 +55,7 @@ const Orders = () => {
   });
 
   return (
-    <div>
+    <div className={style.allContainer}>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
@@ -88,18 +87,17 @@ const Orders = () => {
             </div>
             <form onSubmit={handleSubmit}>
               <input
-                className={style['NavSearch']}
+                className={style.search}
                 placeholder='Search by Paypal ID...'
                 type='search'
-                style={{ marginBottom: '15px' }}
                 onChange={handleChange}
               />
-              <button className={style['BottonSearch']} type='submit'>
+              <button className={style.buttonSearch} type='submit'>
                 Search
               </button>
             </form>
 
-            <p style={{ marginBottom: '10px' }}>
+            <p className={style.totalSales}>
               {' '}
               <span style={{ fontWeight: 'bold', fontStyle: 'oblique' }}>
                 Total Sales:
@@ -127,8 +125,16 @@ const Orders = () => {
                     return (
                       <tr key={transaction.id}>
                         <td>{transaction.paypal_id}</td>
-                        <td>{transaction.artworks[0].title}</td>
-                        <td>{transaction.artworks[0].user.userName}</td>
+                        <td>
+                          {transaction.artworks[0]?.title
+                            ? transaction.artworks[0].title
+                            : '-'}
+                        </td>
+                        <td>
+                          {transaction.artworks[0]?.user.userName
+                            ? transaction.artworks[0].user.userName
+                            : ' ' + '-'}
+                        </td>
                         <td>{transaction.artwork_value} USD</td>
                         <td>{transaction.buyer}</td>
                         <td>{transaction.seller}</td>
