@@ -28,6 +28,10 @@ import {
   GET_ADMIN_ARTS,
   DELETE_ADMIN,
   GET_TRANS,
+  GET_REVIEWS,
+  POST_REVIEW,
+  DELETE_REVIEW,
+  UPDATE_REVIEW,
 } from './actions';
 
 const initialState = {
