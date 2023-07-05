@@ -15,6 +15,9 @@ const NavMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const loggedUser = useSelector((state) => state.loggedUser);
+  const storedUserJSON = localStorage.getItem('user');
+  const storedUser = JSON.parse(storedUserJSON);
+  const userAdmin = storedUser?.role === 'admin';
 
   const { userId } = loggedUser;
 
@@ -90,14 +93,18 @@ const NavMenu = () => {
               Create
             </NavLink>
           </li>
-          <hr />
-          <li>
-            <IoStatsChartSharp />
-            <NavLink to='/dashboard' onClick={toggleMenu}>
-              {' '}
-              Dashboard
-            </NavLink>
-          </li>
+          {userAdmin && (
+            <>
+              <hr />
+              <li>
+                <IoStatsChartSharp />
+                <NavLink to='/dashboard' onClick={toggleMenu}>
+                  {' '}
+                  Dashboard
+                </NavLink>
+              </li>
+            </>
+          )}
           <hr />
           <li>
             <FaPowerOff />
