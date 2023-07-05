@@ -37,6 +37,7 @@ const initialState = {
   allUsers: [], //almacena todos los usuarios.
   filteredArts: [],
   arts: [],
+  reviews: [],
   myFavorites: [],
   detail: {},
   users: [], //almacena datos de usuarios individuales.
@@ -217,6 +218,37 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allArts: action.payload,
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case POST_REVIEW:
+      return {
+        ...state,
+        reviews: [...state.reviews, action.payload],
+      };
+
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter(
+          (review) => review.artworkId !== action.payload.artworkId
+        ),
+      };
+
+    case UPDATE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.map((review) => {
+          if (review.artworkId === action.payload.artworkId) {
+            return action.payload;
+          }
+          return review;
+        }),
       };
 
     case SET_CART_ITEMS:

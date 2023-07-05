@@ -78,7 +78,7 @@ const UserDetail = () => {
       // Llama a la acción updateUser y pasa los datos actualizados
       console.log(editedData);
       dispatch(updateUser(editedData));
-      // localStorage.setItem('user', JSON.stringify(editedData));
+      localStorage.setItem('user', JSON.stringify(editedData));
       setIsEditing(false);
       setEditedData({ ...editedData, ...editedSocialData });
     } catch (error) {
