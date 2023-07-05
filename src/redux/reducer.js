@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, SET_IS_LOGGED_IN, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART_ITEMS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, SET_LOGGED_USER, CHECK_AUTHENTICATION, SHOW_NOTIFICATION, HIDE_NOTIFICATION } from './actions';
+import { GET_ARTS, GET_ARTS_BY_TITLE, GET_ARTS_BY_AUTHOR_NAME, GET_USERS, SET_IS_LOGGED_IN, POST_ART, ADD_FAVORITE, DELETE_FAVORITE, GET_DETAIL, CLEAR_DETAIL, GET_ARTS_BY_FILTERS, POST_USERS, DELETE_ART, UPDATE_USER, UPDATE_ARTWORK, GET_FAVORITES, GET_USERS_DETAIL, SET_CART_ITEMS, ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, SET_LOGGED_USER, CHECK_AUTHENTICATION, SHOW_NOTIFICATION, HIDE_NOTIFICATION, GET_REVIEWS, POST_REVIEW, DELETE_REVIEW, UPDATE_REVIEW } from './actions';
 
 const initialState = {
   notificationVisible: false,
@@ -8,6 +8,7 @@ const initialState = {
   allUsers: [], //almacena todos los usuarios.
   filteredArts: [],
   arts: [],
+  reviews: [],
   myFavorites: [],
   detail: {},
   users: [], //almacena datos de usuarios individuales.
@@ -160,6 +161,35 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allArts: action.payload,
+      };
+
+    case GET_REVIEWS:
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+
+    case POST_REVIEW:
+      return {
+        ...state,
+        reviews: [...state.reviews, action.payload],
+      };
+
+    case DELETE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.artworkId !== action.payload.artworkId),
+      };
+
+    case UPDATE_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.map((review) => {
+          if (review.artworkId === action.payload.artworkId) {
+            return action.payload;
+          }
+          return review;
+        }),
       };
 
     case SET_CART_ITEMS:

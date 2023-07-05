@@ -40,20 +40,22 @@ function Card({ art, imageSize, containerSize, onDelete }) {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getFavorites(userId)).then((res) => {
-        console.log('dispatch getfavorites');
-        if (res.data && res.data.userFav) {
-          const userFavString = JSON.stringify(res.data.userFav);
-          localStorage.setItem('Favorites', userFavString);
-          const favorites = JSON.parse(userFavString);
-          const isFavorite = favorites.some((favorite) => favorite.title === title);
-          setIsFav(isFavorite);
-        }
-      }).catch((error) => {
-        console.error('Error al obtener favoritos:', error);
-      });
+      dispatch(getFavorites(userId))
+        .then((res) => {
+          console.log('dispatch getfavorites');
+          if (res.data && res.data.userFav) {
+            const userFavString = JSON.stringify(res.data.userFav);
+            localStorage.setItem('Favorites', userFavString);
+            const favorites = JSON.parse(userFavString);
+            const isFavorite = favorites.some((favorite) => favorite.title === title);
+            setIsFav(isFavorite);
+          }
+        })
+        .catch((error) => {
+          console.error('Error al obtener favoritos:', error);
+        });
     }
-  },);
+  }, [userId]);
 
   return (
     <div className={styles['cardContainer']} style={{ width: containerSize, height: '350px' }}>
@@ -61,7 +63,7 @@ function Card({ art, imageSize, containerSize, onDelete }) {
         {isFav ? <span className={styles['red']}>♥️</span> : <span className={styles['white']}>♥️</span>}
       </button>
       <div className={styles['imgContainer']}>
-        <img src={image} alt="pic" style={{ width: imageSize, height: '350px' }} />
+        <img src={image} alt='pic' style={{ width: imageSize, height: '350px' }} />
       </div>
       <div className={styles['propsContainer']} />
     </div>

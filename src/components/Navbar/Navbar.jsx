@@ -45,14 +45,14 @@ function Navbar() {
     navigate(`/users/detail/${userId}`);
   };
 
-  const handleLogin = () => {
-    navigate('/login');
+  const handleHome = () => {
+    navigate('/');
   };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <NavMenu userId={userId} />
-      <div className='navbar-title' onClick={handleLogin}>
+      <div className='navbar-title' onClick={handleHome}>
         <span className='logo'>aA</span>
         <span className='space'> </span>
       </div>
