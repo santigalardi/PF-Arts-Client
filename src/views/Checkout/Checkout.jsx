@@ -121,8 +121,8 @@ const Checkout = () => {
           <span className={styles.total}>Total:</span> {calculateTotal()} USD
         </p>
         <div className={styles.separator}></div>
-        <Link to='/cart' className={styles.buttonShopping}>
-          <FontAwesomeIcon icon={faArrowLeft} className='mr-2' /> Back to Cart
+        <Link to='/' className={styles.buttonShopping}>
+          <FontAwesomeIcon icon={faArrowLeft} className='mr-2' /> Back to Home
         </Link>
       </div>
 
