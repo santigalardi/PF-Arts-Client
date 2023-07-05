@@ -42,6 +42,7 @@ const UserDetail = () => {
     fb: userDetail?.fb || '',
     tw: userDetail?.tw || '',
     ig: userDetail?.ig || '',
+    profilePicture: userDetail?.profilePicture || '',
   });
 
   const [isEditingSocial, setIsEditingSocial] = useState(false);
@@ -89,7 +90,7 @@ const UserDetail = () => {
       });
 
       // Llama a la acción updateUser y pasa el formData como parámetro
-      dispatch(updateUser(formData));
+      dispatch(updateUser({ userId, ...editedSocialData, formData }));
       localStorage.setItem('user', JSON.stringify(editedData));
       setIsEditing(false);
       setEditedData({ ...editedData, ...editedSocialData });

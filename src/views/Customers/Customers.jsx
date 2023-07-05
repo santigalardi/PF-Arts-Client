@@ -63,7 +63,7 @@ const Customers = () => {
   };
 
   return (
-    <div>
+    <div className={style.allContainer}>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
@@ -131,7 +131,11 @@ const Customers = () => {
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => handleDelete(user.userId)}>
+                        <button
+                          className={style.deleteButton}
+                          onClick={() => handleDelete(user.userId)}
+                          title='Delete'
+                        >
                           {' '}
                           x{' '}
                         </button>
