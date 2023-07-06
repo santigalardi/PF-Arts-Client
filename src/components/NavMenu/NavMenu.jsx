@@ -9,7 +9,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { IoStatsChartSharp } from 'react-icons/io5';
 import { auth } from '../../Firebase/config';
 import { signOut } from 'firebase/auth';
-import { showNotification } from '../../redux/actions';
+import { showNotification, setIsLoggedIn } from '../../redux/actions';
 import './NavMenu.css';
 
 const NavMenu = () => {
@@ -33,6 +33,7 @@ const NavMenu = () => {
     signOut(auth).then(() => {
       localStorage.clear();
       setLoggedIn(false);
+      dispatch(setIsLoggedIn(false)); // Eliminar los elementos del carrito del localStorage
     });
   };
 
@@ -52,7 +53,10 @@ const NavMenu = () => {
 
   return (
     <nav>
-      <div className={`navbar-menu ${menuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+      <div
+        className={`navbar-menu ${menuOpen ? 'active' : ''}`}
+        onClick={toggleMenu}
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -110,18 +114,26 @@ const NavMenu = () => {
               </li>
             </>
           )}
-          {userId && (
-            <>
-              <hr />
-              <li>
-                <FaPowerOff />
-                <NavLink to='/login' onClick={() => handleLogout()}>
-                  {' '}
-                  Log Out
-                </NavLink>
-              </li>
-            </>
-          )}
+
+          <hr />
+          <li>
+            <FaPowerOff />
+            {userId ? (
+              <NavLink to='/login' onClick={() => handleLogout()}>
+                {' '}
+                Log Out
+              </NavLink>
+            ) : (
+              <span
+                onClick={() =>
+                  dispatch(showNotification('Please log in first.'))
+                }
+              >
+                {' '}
+                Log Out
+              </span>
+            )}
+          </li>
         </ul>
       </div>
     </nav>
