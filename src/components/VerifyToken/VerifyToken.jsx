@@ -13,12 +13,12 @@ const VerifyToken = () => {
 
     const verifyToken = async () => {
       try {
-        await axios.post('http://localhost:3001/users/verify', { token });
+        await axios.post('/users/verify', { token });
         console.log('Token verified successfully');
-        navigate('/'); 
+        navigate('/');
       } catch (error) {
         console.error('Error verifying token:', error.response.data.error);
-        navigate('/register'); 
+        navigate('/register');
       }
     };
 
@@ -28,7 +28,6 @@ const VerifyToken = () => {
       navigate('/login');
     }
   }, [location.search, navigate]);
-
 
   return <div>Cargando...</div>;
 };
