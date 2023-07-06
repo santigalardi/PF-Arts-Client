@@ -71,7 +71,6 @@ const UserDetail = () => {
 
   const handleEdit = () => {
     setIsEditing(true);
-    setShowFileInput(true);
   };
 
   const handleEditSocial = () => {
@@ -80,17 +79,9 @@ const UserDetail = () => {
 
   const handleSave = async () => {
     try {
-      // Crea un objeto FormData para enviar los datos
-      const formData = new FormData();
-      formData.append('profilePicture', selectedFile); // Agrega el archivo al formData
-
-      // Agrega los demás datos actualizados al formData
-      Object.entries(editedData).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
-      // Llama a la acción updateUser y pasa el formData como parámetro
-      dispatch(updateUser({ userId, ...editedSocialData, formData }));
+      // Llama a la acción updateUser y pasa los datos actualizados
+      console.log(editedData);
+      dispatch(updateUser(editedData));
       localStorage.setItem('user', JSON.stringify(editedData));
       setIsEditing(false);
       setEditedData({ ...editedData, ...editedSocialData });
@@ -102,6 +93,12 @@ const UserDetail = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
+
+    // Actualizar la foto de perfil en el estado editedData
+    setEditedData((prevData) => ({
+      ...prevData,
+      profilePicture: URL.createObjectURL(file),
+    }));
   };
 
   const handleSaveSocial = () => {
@@ -312,17 +309,17 @@ const UserDetail = () => {
               <input
                 className={style.inputSocial}
                 type='text'
-                name='fb'
-                placeholder='Facebook'
-                value={editedSocialData.fb}
+                name='tw'
+                placeholder='Twitter'
+                value={editedSocialData.tw}
                 onChange={handleSocialInputChange}
               />
               <input
                 className={style.inputSocial}
                 type='text'
-                name='tw'
-                placeholder='Twitter'
-                value={editedSocialData.tw}
+                name='fb'
+                placeholder='Facebook'
+                value={editedSocialData.fb}
                 onChange={handleSocialInputChange}
               />
               <input
