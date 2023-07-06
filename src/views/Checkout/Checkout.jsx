@@ -2,8 +2,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTruck, faUndo, faCertificate, faGlobe, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { clearCart, postTransaction } from '../../redux/actions';
+import {
+  faTruck,
+  faUndo,
+  faCertificate,
+  faGlobe,
+  faLock,
+  faArrowLeft,
+} from '@fortawesome/free-solid-svg-icons';
+import { clearCart, getAllArts, postTransaction, showNotification } from '../../redux/actions';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loadScript } from '@paypal/paypal-js';
@@ -81,6 +88,8 @@ const Checkout = () => {
                 dispatch(postTransaction(artworkIdsString, transactionData));
                 dispatch(clearCart());
                 localStorage.removeItem('cartItems');
+                dispatch(getAllArts());
+                dispatch(showNotification('Successful purchase! Thank you for your purchase.'))
               });
             },
           })
