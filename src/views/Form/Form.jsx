@@ -2,9 +2,6 @@
 import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
-<<<<<<< Updated upstream
-import { FaPen, FaArrowsAltH, FaArrowsAltV, FaDollarSign, FaCalendar, FaUser, FaImage, FaTags } from 'react-icons/fa';
-=======
 import { useNavigate } from 'react-router-dom';
 import {
   FaPen,
@@ -17,7 +14,6 @@ import {
   FaTags,
 } from 'react-icons/fa';
 import { showNotification, getAllArts } from '../../redux/actions';
->>>>>>> Stashed changes
 import styles from './Form.module.css';
 
 export default function Form() {
