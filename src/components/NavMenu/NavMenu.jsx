@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 import { BsFillHouseFill, BsPersonFill } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux';
@@ -77,9 +78,9 @@ const NavMenu = () => {
               Artists
             </NavLink>
           </li>
-          <hr />
           {userId && (
             <>
+              <hr />
               <li>
                 <AiFillHeart />
                 <NavLink to={`/favorites/${userId}`} onClick={toggleMenu}>
@@ -87,16 +88,20 @@ const NavMenu = () => {
                   Favorites
                 </NavLink>
               </li>
-              <hr />
             </>
           )}
-          <li>
-            <GiPencilBrush />
-            <NavLink to='/create' onClick={toggleMenu}>
-              {' '}
-              Create
-            </NavLink>
-          </li>
+          {userId && (
+            <>
+              <hr />
+              <li>
+                <GiPencilBrush />
+                <NavLink to='/create' onClick={toggleMenu}>
+                  {' '}
+                  Create
+                </NavLink>
+              </li>
+            </>
+          )}
           {userAdmin && (
             <>
               <hr />
@@ -109,6 +114,7 @@ const NavMenu = () => {
               </li>
             </>
           )}
+
           <hr />
           <li>
             <FaPowerOff />
