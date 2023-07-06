@@ -34,7 +34,6 @@ const VerifyToken = () => {
     }
   }, [location.search, navigate, dispatch]);
 
-
   return <div>Cargando...</div>;
 };
 

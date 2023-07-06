@@ -7,14 +7,14 @@ import { PDFViewer } from '@react-pdf/renderer';
 import jsPDF from 'jspdf';
 import DashboardMenu from '../../components/DashboardMenu/DashboardMenu';
 import CustomersPDF from './CustomersPDF';
-import styles from './Customers.module.css'
+import styles from './Customers.module.css';
 
 const Customers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector((state) => state.allUsers);
   const [showPreview, setShowPreview] = useState(false);
-  
+
   const handleExport = () => {
     setShowPreview(true);
   };
@@ -26,15 +26,14 @@ const Customers = () => {
   const handleDownloadPDF = () => {
     // Crear una instancia de jspdf
     const doc = new jsPDF();
-  
+
     // Agregar contenido al PDF
     doc.text('Customers', 10, 10);
     doc.autoTable({ html: '#usersTable' });
-  
+
     // Descargar el PDF
     doc.save('customers.pdf');
   };
-  
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -63,7 +62,7 @@ const Customers = () => {
   };
 
   return (
-    <div className={style.allContainer}>
+    <div className={styles.allContainer}>
       <div className='container-fluid'>
         <div className='row'>
           <nav className='col-md-2 d-none d-md-block bg-light sidebar'>
@@ -77,10 +76,7 @@ const Customers = () => {
               <h1 className='h2'>Customers</h1>
               <div className='btn-toolbar mb-2 mb-md-0'>
                 <div className='btn-group mr-2'>
-                  <button
-                    className='btn btn-sm btn-outline-secondary'
-                    onClick={handleShare}
-                  >
+                  <button className='btn btn-sm btn-outline-secondary' onClick={handleShare}>
                     <FaShare /> Share
                   </button>
                   {showPreview ? (
@@ -121,21 +117,12 @@ const Customers = () => {
                       <td>{user.phoneNumber}</td>
                       <td>{user.location}</td>
                       <td>
-                        <button
-                          className='btn btn-sm btn-primary'
-                          onClick={() =>
-                            navigate(`/users/detail/${user.userId}`)
-                          }
-                        >
+                        <button className='btn btn-sm btn-primary' onClick={() => navigate(`/users/detail/${user.userId}`)}>
                           View Profile
                         </button>
                       </td>
                       <td>
-                        <button
-                          className={style.deleteButton}
-                          onClick={() => handleDelete(user.userId)}
-                          title='Delete'
-                        >
+                        <button className={styles.deleteButton} onClick={() => handleDelete(user.userId)} title='Delete'>
                           {' '}
                           x{' '}
                         </button>
