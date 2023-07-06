@@ -2,11 +2,27 @@
 import { useState } from 'react';
 import { postArts } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+<<<<<<< Updated upstream
 import { FaPen, FaArrowsAltH, FaArrowsAltV, FaDollarSign, FaCalendar, FaUser, FaImage, FaTags } from 'react-icons/fa';
+=======
+import { useNavigate } from 'react-router-dom';
+import {
+  FaPen,
+  FaArrowsAltH,
+  FaArrowsAltV,
+  FaDollarSign,
+  FaCalendar,
+  FaUser,
+  FaImage,
+  FaTags,
+} from 'react-icons/fa';
+import { showNotification, getAllArts } from '../../redux/actions';
+>>>>>>> Stashed changes
 import styles from './Form.module.css';
 
 export default function Form() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     title: '',
@@ -66,7 +82,7 @@ export default function Form() {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const errors = validate(input);
     setErrors(errors);
@@ -84,7 +100,8 @@ export default function Form() {
       formData.append('price', input.price);
       formData.append('category', input.category);
 
-      dispatch(postArts(formData));
+      await dispatch(postArts(formData));
+      dispatch(showNotification('Art created successfully!'));
       setShowConfirmation(true);
       setInput({
         title: '',
@@ -98,6 +115,11 @@ export default function Form() {
       });
       setSubmitted(false);
       setErrors({});
+      dispatch(getAllArts());
+      dispatch(showNotification('Art uploaded successfully!'));
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } else {
       setShowAlert(true);
     }
