@@ -309,9 +309,14 @@ export const setLoggedUser = (user) => {
 };
 
 export const setIsLoggedIn = (isLoggedIn) => {
-  return {
-    type: SET_IS_LOGGED_IN,
-    payload: isLoggedIn,
+  return (dispatch) => {
+    if (!isLoggedIn) {
+      localStorage.removeItem('cartItems'); // Eliminar el contenido del localStorage
+    }
+    dispatch({
+      type: SET_IS_LOGGED_IN,
+      payload: isLoggedIn,
+    });
   };
 };
 
