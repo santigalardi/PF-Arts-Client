@@ -15,7 +15,7 @@ import {
 import axios from 'axios';
 import googleLogo from '../../assets/img/google.png';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
-// import styles from './GoogleButton.module.css';
+import styles from './GoogleButton.module.css';
 
 const GoogleButton = () => {
   const navigate = useNavigate();
@@ -129,14 +129,18 @@ const GoogleButton = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles['google']}>
       <Container>
         <Row>
           <Col>
-            <Button onClick={handleGoogleSignIn}>
+            <Button className={styles['button']} onClick={handleGoogleSignIn}>
               <Row>
                 <Col>
-                  <Image src={googleLogo} width='24' alt='' />
+                  <Image
+                    className={styles['googleLogo']}
+                    src={googleLogo}
+                    alt=''
+                  />
                 </Col>
               </Row>
             </Button>
