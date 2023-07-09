@@ -130,20 +130,13 @@ const GoogleButton = () => {
 
   return (
     <div>
-      <Container className='w-100 my-3'>
+      <Container>
         <Row>
           <Col>
-            <Button
-              variant='outline-danger'
-              className='w-100 my-1'
-              onClick={handleGoogleSignIn}
-            >
-              <Row className='align-items-center'>
-                <Col xs={1} className='d-block'>
+            <Button onClick={handleGoogleSignIn}>
+              <Row>
+                <Col>
                   <Image src={googleLogo} width='24' alt='' />
-                </Col>
-                <Col xs={10} md={10} className='text-center'>
-                  Continue with Google
                 </Col>
               </Row>
             </Button>
