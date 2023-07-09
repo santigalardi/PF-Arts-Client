@@ -13,6 +13,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import GoogleButton from '../../components/GoogleButton/GoogleButton';
 import axios from 'axios';
 import styles from './Login.module.css';
+import landing from '../../assets/img/Landing_11zon.png';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -104,16 +105,45 @@ const Login = () => {
 
   return (
     <div className={styles['login-container']}>
+      <div>
+        <span className={styles['logoArt']}>aA</span>
+      </div>
+      <span className={styles['sub']}>BETA</span>
+      <div className={styles['landingImage']}>
+        <img className={styles['image']} src={landing} alt='' />
+      </div>
+      <div className={styles['sloganContainer']}>
+        <span className={styles['slogan']}>Showcase Art.</span>
+      </div>
+      <span className={styles['sloganL']}>Showcase Art.</span>
+      <div className={styles['registerContainer']}>
+        <NavLink to='/register'>
+          <button className={styles['register']}>Sign up</button>
+        </NavLink>
+      </div>
+      <div className={styles['exploreContainer']}>
+        <NavLink to='/'>
+          <button className={styles['explore']}>Explore</button>
+        </NavLink>
+      </div>
+
       <Container className={styles['container']}>
         <Row className={styles['background']}>
           {/*  */}
           <Col className={styles['log']}>
             <h2 className={styles['header']}>Log in</h2>
             <div className='login'>
-              <Form id='login' onSubmit={handleSubmit}>
+              <Form
+                className={styles['allForm']}
+                id='login'
+                onSubmit={handleSubmit}
+              >
                 <Form.Group>
                   <Form.Label htmlFor='username'>
                     <span className={styles['username']}>username</span>
+                    {errors.username && (
+                      <span className={styles.error}>{errors.username}</span>
+                    )}
                   </Form.Label>
                   <Form.Control
                     id='username'
@@ -124,13 +154,13 @@ const Login = () => {
                     className={styles.input}
                     placeholder='Enter your username'
                   />
-                  {errors.username && (
-                    <span className={styles.error}>{errors.username}</span>
-                  )}
                 </Form.Group>
                 <Form.Group>
                   <Form.Label htmlFor='password'>
                     <span className={styles['username']}>password</span>
+                    {errors.password && (
+                      <span className={styles.error}>{errors.password}</span>
+                    )}
                   </Form.Label>
                   <Form.Control
                     id='password'
@@ -141,11 +171,8 @@ const Login = () => {
                     className={styles.input}
                     placeholder='Enter your password'
                   />
-                  {errors.password && (
-                    <span className={styles.error}>{errors.password}</span>
-                  )}
                 </Form.Group>
-                <div>
+                <div className={styles['loginButtonContainer']}>
                   <Button
                     variant='primary'
                     type='submit'
@@ -155,26 +182,19 @@ const Login = () => {
                   >
                     Log in
                   </Button>
+                  <GoogleButton />
+                  {showConfirmation && (
+                    <p className={styles.confirmation}>Ready!</p>
+                  )}
                 </div>
-                {showConfirmation && (
-                  <p className={styles.confirmation}>Ready!</p>
-                )}
                 {showAlert && (
-                  <p className={styles.error}>Invalid username or password</p>
+                  <p className={styles.error2}>Invalid username or password</p>
                 )}
                 {loginError && (
-                  <p className={styles.error}>Invalid username or password</p>
+                  <p className={styles.error2}>Invalid username or password</p>
                 )}
-                <div className='mb-3'>
-                  <p>
-                    <NavLink to='/register'>
-                      <button className={styles['register']}>Sign up</button>
-                    </NavLink>
-                  </p>
-                </div>
               </Form>
               {/* LOGIN REDES SOCIALES */}
-              <GoogleButton className={styles['googleButton']} />
             </div>
           </Col>
         </Row>
