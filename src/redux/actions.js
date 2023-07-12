@@ -168,7 +168,6 @@ export const hideNotification = () => {
 
 export const getAllArts = () => {
   return async function (dispatch) {
-    console.log('actions Get all arts');
     const response = await axios.get('/artworks');
     return dispatch({
       type: GET_ARTS,
@@ -204,6 +203,7 @@ export const filterByArtist = (payload) => {
 };
 
 export function postArts(payload) {
+  console.log(payload);
   return async function (dispatch) {
     const token = localStorage.token;
     try {
@@ -266,7 +266,6 @@ export function clearCart() {
 }
 
 export const updateUser = (updatedUser) => {
-  console.log(updatedUser);
   const token = localStorage.token;
 
   const config = {
@@ -274,6 +273,8 @@ export const updateUser = (updatedUser) => {
       Authorization: `Bearer ${token}`,
     },
   };
+
+  console.log(updatedUser);
 
   return async (dispatch) => {
     try {
