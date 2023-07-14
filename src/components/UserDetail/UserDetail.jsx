@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllUsers, getAllArts, updateUser, setLoggedUser } from '../../redux/actions';
+import { getUserDetail, updateUser, setLoggedUser } from '../../redux/actions';
 import { useParams } from 'react-router-dom';
 import { FaTwitterSquare, FaFacebookSquare, FaInstagramSquare, FaPencilAlt, FaMapMarkerAlt, FaEnvelope, FaMobileAlt, FaImage } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,53 +11,42 @@ import style from './UserDetail.module.css';
 const UserDetail = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.allUsers); // usuario
-  const artworkId = useSelector((state) => state.allArts); // obras
   const loggedUser = useSelector((state) => state.loggedUser);
-  const userDetail = allUsers.find((user) => user.userId === userId); // datos del usuario
-  const filteredArtworks = artworkId.filter((artwork) => artwork.userId === userId); // obras del usuario
+  const userDetail = useSelector((state) => state.userDetail);
+  const filteredArtworks = userDetail.artworks;
   const [enabledUserEdit, setEnabledUserEdit] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const storedUserJSON = localStorage.getItem('user');
-  const storedUser = JSON.parse(storedUserJSON);
-  // console.log('Storeduser', storedUser);
   console.log('loggedUser', loggedUser);
   console.log('userDetail', userDetail);
 
   const [editedData, setEditedData] = useState({
     // Estado local para editar datos personales.
-    ...storedUser,
-    userName: loggedUser.userName || '',
-    description: loggedUser.description || '',
-    phoneNumber: loggedUser.phoneNumber || '',
-    location: loggedUser.location || '',
-    fb: loggedUser.fb || '',
-    tw: loggedUser.tw || '',
-    ig: loggedUser.ig || '',
+    ...userDetail,
+    userName: loggedUser.userName,
     profilePicture: loggedUser.profilePicture,
+    description: loggedUser.description,
+    phoneNumber: loggedUser.phoneNumber,
+    location: loggedUser.location,
   });
-  console.log('editedata', editedData);
 
   const [isEditingSocial, setIsEditingSocial] = useState(false);
   const [editedSocialData, setEditedSocialData] = useState({
-    fb: loggedUser?.fb || '',
-    tw: loggedUser?.tw || '',
-    ig: loggedUser?.ig || '',
+    fb: loggedUser.fb || '',
+    tw: loggedUser.tw || '',
+    ig: loggedUser.ig || '',
   });
 
   const [selectedFile, setSelectedFile] = useState(null);
 
   const enableEdit = () => {
-    if (storedUser) {
-      const storedUserId = storedUser.userId;
-      // Comparar storedUserId con el userId recibido por los parámetros
-      if (storedUserId === userId) {
-        // Realizar acciones en caso de que sean iguales
-        setEnabledUserEdit(true);
-      } else {
-        // Realizar acciones en caso de que no sean iguales
-        setEnabledUserEdit(false);
-      }
+    const loggedUserId = loggedUser.userId;
+    // Comparar storedUserId con el userId recibido por los parámetros
+    if (loggedUserId === userId) {
+      // Realizar acciones en caso de que sean iguales
+      setEnabledUserEdit(true);
+    } else {
+      // Realizar acciones en caso de que no sean iguales
+      setEnabledUserEdit(false);
     }
   };
 
@@ -71,29 +60,23 @@ const UserDetail = () => {
 
   const handleSave = async (e) => {
     e.preventDefault(); // Evita el comportamiento predeterminado del formulario
-
-    try {
-      const formData = new FormData();
-      formData.append('userName', editedData.userName);
-      formData.append('description', editedData.description);
-      formData.append('phoneNumber', editedData.phoneNumber);
-      formData.append('location', editedData.location);
-      formData.append('fb', editedSocialData.fb);
-      formData.append('tw', editedSocialData.tw);
-      formData.append('ig', editedSocialData.ig);
-      formData.append('profilePicture', selectedFile);
-
-      // Llama a la acción updateUser y pasa el objeto FormData
-      await dispatch(updateUser(formData)).then(() => {
-        localStorage.setItem('user', JSON.stringify(userDetail));
+    const formData = new FormData();
+    formData.append('userName', editedData.userName);
+    formData.append('description', editedData.description);
+    formData.append('phoneNumber', editedData.phoneNumber);
+    formData.append('location', editedData.location);
+    formData.append('fb', editedSocialData.fb);
+    formData.append('tw', editedSocialData.tw);
+    formData.append('ig', editedSocialData.ig);
+    formData.append('profilePicture', editedData.profilePicture);
+    // Llama a la acción updateUser y pasa el objeto FormData
+    dispatch(updateUser(formData))
+      .then(() => dispatch(getUserDetail(userId)))
+      .then(() => {
+        setSelectedFile(null);
+        setIsEditing(false);
+        setEditedData({ ...editedData, ...editedSocialData });
       });
-      dispatch(setLoggedUser(userDetail));
-      setSelectedFile(null);
-      setIsEditing(false);
-      setEditedData({ ...editedData, ...editedSocialData });
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handleFileChange = (e) => {
@@ -102,10 +85,9 @@ const UserDetail = () => {
       setSelectedFile(file);
       setEditedData((prevData) => ({
         ...prevData,
-        profilePicture: selectedFile,
+        profilePicture: file,
       }));
     }
-    // Actualizar la foto de perfil en el estado editedData
   };
 
   const handleSaveSocial = () => {
@@ -130,9 +112,13 @@ const UserDetail = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllUsers());
-    dispatch(getAllArts());
-    enableEdit();
+    dispatch(getUserDetail(userId)).then(() => {
+      enableEdit();
+      console.log(enabledUserEdit);
+      if (enabledUserEdit === true) {
+        dispatch(setLoggedUser(userDetail));
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userId]);
 
@@ -171,15 +157,15 @@ const UserDetail = () => {
     <div className={style['containerUserDetail']}>
       <form onSubmit={handleSave} encType='multipart/form-data'>
         <div className={style['userDetail']}>
-          <div className={style['positionPhoto']}>{selectedFile !== null ? <img src={URL.createObjectURL(selectedFile)} alt='img' className={style['photoPerfil']} /> : loggedUser.profilePicture && <img src={userDetail.profilePicture} alt='img' className={style['photoPerfil']} />}</div>
+          <div className={style['positionPhoto']}>{selectedFile !== null ? <img src={URL.createObjectURL(selectedFile)} alt='img' className={style['photoPerfil']} /> : <img src={userDetail.profilePicture} alt='img' className={style['photoPerfil']} />}</div>
           <div className={style['details']}>
             <div className={style['username']}>
-              {isEditing ? <input className={style.inputUserName} placeholder='Username' type='text' value={editedData.userName} onChange={(e) => setEditedData({ ...editedData, userName: e.target.value })} /> : <span className={style['username-text']}>{userDetail?.userName || '-'}</span>}
+              {isEditing ? <input className={style.inputUserName} placeholder='Username' type='text' value={editedData.userName} onChange={(e) => setEditedData({ ...userDetail, userName: e.target.value })} /> : <span className={style['username-text']}>{userDetail?.userName || '-'}</span>}
               <span>
                 {isEditing ? (
                   <>
                     <div className={style['editBs']}>
-                      <button className={style.updateButtonSave} onClick={handleSave}>
+                      <button className={style.updateButtonSave} type='submit'>
                         Save
                       </button>
                       <button className={style.updateButtonCancel} onClick={handleCancel}>
@@ -198,13 +184,13 @@ const UserDetail = () => {
             </div>
 
             <div>
-              <FaEnvelope className={style['iconEmail']} /> <span className={style['email-text']}>{userDetail?.email || '-'}</span> <FaMapMarkerAlt className={style['iconLocation']} /> <span className={style['location']}>{isEditing ? <input className={style.inputName} placeholder='Location' type='text' value={editedData.location} onChange={(e) => setEditedData({ ...editedData, location: e.target.value })} /> : <span className={style['location-text']}>{userDetail?.location || '-'}</span>}</span>
+              <FaEnvelope className={style['iconEmail']} /> <span className={style['email-text']}>{userDetail?.email || '-'}</span> <FaMapMarkerAlt className={style['iconLocation']} /> <span className={style['location']}>{isEditing ? <input className={style.inputName} placeholder='Location' type='text' value={editedData.location} onChange={(e) => setEditedData({ ...userDetail, location: e.target.value })} /> : <span className={style['location-text']}>{userDetail?.location || '-'}</span>}</span>
             </div>
 
             <div className={style['phone']}>
-              <FaMobileAlt className={style['iconPhone']} /> {isEditing ? <input className={style.inputName} placeholder='Phone number' type='number' value={editedData.phoneNumber} onChange={(e) => setEditedData({ ...editedData, phoneNumber: e.target.value })} /> : <span className={style['phone-text']}>{userDetail?.phoneNumber || '-'}</span>}
+              <FaMobileAlt className={style['iconPhone']} /> {isEditing ? <input className={style.inputName} placeholder='Phone number' type='number' value={editedData.phoneNumber} onChange={(e) => setEditedData({ ...userDetail, phoneNumber: e.target.value })} /> : <span className={style['phone-text']}>{userDetail?.phoneNumber || '-'}</span>}
             </div>
-            <div className={style['bio']}>{isEditing ? <textarea className={style.inputBio} placeholder='Tell us about yourself' value={editedData.description} onChange={(e) => setEditedData({ ...editedData, description: e.target.value })} /> : <p className={style['bio-text']}>{userDetail?.description || '-'}</p>}</div>
+            <div className={style['bio']}>{isEditing ? <textarea className={style.inputBio} placeholder='Tell us about yourself' value={editedData.description} onChange={(e) => setEditedData({ ...userDetail, description: e.target.value })} /> : <p className={style['bio-text']}>{userDetail?.description || '-'}</p>}</div>
             {isEditing && (
               <div>
                 <label htmlFor='fileInput' className={style.selectFileButton}>
