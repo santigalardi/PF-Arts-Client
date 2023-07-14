@@ -38,17 +38,19 @@ const UserDetail = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const enableEdit = () => {
-    const loggedUserId = loggedUser.userId;
-    // Comparar storedUserId con el userId recibido por los parámetros
-    if (loggedUserId === userId) {
-      // Realizar acciones en caso de que sean iguales
-      setEnabledUserEdit(true);
-    } else {
-      // Realizar acciones en caso de que no sean iguales
-      setEnabledUserEdit(false);
-    }
-  };
+  const loggedUserId = loggedUser.userId;
+
+  // const enableEdit = () => {
+  //   const loggedUserId = loggedUser.userId;
+  //   // Comparar storedUserId con el userId recibido por los parámetros
+  //   if (loggedUserId === userId) {
+  //     // Realizar acciones en caso de que sean iguales
+  //     setEnabledUserEdit(true);
+  //   } else {
+  //     // Realizar acciones en caso de que no sean iguales
+  //     setEnabledUserEdit(false);
+  //   }
+  // };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -113,14 +115,20 @@ const UserDetail = () => {
 
   useEffect(() => {
     dispatch(getUserDetail(userId)).then(() => {
-      enableEdit();
       console.log(enabledUserEdit);
-      if (enabledUserEdit === true) {
-        dispatch(setLoggedUser(userDetail));
+      if (loggedUserId === userId) {
+        setEnabledUserEdit(true);
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (enabledUserEdit) {
+      console.log(enabledUserEdit);
+      dispatch(setLoggedUser(userDetail));
+    }
+  }, [enabledUserEdit, dispatch, userDetail]);
 
   // Necesita 4 obras para completar el carrusel:
   const artworksNeeded = 4 - filteredArtworks.length;
@@ -129,6 +137,7 @@ const UserDetail = () => {
     image: `https://via.placeholder.com/300x200/D5D1D1?text=Artwork+${index + 1}`,
     title: `Artwork ${index + 1}`,
   }));
+
   // Combina las obras del usuario con la img en gris si es necesario:
   const combinedArtworks = [...filteredArtworks, ...grayImages];
   // Muestra el carrusel solo si el usuario tiene al menos una obra:
