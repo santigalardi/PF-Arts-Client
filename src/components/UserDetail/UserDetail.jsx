@@ -16,8 +16,6 @@ const UserDetail = () => {
   const filteredArtworks = userDetail.artworks;
   const [enabledUserEdit, setEnabledUserEdit] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  console.log('loggedUser', loggedUser);
-  console.log('userDetail', userDetail);
 
   const [editedData, setEditedData] = useState({
     // Estado local para editar datos personales.
@@ -39,18 +37,6 @@ const UserDetail = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const loggedUserId = loggedUser.userId;
-
-  // const enableEdit = () => {
-  //   const loggedUserId = loggedUser.userId;
-  //   // Comparar storedUserId con el userId recibido por los parámetros
-  //   if (loggedUserId === userId) {
-  //     // Realizar acciones en caso de que sean iguales
-  //     setEnabledUserEdit(true);
-  //   } else {
-  //     // Realizar acciones en caso de que no sean iguales
-  //     setEnabledUserEdit(false);
-  //   }
-  // };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -115,9 +101,9 @@ const UserDetail = () => {
 
   useEffect(() => {
     dispatch(getUserDetail(userId)).then(() => {
-      console.log(enabledUserEdit);
       if (loggedUserId === userId) {
         setEnabledUserEdit(true);
+        localStorage.setItem('user', JSON.stringify(userDetail));
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,7 +111,6 @@ const UserDetail = () => {
 
   useEffect(() => {
     if (enabledUserEdit) {
-      console.log(enabledUserEdit);
       dispatch(setLoggedUser(userDetail));
     }
   }, [enabledUserEdit, dispatch, userDetail]);
