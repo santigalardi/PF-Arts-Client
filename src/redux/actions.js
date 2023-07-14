@@ -18,7 +18,7 @@ export const GET_USERS = 'GET_USERS';
 export const POST_USERS = 'POST_USERS';
 export const UPDATE_USER = 'UPDATE_USER';
 export const SET_LOGGED_USER = 'SET_LOGGED_USER';
-export const GET_USERS_DETAIL = 'GET_USERS_DETAIL';
+export const GET_USER_DETAIL = 'GET_USER_DETAIL';
 // -------- REVIEWS ------
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const POST_REVIEW = 'POST_REVIEW';
@@ -274,8 +274,6 @@ export const updateUser = (updatedUser) => {
     },
   };
 
-  console.log(updatedUser);
-
   return async (dispatch) => {
     try {
       const response = await axios.put(`/users/edit`, updatedUser, config);
@@ -311,7 +309,7 @@ export const getUserDetail = (id) => {
     try {
       const response = await axios.get(`/users/detail/${id}`);
       return dispatch({
-        type: GET_USERS_DETAIL,
+        type: GET_USER_DETAIL,
         payload: response.data,
       });
     } catch (error) {
