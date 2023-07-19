@@ -1,19 +1,31 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { auth } from '../../Firebase/config';
-import { signOut } from 'firebase/auth';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import NavMenu from '../NavMenu/NavMenu';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoggedUser } from '../../redux/actions';
 import './Navbar.style.css';
 
 function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loggedUser = useSelector((state) => state.loggedUser);
+
+  const { userName, profilePicture, userId } = loggedUser;
+
+  const storedUser = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (storedUser) {
+      setLoggedIn(true);
+      // Recuperar los datos del usuario almacenados en localStorage
+      const user = JSON.parse(localStorage.getItem('user'));
+      dispatch(setLoggedUser(user));
+    }
+  }, [dispatch, storedUser]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,50 +41,40 @@ function Navbar() {
     };
   }, [location]);
 
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      localStorage.clear();
-      setLoggedIn(false);
-    });
+  const handleNavigate = () => {
+    navigate(`/users/detail/${userId}`);
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        localStorage.setItem('email', user.email);
-        setLoggedIn(true);
-        const storedProfilePhotoUrl = localStorage.getItem('profilePhotoUrl'); // Leer la URL del localStorage
-        setProfilePhotoUrl(storedProfilePhotoUrl); // Actualizar el estado con la URL del localStorage
-        const storedFirstName = localStorage.getItem('firstName');
-        setFirstName(storedFirstName);
-      } else {
-        localStorage.removeItem('email');
-        setLoggedIn(false);
-      }
-    });
-    return unsubscribe;
-  }, []);
+  const handleHome = () => {
+    navigate('/');
+  };
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <NavMenu />
-      <div className='navbar-title'>Henry Art Gallery</div>
+      <NavMenu userId={userId} />
+      <div className='navbar-title' onClick={handleHome}>
+        <span className='logo'>aA</span>
+        <span className='space'> </span>
+      </div>
+      <span className='sub'>BETA</span>
       <div className='navlinks-container'>
         {loggedIn ? (
-          <div className='profile-menu' onClick={handleLogout}>
-            <p className='user-welcome'>{firstName}</p>
-            <div className='profile-menu-photo-container'>
-              <img src={profilePhotoUrl} alt='' className='profile-menu-photo' />
+          <>
+            <div className='profile-menu' onClick={handleNavigate}>
+              <p className='user-welcome'>{userName}</p>
+              <div className='profile-menu-photo-container'>
+                <img src={profilePicture} alt='' className='profile-menu-photo' />
+              </div>
             </div>
-          </div>
+            <NavLink to='/cart' className='navlinks'>
+              <AiOutlineShoppingCart className='cartLogo' />
+            </NavLink>
+          </>
         ) : (
-          <NavLink to='/login' className='navlinks'>
+          <NavLink to='/login' className='login'>
             Log in
           </NavLink>
         )}
-        <NavLink to='/cart' className='navlinks'>
-          <AiOutlineShoppingCart className='cartLogo' />
-        </NavLink>
       </div>
     </nav>
   );

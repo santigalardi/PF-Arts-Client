@@ -3,10 +3,17 @@
   background-color: #f8f8f8;
   border: 1px solid #ccc;
   cursor: pointer;
-  border-radius: 0px 0px 20px 0px;
+  border-radius: 2px;
   padding-top: 0px;
   vertical-align: top;
   height: 30px;
+}
+
+.NavSearch {
+  border-radius: 20px 0 0 20px;
+  border: 1px solid rgb(146, 146, 146);
+  height: 30px;
+  padding-left: 10px;
 }
 
 .NavSearch::placeholder {
@@ -14,15 +21,22 @@
   font-style: oblique;
 }
 
-.BottonSearch:hover {
-  background-color: #eaeaea;
-  ;
+.NavSearch:focus {
+  outline: none;
 }
 
+.BottonSearch {
+  border-radius: 0 20px 20px 0;
+  border: 1px solid rgb(146, 146, 146);
+}
+
+.BottonSearch:hover {
+  background-color: #eaeaea;
+}
 
 .icon {
-  font-size: 27px;
-  /* color: azure; */
+  font-size: 23px;
+  color: rgb(36, 89, 168);
 }
 
 .searchbar-container {

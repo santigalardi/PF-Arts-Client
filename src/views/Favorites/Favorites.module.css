@@ -1,0 +1,48 @@
+@keyframes animatedBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container{
+  height: 100%;
+  min-height: 70.5vh;
+  margin: 20px;
+}
+
+.textContainer {
+  /* background-color: rgb(243, 243, 243); */
+  width: fit-content;
+  padding: 0 5px 0 5px;
+  border-radius: 5px;
+  margin-left: 90px;
+  margin-top: -20px;
+  font-style: oblique;
+}
+
+.boxFav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 30px;
+  /* margin-left: -20px; */
+}
+
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 61.5vh;
+}
+
+.expo {
+  color: blue;
+  font-weight: bold;
+}

@@ -1,14 +1,37 @@
 .usersPage {
-  display: flex;
-  height: 100vh;
+   display: flex;
+   flex-wrap: wrap;
+   min-height: 70vh;
 }
 .userCards {
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 6rem;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: auto;
-  margin-top: 3rem;
-
+   display: flex;
+   flex-wrap: wrap;
+    margin-right: 100px;
+   margin-left: 100px; 
+   margin-bottom: 20px;
+   margin-top: 25px;
+   justify-content: center;
+   align-items: center;
+   /* background-color: red; */
+   width: 100%;
 }
+.pagination{
+   display: flex;
+   justify-content: center;
+   margin: 30px;
+}
+
+.BttBack {
+   text-decoration: none;
+   background-color: white;
+   color: rgb(53, 53, 53);
+   border-radius: 10px;
+   font-weight: bold;
+   padding: 5px;
+   margin-top: 20px;
+ }
+ 
+ .BttBack:hover {
+   background-color: rgb(53, 53, 53);
+   color: white;
+ }
