@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { FaTwitterSquare, FaFacebookSquare, FaInstagramSquare, FaPencilAlt, FaMapMarkerAlt, FaEnvelope, FaMobileAlt, FaImage } from 'react-icons/fa';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import CarruselUsers from '../CarruselUsers/CarruselUsers';
+import CarruselUsers from '../../components/CarruselUsers/CarruselUsers';
 import style from './UserDetail.module.css';
 
 const UserDetail = () => {
